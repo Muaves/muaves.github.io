@@ -1,56 +1,296 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GBRRgf's page</title>
-    <link rel="stylesheet" href="syle.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Link Nexus - Hacker Style Links Page</title>
+    <meta name="description" content="A customizable terminal-style links page with matrix effects and sound interactions">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="links.css">
 </head>
 <body>
-    <div class="matrix-background"></div>
-    <div class="scanline"></div>
+    <div id="matrix-rain"></div>
     
-    <main class="content">
-        <div class="profile">
-            <h1 class="terminal-text">FAZE_gBR_24</h1>
-            <p class="terminal-text">> HTML, CSS, JS, Developer</p>
-        </div>
-
-        <div class="terminal-window">
+    <div class="container">
+        <div class="terminal-window fade-in-up">
             <div class="terminal-header">
-                <span class="terminal-title">gbrrgf@catlinux:~#</span>
+                <div class="terminal-buttons">
+                    <div class="btn red"></div>
+                    <div class="btn yellow"></div>
+                    <div class="btn green"></div>
+                </div>
+                <span class="terminal-title">gbrr@muaves.local:~$</span>
             </div>
             <div class="terminal-content">
-                <p class="terminal-line">> Hai~~ FAZE_gBR_24 vagyok!</p>
-                <p class="terminal-line">> Egy programozó...lol</p>
+                <div class="terminal-line">
+                    <span class="prompt">gbrr@muaves.local:~$</span> whoami
+                </div>
+                <div class="title-text">
+                    <span id="typing-title"></span><span class="cursor">|</span>
+                </div>
+                <div class="subtitle-text">
+                    <span id="typing-subtitle"></span>
+                </div>
             </div>
         </div>
 
-        <div class="terminal-window">
+        <div class="terminal-window fade-in-up" style="animation-delay: 0.3s;">
             <div class="terminal-header">
-                <span class="terminal-title">gbrrgf@catlinux:~#</span>
+                <div class="terminal-buttons">
+                    <div class="btn red"></div>
+                    <div class="btn yellow"></div>
+                    <div class="btn green"></div>
+                </div>
+                <span class="terminal-title">profile.info</span>
             </div>
             <div class="terminal-content">
-                <p class="terminal-line">> Infók rólam</p>
-                <p class="terminal-line">> Egy professzionális programozó</p>
-                <p class="terminal-line">> cica: No such an file or directory from above!</p>
-                <p class="terminal-line">> - Imádom a macskákat</p>
-                <p class="terminal-line">> - Linuxot használok már mióta</p>
-                <p class="terminal-line">> - Vibe coder... Egy szinten...</p>
-                <p class="terminal-line">> - <a href="https://muaves.github.io/projects" target="_blank">Projekteim itt találhatóak!</a>
-                <p class="terminal-line">> - Most Mincecraft pluginok kreálásában érdeklődöm...</p>
-                <p class="terminal-line">> sudo rm rf / </p>
+                <div class="terminal-line">
+                    <span class="prompt">gbrr@muaves.local:~$</span> 
+                    <span class="command">cat profile.json</span>
+                </div>
+                <div class="json-content">
+                    <div class="json-line">{</div>
+                    <div class="json-line indent">
+                        <span class="json-key">"name"</span>: <span class="json-value">"GBRR"</span>,
+                    </div>
+                    <div class="json-line indent">
+                        <span class="json-key">"role"</span>: <span class="json-value">"Senior Developer"</span>,
+                    </div>
+                    <div class="json-line indent">
+                        <span class="json-key">"location"</span>: <span class="json-value">"Cyberspace"</span>,
+                    </div>
+                    <div class="json-line indent">
+                        <span class="json-key">"status"</span>: <span class="json-status">"Online"</span>,
+                    </div>
+                    <div class="json-line indent">
+                        <span class="json-key">"time:"</span>: <span class="json-status" id="current-time"></span>
+                    </div>
+                    <div class="json-line">}</div>
+                </div>
             </div>
         </div>
 
-        <div class="social-links">
-            <a href="https://github.com/Muaves" target="_blank" class="glow-button github">
-                <i class="fab fa-github"></i>
-            </a>
-         
-    </main>
+        <div class="terminal-window fade-in-up" id="links-terminal" style="animation-delay: 0.6s; opacity: 0;">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="btn red"></div>
+                    <div class="btn yellow"></div>
+                    <div class="btn green"></div>
+                </div>
+                <span class="terminal-title">available_links.sh</span>
+            </div>
+            <div class="terminal-content">
+                <div class="terminal-line">
+                    <span class="prompt">gbrr@muaves.local:~$</span> 
+                    <span class="command">./get_links.sh</span>
+                </div>
+                <div class="description">
+                    Welcome to my digital realm. Choose your destination wisely.
+                </div>
+                
+                <div class="links-grid" id="links-container">
+                </div>
+            </div>
+        </div>
 
-    <script src="uwu.js"></script>
+        <div class="terminal-window fade-in-up" style="animation-delay: 0.9s;">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="btn red"></div>
+                    <div class="btn yellow"></div>
+                    <div class="btn green"></div>
+                </div>
+                <span class="terminal-title">system.info</span>
+            </div>
+            <div class="terminal-content">
+                <div class="terminal-line">
+                    <span class="prompt">gbrr@muaves.local:~$</span> 
+                    <span class="command">uptime</span>
+                </div>
+                <div class="system-info">
+                    <div>System online since: <span id="system-date"></span></div>
+                    <div class="ready-text">Ready for connections... 🚀</div>
+                </div>
+            </div>
+        </div>
+
+        
+        
+    </div>
+
+    <script>
+        const CONFIG = {
+            username: "Muaves",
+            hostname: "gbr.local",
+            title: "LINKS 'o MUAVES",
+            subtitle: "Web Developer | Full Stack | Open Source",
+            description: "Welcome to my digital realm. Choose your destination wisely.",
+            
+            profile: {
+                name: "Gabriel",
+                role: "Senior Developer", 
+                location: "Cyberspace",
+                status: "Online"
+            },
+            
+            links: [
+                {
+                    title: "GitHub",
+                    url: "https://github.com/muaves",
+                    description: "Open source projects & contributions",
+                    icon: "💾"
+                },
+                {
+                    title: "Main page",
+                    url: "https://muaves.github.io", 
+                    description: "My latest work and case studies",
+                    icon: "🌐"
+                },
+                {
+                    title: "Instagram",
+                    url: "https://instagram.com/faze_gbr_24",
+                    description: "My instagram", 
+                    icon: "💼"
+                },
+                {
+                    title: "Snapchat",
+                    url: "https://snapchat.com/add/faze_gbr_24",
+                    description: "My snapchat", 
+                    icon: "👻"
+                },
+                {
+                    title: "Redstone Launcher", 
+                    url: "https://tggamesyt.dev/redstone-launcher",
+                    description: "A custom Minecraft launcher",
+                    icon: "🎮"
+                },
+               
+            ]
+        };
+
+        function playSound(frequency = 800, duration = 100) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.1, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration/1000);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration/1000);
+        }
+
+        function typeText(element, text, speed = 50, callback) {
+            let i = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
+        function createMatrixRain() {
+            const matrixContainer = document.getElementById('matrix-rain');
+            const characters = 'ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ';
+            
+            for (let i = 0; i < 20; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'matrix-drop';
+                drop.style.left = Math.random() * 100 + '%';
+                drop.style.animationDelay = Math.random() * 2 + 's';
+                drop.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                
+                let dropText = '';
+                for (let j = 0; j < 20; j++) {
+                    dropText += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
+                }
+                drop.innerHTML = dropText;
+                
+                matrixContainer.appendChild(drop);
+            }
+        }
+
+        function generateLinks() {
+            const container = document.getElementById('links-container');
+            
+            CONFIG.links.forEach((link, index) => {
+                const linkElement = document.createElement('a');
+                linkElement.href = link.url;
+                linkElement.target = '_blank';
+                linkElement.rel = 'noopener noreferrer';
+                linkElement.className = 'link-button slide-in-right';
+                linkElement.style.animationDelay = (index * 0.1) + 's';
+                
+                linkElement.innerHTML = `
+                    <div class="link-content">
+                        <span class="link-icon">${link.icon}</span>
+                        <div class="link-text">
+                            <div class="link-title">${link.title}</div>
+                            <div class="link-description">${link.description}</div>
+                        </div>
+                        <span class="link-arrow">→</span>
+                    </div>
+                    <div class="link-glow"></div>
+                `;
+                
+                // Add sound effects
+                linkElement.addEventListener('mouseenter', () => playSound(600, 80));
+                linkElement.addEventListener('click', () => playSound(800, 120));
+                
+                container.appendChild(linkElement);
+            });
+        }
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = `"${now.toLocaleTimeString()}"`;
+            document.getElementById('last-updated').textContent = now.toLocaleTimeString();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('system-date').textContent = new Date().toLocaleDateString();
+            
+            createMatrixRain();
+            
+            setTimeout(() => {
+                typeText(document.getElementById('typing-title'), CONFIG.title, 100, () => {
+                    setTimeout(() => {
+                        typeText(document.getElementById('typing-subtitle'), CONFIG.subtitle, 50, () => {
+                            // Show links after typing completes
+                            setTimeout(() => {
+                                document.getElementById('links-terminal').style.opacity = 1;
+                                generateLinks();
+                            }, 1000);
+                        });
+                    }, 500);
+                });
+            }, 1000);
+            
+            updateTime();
+            setInterval(updateTime, 1000);
+        });
+
+        setInterval(() => {
+            const title = document.getElementById('typing-title');
+            if (title && Math.random() < 0.1) {
+                title.classList.add('glitch');
+                setTimeout(() => title.classList.remove('glitch'), 300);
+            }
+        }, 2000);
+    </script>
 </body>
-</html> 
+</html>
