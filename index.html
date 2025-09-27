@@ -1,62 +1,1420 @@
 <!DOCTYPE html>
-<html lang="hu">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GBRR's page</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>GBRR - PAGE</title>
+    <meta name="description" content="Welcome to my page ig">
+    <meta name="author" content="GBRR - Muavees">
     
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --background: #000000;
+            --foreground: #00ff00;
+            --matrix-green: #00ff00;
+            --matrix-green-bright: #00ff41;
+            --matrix-green-dim: #008f11;
+            --matrix-green-dark: #003300;
+            --terminal-bg: #0d0d0d;
+            --terminal-border: #408040;
+            --muted-foreground: #59a659;
+            --error: #ff0000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--foreground);
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::selection {
+            background: rgba(0, 255, 0, 0.3);
+            color: var(--foreground);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--matrix-green-dim);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--matrix-green);
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-title {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--matrix-green);
+            text-shadow: 0 0 20px var(--matrix-green);
+            margin-bottom: 2rem;
+        }
+
+        .loading-text {
+            font-size: 1.5rem;
+            color: var(--matrix-green);
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            width: 20rem;
+            height: 8px;
+            background: var(--terminal-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--matrix-green);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .rain-column {
+            position: absolute;
+            top: -100%;
+            font-family: 'Courier Prime', monospace;
+            font-size: 14px;
+            color: var(--matrix-green);
+            text-shadow: 0 0 5px var(--matrix-green);
+            animation: matrix-fall linear infinite;
+            white-space: pre;
+            line-height: 1.2;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(13, 13, 13, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--terminal-border);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green);
+            border-bottom: 2px solid var(--matrix-green);
+        }
+
+        .admin-toggle {
+            background: transparent;
+            border: 2px solid var(--matrix-green);
+            color: var(--matrix-green);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-family: inherit;
+        }
+
+        .admin-toggle:hover, .admin-toggle.active {
+            background: var(--matrix-green);
+            color: var(--background);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--matrix-green);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .main-content {
+            margin-top: 4rem;
+            min-height: calc(100vh - 4rem);
+        }
+
+        .page {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .glitch {
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            animation: glitch-before 2s infinite;
+            color: #ff0000;
+            z-index: -1;
+        }
+
+        .glitch::after {
+            animation: glitch-after 2s infinite;
+            color: #00ffff;
+            z-index: -2;
+        }
+
+        .matrix-glow {
+            text-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        .typing-text {
+            overflow: hidden;
+            border-right: 2px solid var(--matrix-green);
+            white-space: nowrap;
+            animation: typing 3s steps(40, end), blink-cursor 0.75s step-end infinite;
+        }
+
+        .terminal-window {
+            background: var(--terminal-bg);
+            border: 2px solid var(--terminal-border);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            backdrop-filter: blur(5px);
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .terminal-window:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.7);
+        }
+
+        .card {
+            background: var(--terminal-bg);
+            border: 2px solid var(--terminal-border);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+        }
+
+        .btn {
+            background: transparent;
+            border: 2px solid var(--matrix-green);
+            color: var(--matrix-green);
+            padding: 0.75rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            font-family: inherit;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: var(--matrix-green);
+            color: var(--background);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+            text-shadow: none;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            background: var(--terminal-bg);
+            border: 2px solid var(--terminal-border);
+            color: var(--matrix-green);
+            padding: 0.75rem;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--matrix-green);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-cols-1 { grid-template-columns: 1fr; }
+        .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: bold;
+            color: var(--matrix-green);
+            text-shadow: 0 0 20px var(--matrix-green);
+            margin-bottom: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--muted-foreground);
+            margin-bottom: 3rem;
+            max-width: 50rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--terminal-bg);
+            border: 2px solid var(--terminal-border);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-status {
+            font-size: 0.875rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .project-status.active { color: var(--matrix-green); }
+        .project-status.completed { color: #00ff88; }
+        .project-status.archived { color: var(--muted-foreground); }
+
+        .project-description {
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background: var(--background);
+            color: var(--matrix-green);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            border: 1px solid var(--terminal-border);
+        }
+
+        .project-date {
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+        }
+
+        /* Skill bars */
+        .skill-item {
+            margin-bottom: 1rem;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-name {
+            font-size: 0.875rem;
+            font-weight: bold;
+            color: var(--matrix-green);
+        }
+
+        .skill-percentage {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--background);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: var(--matrix-green);
+            box-shadow: 0 0 10px var(--matrix-green);
+            transition: width 2s ease-out;
+            width: 0%;
+        }
+
+        .terminal-sim {
+            background: var(--background);
+            border: 2px solid var(--terminal-border);
+            padding: 1rem;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.875rem;
+            color: var(--matrix-green);
+            margin: 2rem 0;
+        }
+
+        .terminal-line {
+            margin-bottom: 0.5rem;
+        }
+
+        .terminal-prompt {
+            color: var(--matrix-green);
+        }
+
+        .terminal-command {
+            color: var(--muted-foreground);
+        }
+
+        .terminal-output {
+            color: var(--matrix-green);
+            text-shadow: 0 0 5px var(--matrix-green);
+        }
+
+        .terminal-error {
+            color: var(--error);
+        }
+
+        .toast {
+            position: fixed;
+            top: 5rem;
+            right: 1rem;
+            background: var(--terminal-bg);
+            border: 2px solid var(--terminal-border);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            padding: 1rem;
+            max-width: 20rem;
+            z-index: 200;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            border-color: var(--error);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .loading-dots::after {
+            content: '';
+            animation: loading-dots 1.5s infinite;
+        }
+
+        @keyframes matrix-fall {
+            to {
+                transform: translateY(calc(100vh + 100%));
+            }
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            10% { transform: translate(-2px, 2px); }
+            20% { transform: translate(-2px, -2px); }
+            30% { transform: translate(2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            50% { transform: translate(-2px, 2px); }
+            60% { transform: translate(-2px, -2px); }
+            70% { transform: translate(2px, 2px); }
+            80% { transform: translate(-2px, -2px); }
+            90% { transform: translate(2px, 2px); }
+        }
+
+        @keyframes glitch-before {
+            0%, 100% { clip-path: inset(0 0 0 0); }
+            10% { clip-path: inset(10% 0 85% 0); }
+            20% { clip-path: inset(80% 0 10% 0); }
+            30% { clip-path: inset(10% 0 85% 0); }
+            40% { clip-path: inset(80% 0 10% 0); }
+            50% { clip-path: inset(10% 0 85% 0); }
+            60% { clip-path: inset(80% 0 10% 0); }
+            70% { clip-path: inset(10% 0 85% 0); }
+            80% { clip-path: inset(80% 0 10% 0); }
+            90% { clip-path: inset(10% 0 85% 0); }
+        }
+
+        @keyframes glitch-after {
+            0%, 100% { clip-path: inset(0 0 0 0); }
+            15% { clip-path: inset(90% 0 5% 0); }
+            25% { clip-path: inset(5% 0 90% 0); }
+            35% { clip-path: inset(90% 0 5% 0); }
+            45% { clip-path: inset(5% 0 90% 0); }
+            55% { clip-path: inset(90% 0 5% 0); }
+            65% { clip-path: inset(5% 0 90% 0); }
+            75% { clip-path: inset(90% 0 5% 0); }
+            85% { clip-path: inset(5% 0 90% 0); }
+            95% { clip-path: inset(90% 0 5% 0); }
+        }
+
+        @keyframes loading-dots {
+            0%, 20% { content: ''; }
+            25% { content: '.'; }
+            50% { content: '..'; }
+            75% { content: '...'; }
+            100% { content: '....'; }
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-cursor {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--matrix-green); }
+        }
+
+        @keyframes fade-in-up {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(13, 13, 13, 0.95);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-links.mobile-open {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .grid-cols-2, .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .rain-column {
+                font-size: 12px;
+            }
+        }
+
+        .fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+
+        .fade-in-up-delay-1 { animation-delay: 0.1s; }
+        .fade-in-up-delay-2 { animation-delay: 0.2s; }
+        .fade-in-up-delay-3 { animation-delay: 0.3s; }
+        .fade-in-up-delay-4 { animation-delay: 0.4s; }
+    </style>
 </head>
-
 <body>
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-title glitch" data-text="MATRIX">GBRR's PAGE</div>
+            <div id="loadingText" class="loading-text">INITIALIZING DATE</div>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <div id="progressPercent">0%</div>
+        </div>
+    </div>
 
-    <div class="matrix-background"></div>
-    <div class="scanline"></div>
+    <div id="matrixRain" class="matrix-rain"></div>
 
-    <main class="content">
-        <div class="profile">
-            <h1 class="terminal-text">FAZE_gBR_24</h1>
-            <p class="terminal-text">> HTML, CSS, JS, Developer</p>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo glitch" data-text="MATRIX">GBRR</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="nav-link active" data-page="home">HOME</a></li>
+                <li><a href="#" class="nav-link" data-page="projects">PROJECTS</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">CONTACT</a></li>
+                <li><a href="#" class="nav-link" data-page="about">ABOUT</a></li>
+                <li><button class="admin-toggle" id="adminToggle" style="cursor: default;">USER</button></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div id="homePage" class="page active">
+            <section class="hero-section">
+                <div class="container">
+                    <div class="hero-title glitch">GBRR</div>
+                    <div class="hero-subtitle typing-text" id="heroSubtitle">Welcome to the real world, TG...</div>
+                    <p class="hero-description">
+                        Im GBRR a programmer i think... i made many projects, some of them are here, some of them are secret.
+                        Explore my digital realm, where code meets creativity and innovation knows no bounds.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn" data-page="projects">ENTER THE MATRIX</a>
+                        <a href="#" class="btn" data-page="about">LEARN THE TRUTH</a>
+                    </div>
+                </div>
+            </section>
+
+            <section style="padding: 5rem 0;">
+                <div class="container">
+                    <h2 style="text-align: center; font-size: 2.5rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 3rem;">
+                        SYSTEM CAPABILITIES
+                    </h2>
+                    <div class="grid grid-cols-3">
+                        <div class="card">
+                            <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                            <h3 style="text-align: center; font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">NEURAL INTERFACE</h3>
+                            <p style="text-align: center; color: var(--muted-foreground);">
+                                Idk what is this tbh
+                            </p>
+                        </div>
+                        <div class="card">
+                            <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">🔒</div>
+                            <h3 style="text-align: center; font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">QUANTUM ENCRYPTION</h3>
+                            <p style="text-align: center; color: var(--muted-foreground);">
+                                Idk that i putted this here just for the icon
+                            </p>
+                        </div>
+                        <div class="card">
+                            <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">🌐</div>
+                            <h3 style="text-align: center; font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">WEBCODING</h3>
+                            <p style="text-align: center; color: var(--muted-foreground);">
+                                Advanced web development frameworks for building dynamic digital environments.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section style="padding: 5rem 0;">
+                <div class="container">
+                    <div class="terminal-window" style="max-width: 50rem; margin: 0 auto;">
+                        <h3 style="font-size: 1.5rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 2rem;">
+                            SYSTEM TERMINAL
+                        </h3>
+                        <div class="terminal-sim">
+                            <div class="terminal-line"><span class="terminal-prompt">gbrr@muaves:~$</span> <span class="terminal-command">whoami</span></div>
+                            <div class="terminal-line terminal-output">The One</div>
+                            <div class="terminal-line"><span class="terminal-prompt">gbrr@muaves:~$</span> <span class="terminal-command">ls -la reality/</span></div>
+                            <div class="terminal-line" style="color: var(--muted-foreground);">drwxr-xr-x 2 neo matrix 4096 Jan 01 1999 simulation/</div>
+                            <div class="terminal-line" style="color: var(--muted-foreground);">-rw-r--r-- 1 neo matrix 1337 Jan 01 1999 truth.txt</div>
+                            <div class="terminal-line" style="color: var(--muted-foreground);">-rw-r--r-- 1 neo matrix  666 Jan 01 1999 illusion.exe</div>
+                            <div class="terminal-line"><span class="terminal-prompt">gbrr@muaves:~$</span> <span class="terminal-command">cat truth.txt</span></div>
+                            <div class="terminal-line terminal-output matrix-glow">The Matrix has you...</div>
+                            <div class="terminal-line"><span class="terminal-prompt">gbrr@muaves:~$</span> <span class="terminal-command loading-dots">_</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
 
-        <div class="terminal-window">
-            <div class="terminal-header">
-                <span class="terminal-title">gbrr@catlinux:~#</span>
-            </div>
-            <div class="terminal-content">
-                <p class="terminal-line">> Hai~~ FAZE_gBR_24 vagyok!</p>
-                <p class="terminal-line">> Egy programozó...lol</p>
+        <div id="projectsPage" class="page">
+            <div class="container" style="padding: 3rem 0;">
+                <div style="margin-bottom: 3rem;">
+                    <h1 style="font-size: 3rem; font-weight: bold; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 1rem;" class="glitch" data-text="PROJECTS">
+                        PROJECTS
+                    </h1>
+                    <p style="color: var(--muted-foreground); font-size: 1.125rem;">
+                        Active operations and completed missions
+                    </p>
+                </div>
+
+                <div id="addProjectSection" class="admin-only" style="display: none; margin-bottom: 2rem;">
+                    <button class="btn" id="showAddFormBtn">+ ADD PROJECT</button>
+                </div>
+
+                <div id="addProjectForm" class="admin-only terminal-window" style="display: none; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">ADD NEW PROJECT</h3>
+                    <form id="projectForm">
+                        <div class="form-group">
+                            <input type="text" id="projectTitle" class="form-input" placeholder="Project Title" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="projectDescription" class="form-textarea" placeholder="Project Description" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="projectTech" class="form-input" placeholder="Technologies (comma-separated)">
+                        </div>
+                        <div class="form-group">
+                            <select id="projectStatus" class="form-select">
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                                <option value="archived">Archived</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button type="submit" class="btn">CREATE PROJECT</button>
+                            <button type="button" class="btn" id="cancelAddBtn">CANCEL</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="projectsGrid" class="projects-grid"></div>
             </div>
         </div>
 
-        <div class="terminal-window">
-            <div class="terminal-header">
-                <span class="terminal-title">gbrr@catlinux:~#</span>
-            </div>
-            <div class="terminal-content">
-                <p class="terminal-line">> Infók rólam</p>
-                <p class="terminal-line">> Egy professzionális programozó</p>
-                <p class="terminal-line">> cica: No such an file or directory from above!</p>
-                <p class="terminal-line">> - Imádom a macskákat</p>
-                <p class="terminal-line">> - Linuxot használok már mióta</p>
-                <p class="terminal-line">> - Vibe coder... Egy szinten...</p>
-                <p class="terminal-line">> - <a href="https://muaves.github.io/projects" target="_blank">Projekteim itt
-                        találhatóak!</a>
-                <p class="terminal-line">> - Most Mincecraft pluginok kreálásában érdeklődöm...</p>
-                <p class="terminal-line">> sudo rm -rf / </p>
+        <div id="contactPage" class="page">
+            <div class="container" style="padding: 3rem 0;">
+                <div style="margin-bottom: 3rem;">
+                    <h1 style="font-size: 3rem; font-weight: bold; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 1rem;" class="glitch" data-text="CONTACT">
+                        CONTACT
+                    </h1>
+                    <p style="color: var(--muted-foreground); font-size: 1.125rem;">
+                        Establish secure communication channel
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2">
+                    <div class="terminal-window">
+                        <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1.5rem;">SEND TRANSMISSION</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" id="contactName" class="form-input" placeholder="Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="contactEmail" class="form-input" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="contactSubject" class="form-input" placeholder="Subject">
+                            </div>
+                            <div class="form-group">
+                                <textarea id="contactMessage" class="form-textarea" placeholder="Message" rows="6" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-full">TRANSMIT MESSAGE</button>
+                        </form>
+                    </div>
+
+                    <div>
+                        <div class="terminal-window">
+                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">MATRIX COORDINATES</h3>
+                            <div style="margin-bottom: 1rem;">
+                                <div style="font-size: 0.875rem; color: var(--matrix-green); font-weight: bold;">LOCATION:</div>
+                                <div style="color: var(--muted-foreground);">Unknown</div>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <div style="font-size: 0.875rem; color: var(--matrix-green); font-weight: bold;">FREQUENCY:</div>
+                                <div style="color: var(--muted-foreground);">10</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.875rem; color: var(--matrix-green); font-weight: bold;">SECURE LINE:</div>
+                                <div style="color: var(--muted-foreground);">NONE</div>
+                            </div>
+                        </div>
+
+                        <div class="terminal-window">
+                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">OPERATIONAL HOURS</h3>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="color: var(--muted-foreground);">MON - FRI:</span>
+                                <span style="color: var(--matrix-green);">24/7</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span style="color: var(--muted-foreground);">SAT - SUN:</span>
+                                <span style="color: var(--matrix-green);">24/7</span>
+                            </div>
+                            <div style="font-size: 0.75rem; color: var(--muted-foreground);">
+                                * The Matrix never sleeps
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="social-links">
-            <a href="https://github.com/Muaves" target="_blank" class="glow-button github">
-                <i class="fab fa-github"></i>
-            </a>
+        <div id="aboutPage" class="page">
+            <div class="container" style="padding: 3rem 0;">
+                <div style="margin-bottom: 3rem;">
+                    <h1 style="font-size: 3rem; font-weight: bold; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 1rem;" class="glitch" data-text="ABOUT">
+                        ABOUT
+                    </h1>
+                    <p style="color: var(--muted-foreground); font-size: 1.125rem;">
+                        The truth about the simulation
+                    </p>
+                </div>
 
-    </main>
+                <div class="grid grid-cols-2">
+                    <div>
+                        <div class="terminal-window">
+                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">IDENTITY PROFILE</h3>
+                            <p style="color: var(--muted-foreground); margin-bottom: 1rem;">
+                                Welcome to my digital domain. I am GBRR, a programmer, mostly in css html and js!
+                                I'm ALWAYS hungry so bring food.
+                               
+                            </p>
+                            <p style="color: var(--muted-foreground);">
+                               My projects are idk what do u think?
+                            </p>
+                        </div>
 
-    <script src="uwu.js"></script>
+                        <div class="terminal-window">
+                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">NOTES</h3>
+                            <div id="matrixQuotes">
+                                <div style="display: flex; align-items: start; margin-bottom: 0.75rem;">
+                                    <span style="color: var(--matrix-green); margin-right: 0.5rem;">&gt;</span>
+                                    <span style="color: var(--muted-foreground);" class="typing-text">TG has you...</span>
+                                </div>
+                                <div style="display: flex; align-items: start; margin-bottom: 0.75rem;">
+                                    <span style="color: var(--matrix-green); margin-right: 0.5rem;">&gt;</span>
+                                    <span style="color: var(--muted-foreground);">There is no spoon</span>
+                                </div>
+                                <div style="display: flex; align-items: start; margin-bottom: 0.75rem;">
+                                    <span style="color: var(--matrix-green); margin-right: 0.5rem;">&gt;</span>
+                                    <span style="color: var(--muted-foreground);">Welcome to the real world</span>
+                                </div>
+                                <div style="display: flex; align-items: start; margin-bottom: 0.75rem;">
+                                    <span style="color: var(--matrix-green); margin-right: 0.5rem;">&gt;</span>
+                                    <span style="color: var(--muted-foreground);">Follow the white rabbit</span>
+                                </div>
+                                <div style="display: flex; align-items: start;">
+                                    <span style="color: var(--matrix-green); margin-right: 0.5rem;">&gt;</span>
+                                    <span style="color: var(--muted-foreground);">Take the kifli</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="terminal-window">
+                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">SKILLS:</h3>
+                            <div id="skillsContainer">
+                                <div class="skill-item">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span class="skill-name">HTML</span>
+                                        <span class="skill-percentage">95%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" data-width="95"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span class="skill-name">CSS</span>
+                                        <span class="skill-percentage">88%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" data-width="88"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span class="skill-name">PVP Skills</span>
+                                        <span class="skill-percentage">92%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" data-width="92"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span class="skill-name">Server Programming</span>
+                                        <span class="skill-percentage">87%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" data-width="87"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <span class="skill-name">AI asking skill</span>
+                                        <span class="skill-percentage">90%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-fill" data-width="90"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="terminal-window">
+                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">SYSTEM STATS</h3>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                <span style="color: var(--muted-foreground);">Fav. Color</span>
+                                <span style="color: var(--matrix-green);">Red</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                <span style="color: var(--muted-foreground);">How many days TG annoyed me</span>
+                                <span style="color: var(--matrix-green);">47</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                <span style="color: var(--muted-foreground);">Ideas</span>
+                                <span style="color: var(--matrix-green);">1,337</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: var(--muted-foreground);">STATUS:</span>
+                                <span style="color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green);">THE ONE</span>
+                            </div>
+                        </div>
+
+                        <div class="terminal-window">
+                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">DOWNLOAD CV</h3>
+                            <p style="color: var(--muted-foreground); margin-bottom: 1rem;">
+                                Access my complete digital profile and experience matrix.
+                            </p>
+                            <button class="btn btn full" onclick="alert('LOL.')">DOWNLOAD cv.exe</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terminal-window" style="text-align: center; margin-top: 3rem;">
+                    <h3 style="font-size: 1.5rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 2rem;">
+                        MISSION STATEMENT
+                    </h3>
+                    <p style="font-size: 1.125rem; color: var(--muted-foreground); margin-bottom: 2rem; max-width: 48rem; margin-left: auto; margin-right: auto;">
+                        This website is a testament to the power of code and creativity. and i ran out of ideas here...
+                    <p style="color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); font-weight: bold;">
+                        Together, we will build a world where the truth prevails over illusion.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer"></div>
+
+    <script>
+        let isAdmin = false;
+        let currentPage = 'home';
+        let projects = [
+            {
+                id: 1,
+                title: 'ProTiers',
+                description: 'Uhm... idk something with tiers',
+                tech: ['HTML', 'CSS', 'JS'],
+                status: 'active',
+                createdAt: '2025-03-12'
+            },
+            {
+                id: 2,
+                title: 'EzCraft',
+                description: 'Minecraft economy server with custom plugins',
+                tech: ['CSS', 'Java', 'Python'],
+                status: 'completed',
+                createdAt: '2024-11-20'
+            },
+            {
+                id: 3,
+                title: 'Redstone Launcher',
+                description: 'THE BEST MINECRAFT LAUNCHER!!! www.redstone-launcher.com',
+                tech: ['JavaScript', 'CSS', 'HTML'],
+                status: 'Not completed',
+                createdAt: '2025-07-10'
+            }
+        ];
+
+        function initLoadingScreen() {
+            const loadingSteps = [
+                'LOADING SYSTEM',
+                'LOADING RESOURCES',
+                'ESTABLISHING CONNECTION',
+                'DECRYPTING DATA',
+                'ACCESSING TGs BRAIN',
+                'WELCOME TO MY PAGE'
+            ];
+
+            const loadingText = document.getElementById('loadingText');
+            const progressFill = document.getElementById('progressFill');
+            const progressPercent = document.getElementById('progressPercent');
+            const loadingScreen = document.getElementById('loadingScreen');
+
+            let stepIndex = 0;
+            const interval = setInterval(() => {
+                if (stepIndex < loadingSteps.length) {
+                    loadingText.textContent = loadingSteps[stepIndex];
+                    const progress = ((stepIndex + 1) / loadingSteps.length) * 100;
+                    progressFill.style.width = progress + '%';
+                    progressPercent.textContent = Math.round(progress) + '%';
+                    stepIndex++;
+                } else {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.classList.add('fade-out');
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                            initAnimations();
+                        }, 500);
+                    }, 1000);
+                }
+            }, 800);
+        }
+
+        function initMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            const columns = Math.floor(window.innerWidth / 20);
+            const characters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            
+            const createRainColumn = (x) => {
+                const column = document.createElement('div');
+                column.className = 'rain-column';
+                column.style.left = x + 'px';
+                column.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                column.style.animationDelay = (Math.random() * 2) + 's';
+                
+                let text = '';
+                const height = Math.random() * 50 + 10;
+                for (let i = 0; i < height; i++) {
+                    text += characters.charAt(Math.floor(Math.random() * characters.length)) + '\n';
+                }
+                column.textContent = text;
+                
+                return column;
+            };
+
+            const addColumns = () => {
+                container.innerHTML = '';
+                for (let i = 0; i < columns; i++) {
+                    const column = createRainColumn(i * 20);
+                    container.appendChild(column);
+                }
+            };
+
+            addColumns();
+
+            window.addEventListener('resize', () => {
+                const newColumns = Math.floor(window.innerWidth / 20);
+                if (newColumns !== columns) {
+                    addColumns();
+                }
+            });
+            
+            setInterval(() => {
+                const randomColumn = Math.floor(Math.random() * container.children.length);
+                const column = container.children[randomColumn];
+                if (column) {
+                    const newColumn = createRainColumn(randomColumn * 20);
+                    container.replaceChild(newColumn, column);
+                }
+            }, 2000);
+        }
+
+        function initNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const adminToggle = document.getElementById('adminToggle');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinksContainer = document.getElementById('navLinks');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    if (page) {
+                        navigateToPage(page);
+                    }
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (e.target.hasAttribute('data-page')) {
+                    e.preventDefault();
+                    const page = e.target.getAttribute('data-page');
+                    navigateToPage(page);
+                }
+            });
+
+            adminToggle.addEventListener('click', () => {
+                isAdmin = !isAdmin;
+                adminToggle.textContent = isAdmin ? 'ADMIN' : 'USER';
+                adminToggle.classList.toggle('active', isAdmin);
+                updateAdminVisibility();
+            });
+
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinksContainer.classList.toggle('mobile-open');
+            });
+        }
+
+        function navigateToPage(page) {
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === page) {
+                    link.classList.add('active');
+                }
+            });
+
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+            });
+
+            const targetPage = document.getElementById(page + 'Page');
+            if (targetPage) {
+                currentPage = page;
+                setTimeout(() => {
+                    targetPage.classList.add('active');
+                    if (page === 'about') {
+                        animateSkills();
+                    }
+                    if (page === 'projects') {
+                        renderProjects();
+                    }
+                    addFadeInUpAnimations(targetPage);
+                }, 50);
+            }
+
+            document.getElementById('navLinks').classList.remove('mobile-open');
+        }
+
+        function updateAdminVisibility() {
+            const adminElements = document.querySelectorAll('.admin-only');
+            adminElements.forEach(el => {
+                el.style.display = isAdmin ? 'block' : 'none';
+            });
+        }
+
+        function initProjects() {
+            const showAddFormBtn = document.getElementById('showAddFormBtn');
+            const cancelAddBtn = document.getElementById('cancelAddBtn');
+            const projectForm = document.getElementById('projectForm');
+            const addProjectForm = document.getElementById('addProjectForm');
+
+            showAddFormBtn.addEventListener('click', () => {
+                addProjectForm.style.display = 'block';
+            });
+
+            cancelAddBtn.addEventListener('click', () => {
+                addProjectForm.style.display = 'none';
+                projectForm.reset();
+            });
+
+            projectForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const title = document.getElementById('projectTitle').value;
+                const description = document.getElementById('projectDescription').value;
+                const tech = document.getElementById('projectTech').value;
+                const status = document.getElementById('projectStatus').value;
+
+                if (!title || !description) {
+                    showToast('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                const newProject = {
+                    id: Date.now(),
+                    title: title,
+                    description: description,
+                    tech: tech ? tech.split(',').map(t => t.trim()).filter(t => t) : [],
+                    status: status,
+                    createdAt: new Date().toISOString().split('T')[0]
+                };
+
+                projects.unshift(newProject);
+                renderProjects();
+                addProjectForm.style.display = 'none';
+                projectForm.reset();
+                showToast('Project added successfully');
+            });
+        }
+
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            
+            if (projects.length === 0) {
+                grid.innerHTML = `
+                    <div style="text-align: center; padding: 3rem 0; grid-column: 1 / -1;">
+                        <div style="font-size: 4rem; color: var(--muted-foreground); margin-bottom: 1rem;">404</div>
+                        <div style="font-size: 1.25rem; color: var(--muted-foreground);">No projects found</div>
+                        <div style="color: var(--muted-foreground); margin-top: 0.5rem;">
+                            The Matrix is empty... for now.
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = projects.map((project, index) => `
+                <div class="project-card fade-in-up-delay-${Math.min(index + 1, 4)}">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <h3 class="project-title">${project.title}</h3>
+                        <span class="project-status ${project.status}">${project.status.toUpperCase()}</span>
+                    </div>
+                    <p class="project-description">${project.description}</p>
+                    ${project.tech.length > 0 ? `
+                        <div style="margin-bottom: 1rem;">
+                            <h4 style="font-size: 0.875rem; color: var(--matrix-green); margin-bottom: 0.5rem;">TECH STACK:</h4>
+                            <div class="tech-stack">
+                                ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                    <div class="project-date">CREATED: ${project.createdAt}</div>
+                </div>
+            `).join('');
+        }
+
+        function initContact() {
+            const contactForm = document.getElementById('contactForm');
+            
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const message = document.getElementById('contactMessage').value;
+
+                if (!name || !email || !message) {
+                    showToast('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                showToast('Your transmission has been received');
+                contactForm.reset();
+            });
+        }
+
+        function animateSkills() {
+            const skillFills = document.querySelectorAll('.skill-fill');
+            skillFills.forEach((fill, index) => {
+                setTimeout(() => {
+                    const width = fill.getAttribute('data-width');
+                    fill.style.width = width + '%';
+                }, index * 200);
+            });
+        }
+
+        // Toast Notifications
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 0.5rem;">${type === 'error' ? 'ERROR' : 'SUCCESS'}</div>
+                <div>${message}</div>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (container.contains(toast)) {
+                        container.removeChild(toast);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        function typeText(element, text, speed = 50) {
+            element.textContent = '';
+            element.style.borderRight = '2px solid var(--matrix-green)';
+            
+            let i = 0;
+            const typeInterval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typeInterval);
+                    setTimeout(() => {
+                        element.style.borderRight = 'none';
+                    }, 500);
+                }
+            }, speed);
+        }
+
+        function addFadeInUpAnimations(container) {
+            const elements = container.querySelectorAll('.terminal-window, .card, .project-card');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    el.style.transition = 'all 0.6s ease-out';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        function initAnimations() {
+            const heroSubtitle = document.getElementById('heroSubtitle');
+            if (heroSubtitle) {
+                typeText(heroSubtitle, 'Welcome to the real world, Neo...', 80);
+            }
+            
+            addFadeInUpAnimations(document.getElementById('homePage'));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initMatrixRain();
+            initNavigation();
+            initProjects();
+            initContact();
+            initLoadingScreen();
+            updateAdminVisibility();
+        });
+    </script>
 </body>
-
 </html>
