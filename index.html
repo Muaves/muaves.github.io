@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+       <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GBRR - PAGE</title>
     <meta name="description" content="Welcome to my page ig">
     <meta name="author" content="GBRR - Muavees">
-    <link rel="shortcut icon" href="../GBRR - PAGE.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../Képek/GBRR - PAGE.ico" type="image/x-icon">
     
 
 
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZmCULaM6tU8zTtIk2+3zV9zzTtmI3UksdQRVvoxMfooAo0+ynIR+fzpF6L7U5qmqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
         :root {
@@ -465,7 +466,6 @@
             color: var(--muted-foreground);
         }
 
-        /* Skill bars */
         .skill-item {
             margin-bottom: 1rem;
         }
@@ -701,13 +701,14 @@
 
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo glitch" data-text="MATRIX">GBRR</div>
+            <div class="nav-logo glitch" data-text="MATRIX">MATRIX</div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" class="nav-link active" data-page="home">HOME</a></li>
                 <li><a href="#" class="nav-link" data-page="projects">PROJECTS</a></li>
                 <li><a href="#" class="nav-link" data-page="contact">CONTACT</a></li>
                 <li><a href="#" class="nav-link" data-page="about">ABOUT</a></li>
-                <li><button class="admin-toggle" id="adminToggle" style="cursor: default;">USER</button></li>
+                <li class="admin-only" style="display: none;"><a href="#" class="nav-link" data-page="system">SYSTEM</a></li>
+                <li><button class="admin-toggle" id="adminToggle">LOGIN</button></li>
             </ul>
             <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
@@ -715,7 +716,7 @@
 
     <div class="main-content">
         <div id="homePage" class="page active">
-            <section class="hero-section">
+             <section class="hero-section">
                 <div class="container">
                     <div class="hero-title glitch">GBRR</div>
                     <div class="hero-subtitle typing-text" id="heroSubtitle">Welcome to the real world, TG...</div>
@@ -730,7 +731,7 @@
                 </div>
             </section>
 
-            <section style="padding: 5rem 0;">
+             <section style="padding: 5rem 0;">
                 <div class="container">
                     <h2 style="text-align: center; font-size: 2.5rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 3rem;">
                         SYSTEM CAPABILITIES
@@ -761,7 +762,7 @@
                 </div>
             </section>
 
-            <section style="padding: 5rem 0;">
+             <section style="padding: 5rem 0;">
                 <div class="container">
                     <div class="terminal-window" style="max-width: 50rem; margin: 0 auto;">
                         <h3 style="font-size: 1.5rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 2rem;">
@@ -907,7 +908,7 @@
                 </div>
 
                 <div class="grid grid-cols-2">
-                    <div>
+                     <div>
                         <div class="terminal-window">
                             <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">IDENTITY PROFILE</h3>
                             <p style="color: var(--muted-foreground); margin-bottom: 1rem;">
@@ -998,7 +999,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div class="terminal-window">
                             <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">SYSTEM STATS</h3>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
@@ -1029,7 +1030,7 @@
                     </div>
                 </div>
 
-                <div class="terminal-window" style="text-align: center; margin-top: 3rem;">
+                  <div class="terminal-window" style="text-align: center; margin-top: 3rem;">
                     <h3 style="font-size: 1.5rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 2rem;">
                         MISSION STATEMENT
                     </h3>
@@ -1041,13 +1042,124 @@
                 </div>
             </div>
         </div>
+
+        <div id="systemPage" class="page">
+            <div class="container" style="padding: 3rem 0;">
+                <div style="margin-bottom: 3rem;">
+                    <h1 style="font-size: 3rem; font-weight: bold; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 1rem;" class="glitch" data-text="SYSTEM">
+                        SYSTEM MONITOR
+                    </h1>
+                    <p style="color: var(--muted-foreground); font-size: 1.125rem;">
+                        Real-time system diagnostics and monitoring
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2">
+                    <div class="terminal-window">
+                        <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">SYSTEM TIME</h3>
+                        <div style="font-size: 2rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); font-weight: bold;" id="systemTime">
+                            00:00:00
+                        </div>
+                        <div style="font-size: 1rem; color: var(--muted-foreground); margin-top: 0.5rem;" id="systemDate">
+                            Loading...
+                        </div>
+                    </div>
+
+                    <div class="terminal-window">
+                        <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">UPTIME</h3>
+                        <div style="font-size: 2rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); font-weight: bold;" id="uptime">
+                            00:00:00
+                        </div>
+                        <div style="font-size: 0.875rem; color: var(--muted-foreground); margin-top: 0.5rem;">
+                            System operational
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terminal-window" style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1.5rem;">CPU USAGE</h3>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span class="skill-name">CPU Load</span>
+                        <span class="skill-percentage" id="cpuPercentage">0%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" id="cpuBar" style="width: 0%;"></div>
+                    </div>
+                    <div style="margin-top: 1rem; font-size: 0.875rem; color: var(--muted-foreground);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Core 1:</span>
+                            <span id="core1">0%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Core 2:</span>
+                            <span id="core2">0%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span>Core 3:</span>
+                            <span id="core3">0%</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Core 4:</span>
+                            <span id="core4">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terminal-window" style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1.5rem;">MEMORY USAGE</h3>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span class="skill-name">RAM</span>
+                        <span class="skill-percentage" id="memoryPercentage">0%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-fill" id="memoryBar" style="width: 0%;"></div>
+                    </div>
+                    <div style="margin-top: 1rem; display: flex; justify-content: space-between; color: var(--muted-foreground); font-size: 0.875rem;">
+                        <span>Used: <span id="memoryUsed">0 GB</span></span>
+                        <span>Total: <span id="memoryTotal">16 GB</span></span>
+                    </div>
+                </div>
+
+                <div class="terminal-window" style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1.5rem;">NETWORK ACTIVITY</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; font-size: 0.875rem;">
+                        <div>
+                            <div style="color: var(--muted-foreground); margin-bottom: 0.5rem;">DOWNLOAD:</div>
+                            <div style="color: var(--matrix-green); font-size: 1.25rem; font-weight: bold;" id="downloadSpeed">0 KB/s</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--muted-foreground); margin-bottom: 0.5rem;">UPLOAD:</div>
+                            <div style="color: var(--matrix-green); font-size: 1.25rem; font-weight: bold;" id="uploadSpeed">0 KB/s</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--muted-foreground); margin-bottom: 0.5rem;">PACKETS SENT:</div>
+                            <div style="color: var(--matrix-green);" id="packetsSent">0</div>
+                        </div>
+                        <div>
+                            <div style="color: var(--muted-foreground); margin-bottom: 0.5rem;">PACKETS RECEIVED:</div>
+                            <div style="color: var(--matrix-green);" id="packetsReceived">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="terminal-window" style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">SYSTEM LOGS</h3>
+                    <div id="systemLogs" style="max-height: 300px; overflow-y: auto; font-size: 0.875rem; font-family: 'Courier Prime', monospace;">
+                        <div class="terminal-line"><span style="color: var(--muted-foreground);">[00:00:00]</span> <span style="color: var(--matrix-green);">System initialized</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="toastContainer"></div>
 
     <script>
+        const ADMIN_PASSWORD = 'iloveyou<3';
         let isAdmin = false;
         let currentPage = 'home';
+        let systemStartTime = Date.now();
+        let monitoringIntervals = [];
         let projects = [
             {
                 id: 1,
@@ -1185,10 +1297,29 @@
             });
 
             adminToggle.addEventListener('click', () => {
-                isAdmin = !isAdmin;
-                adminToggle.textContent = isAdmin ? 'ADMIN' : 'USER';
-                adminToggle.classList.toggle('active', isAdmin);
-                updateAdminVisibility();
+                if (isAdmin) {
+                    isAdmin = false;
+                    adminToggle.textContent = 'LOGIN';
+                    adminToggle.classList.remove('active');
+                    updateAdminVisibility();
+                    stopMonitoring();
+                    showToast('Logged out successfully', false);
+                    if (currentPage === 'system') {
+                        navigateToPage('home');
+                    }
+                } else {
+                    const password = prompt('Enter admin password:');
+                    if (password === ADMIN_PASSWORD) {
+                        isAdmin = true;
+                        adminToggle.textContent = 'LOGOUT';
+                        adminToggle.classList.add('active');
+                        updateAdminVisibility();
+                        startMonitoring();
+                        showToast('Admin access granted', false);
+                    } else if (password !== null) {
+                        showToast('Access denied: Invalid password', true);
+                    }
+                }
             });
 
             mobileMenuBtn.addEventListener('click', () => {
@@ -1231,6 +1362,226 @@
             adminElements.forEach(el => {
                 el.style.display = isAdmin ? 'block' : 'none';
             });
+        }
+
+        function startMonitoring() {
+            const timeInterval = setInterval(updateTime, 1000);
+            monitoringIntervals.push(timeInterval);
+
+            const statsInterval = setInterval(updateSystemStats, 2000);
+            monitoringIntervals.push(statsInterval);
+
+            const logsInterval = setInterval(addSystemLog, 5000);
+            monitoringIntervals.push(logsInterval);
+
+            updateTime();
+            updateSystemStats();
+        }
+
+        function stopMonitoring() {
+            monitoringIntervals.forEach(interval => clearInterval(interval));
+            monitoringIntervals = [];
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            const timeEl = document.getElementById('systemTime');
+            const dateEl = document.getElementById('systemDate');
+            if (timeEl) timeEl.textContent = timeStr;
+            if (dateEl) dateEl.textContent = dateStr;
+
+            const uptime = Date.now() - systemStartTime;
+            const hours = Math.floor(uptime / 3600000);
+            const minutes = Math.floor((uptime % 3600000) / 60000);
+            const seconds = Math.floor((uptime % 60000) / 1000);
+            const uptimeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            const uptimeEl = document.getElementById('uptime');
+            if (uptimeEl) uptimeEl.textContent = uptimeStr;
+        }
+
+        function updateSystemStats() {
+            const cpuUsage = Math.floor(Math.random() * 40 + 20); // 20-60%
+            const cpuBar = document.getElementById('cpuBar');
+            const cpuPercentage = document.getElementById('cpuPercentage');
+            if (cpuBar) cpuBar.style.width = cpuUsage + '%';
+            if (cpuPercentage) cpuPercentage.textContent = cpuUsage + '%';
+
+            ['core1', 'core2', 'core3', 'core4'].forEach(coreId => {
+                const coreEl = document.getElementById(coreId);
+                if (coreEl) coreEl.textContent = Math.floor(Math.random() * 80 + 10) + '%';
+            });
+
+            const memoryUsage = Math.floor(Math.random() * 30 + 40); // 40-70%
+            const memoryUsed = (16 * memoryUsage / 100).toFixed(1);
+            const memoryBar = document.getElementById('memoryBar');
+            const memoryPercentage = document.getElementById('memoryPercentage');
+            const memoryUsedEl = document.getElementById('memoryUsed');
+            if (memoryBar) memoryBar.style.width = memoryUsage + '%';
+            if (memoryPercentage) memoryPercentage.textContent = memoryUsage + '%';
+            if (memoryUsedEl) memoryUsedEl.textContent = memoryUsed + ' GB';
+
+            const downloadSpeed = Math.floor(Math.random() * 1000 + 100);
+            const uploadSpeed = Math.floor(Math.random() * 500 + 50);
+            const packetsSent = Math.floor(Math.random() * 10000 + 50000);
+            const packetsReceived = Math.floor(Math.random() * 10000 + 50000);
+
+            const downloadEl = document.getElementById('downloadSpeed');
+            const uploadEl = document.getElementById('uploadSpeed');
+            const sentEl = document.getElementById('packetsSent');
+            const receivedEl = document.getElementById('packetsReceived');
+
+            if (downloadEl) downloadEl.textContent = downloadSpeed + ' KB/s';
+            if (uploadEl) uploadEl.textContent = uploadSpeed + ' KB/s';
+            if (sentEl) sentEl.textContent = packetsSent.toLocaleString();
+            if (receivedEl) receivedEl.textContent = packetsReceived.toLocaleString();
+        }
+
+        function addSystemLog() {
+            const logs = [
+                'Process completed successfully',
+                'Connection established',
+                'Data synchronization complete',
+                'Security scan passed',
+                'Cache cleared',
+                'System optimization complete',
+                'Backup created successfully',
+                'Network latency: 12ms',
+                'Database query executed',
+                'API response: 200 OK'
+            ];
+
+            const logsContainer = document.getElementById('systemLogs');
+            if (logsContainer) {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+                const randomLog = logs[Math.floor(Math.random() * logs.length)];
+                
+                const logLine = document.createElement('div');
+                logLine.className = 'terminal-line';
+                logLine.innerHTML = `<span style="color: var(--muted-foreground);">[${timeStr}]</span> <span style="color: var(--matrix-green);">${randomLog}</span>`;
+                
+                logsContainer.appendChild(logLine);
+                
+                while (logsContainer.children.length > 20) {
+                    logsContainer.removeChild(logsContainer.firstChild);
+                }
+                
+                logsContainer.scrollTop = logsContainer.scrollHeight;
+            }
+        }
+
+        function startMonitoring() {
+            const timeInterval = setInterval(updateTime, 1000);
+            monitoringIntervals.push(timeInterval);
+
+            const statsInterval = setInterval(updateSystemStats, 2000);
+            monitoringIntervals.push(statsInterval);
+
+            const logsInterval = setInterval(addSystemLog, 5000);
+            monitoringIntervals.push(logsInterval);
+
+            updateTime();
+            updateSystemStats();
+        }
+
+        function stopMonitoring() {
+            monitoringIntervals.forEach(interval => clearInterval(interval));
+            monitoringIntervals = [];
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            const timeEl = document.getElementById('systemTime');
+            const dateEl = document.getElementById('systemDate');
+            if (timeEl) timeEl.textContent = timeStr;
+            if (dateEl) dateEl.textContent = dateStr;
+
+            const uptime = Date.now() - systemStartTime;
+            const hours = Math.floor(uptime / 3600000);
+            const minutes = Math.floor((uptime % 3600000) / 60000);
+            const seconds = Math.floor((uptime % 60000) / 1000);
+            const uptimeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            const uptimeEl = document.getElementById('uptime');
+            if (uptimeEl) uptimeEl.textContent = uptimeStr;
+        }
+
+        function updateSystemStats() {
+            const cpuUsage = Math.floor(Math.random() * 40 + 20); // 20-60%
+            const cpuBar = document.getElementById('cpuBar');
+            const cpuPercentage = document.getElementById('cpuPercentage');
+            if (cpuBar) cpuBar.style.width = cpuUsage + '%';
+            if (cpuPercentage) cpuPercentage.textContent = cpuUsage + '%';
+
+            ['core1', 'core2', 'core3', 'core4'].forEach(coreId => {
+                const coreEl = document.getElementById(coreId);
+                if (coreEl) coreEl.textContent = Math.floor(Math.random() * 80 + 10) + '%';
+            });
+
+            const memoryUsage = Math.floor(Math.random() * 30 + 40); // 40-70%
+            const memoryUsed = (16 * memoryUsage / 100).toFixed(1);
+            const memoryBar = document.getElementById('memoryBar');
+            const memoryPercentage = document.getElementById('memoryPercentage');
+            const memoryUsedEl = document.getElementById('memoryUsed');
+            if (memoryBar) memoryBar.style.width = memoryUsage + '%';
+            if (memoryPercentage) memoryPercentage.textContent = memoryUsage + '%';
+            if (memoryUsedEl) memoryUsedEl.textContent = memoryUsed + ' GB';
+
+            const downloadSpeed = Math.floor(Math.random() * 1000 + 100);
+            const uploadSpeed = Math.floor(Math.random() * 500 + 50);
+            const packetsSent = Math.floor(Math.random() * 10000 + 50000);
+            const packetsReceived = Math.floor(Math.random() * 10000 + 50000);
+
+            const downloadEl = document.getElementById('downloadSpeed');
+            const uploadEl = document.getElementById('uploadSpeed');
+            const sentEl = document.getElementById('packetsSent');
+            const receivedEl = document.getElementById('packetsReceived');
+
+            if (downloadEl) downloadEl.textContent = downloadSpeed + ' KB/s';
+            if (uploadEl) uploadEl.textContent = uploadSpeed + ' KB/s';
+            if (sentEl) sentEl.textContent = packetsSent.toLocaleString();
+            if (receivedEl) receivedEl.textContent = packetsReceived.toLocaleString();
+        }
+
+        function addSystemLog() {
+            const logs = [
+                'Process completed successfully',
+                'Connection established',
+                'Data synchronization complete',
+                'Security scan passed',
+                'Cache cleared',
+                'System optimization complete',
+                'Backup created successfully',
+                'Network latency: 12ms',
+                'Database query executed',
+                'API response: 200 OK'
+            ];
+
+            const logsContainer = document.getElementById('systemLogs');
+            if (logsContainer) {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+                const randomLog = logs[Math.floor(Math.random() * logs.length)];
+                
+                const logLine = document.createElement('div');
+                logLine.className = 'terminal-line';
+                logLine.innerHTML = `<span style="color: var(--muted-foreground);">[${timeStr}]</span> <span style="color: var(--matrix-green);">${randomLog}</span>`;
+                
+                logsContainer.appendChild(logLine);
+                
+                while (logsContainer.children.length > 20) {
+                    logsContainer.removeChild(logsContainer.firstChild);
+                }
+                
+                logsContainer.scrollTop = logsContainer.scrollHeight;
+            }
         }
 
         function initProjects() {
@@ -1344,7 +1695,6 @@
             });
         }
 
-        // Toast Notifications
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
@@ -1402,7 +1752,7 @@
         function initAnimations() {
             const heroSubtitle = document.getElementById('heroSubtitle');
             if (heroSubtitle) {
-                typeText(heroSubtitle, 'Welcome to the real world, Muaves...', 80);
+                typeText(heroSubtitle, 'Welcome to the real world, Neo...', 80);
             }
             
             addFadeInUpAnimations(document.getElementById('homePage'));
@@ -1419,5 +1769,3 @@
     </script>
 </body>
 </html>
-
-
