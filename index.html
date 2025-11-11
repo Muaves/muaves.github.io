@@ -1,30 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-       <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GBRR - PAGE</title>
-    <meta name="description" content="Welcome to my page ig">
+    <title>GBRR's page</title>
+    <meta name="description" content="Welcome to GBRR's page ig">
     <meta name="author" content="GBRR - Muavees">
     <link rel="shortcut icon" href="../GBRR - PAGE.ico" type="image/x-icon">
-    
-
-
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZmCULaM6tU8zTtIk2+3zV9zzTtmI3UksdQRVvoxMfooAo0+ynIR+fzpF6L7U5qmqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --background: #000000;
-            --foreground: #00ff00;
-            --matrix-green: #00ff00;
-            --matrix-green-bright: #00ff41;
-            --matrix-green-dim: #008f11;
-            --matrix-green-dark: #003300;
-            --terminal-bg: #0d0d0d;
-            --terminal-border: #408040;
-            --muted-foreground: #59a659;
-            --error: #ff0000;
+            --primary: hsl(280, 65%, 58%);
+            --primary-dark: hsl(280, 70%, 48%);
+            --accent: hsl(330, 70%, 55%);
+            --background: hsl(240, 8%, 8%);
+            --surface: hsl(240, 7%, 12%);
+            --surface-hover: hsl(240, 8%, 16%);
+            --text: hsl(0, 0%, 96%);
+            --text-muted: hsl(0, 0%, 65%);
+            --border: hsl(240, 8%, 22%);
+            --success: hsl(140, 60%, 52%);
+            --error: hsl(350, 65%, 58%);
         }
 
         * {
@@ -35,19 +32,18 @@
 
         body {
             background: var(--background);
-            color: var(--foreground);
-            font-family: 'Courier Prime', 'Courier New', monospace;
-            overflow-x: hidden;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
         }
 
         ::selection {
-            background: rgba(0, 255, 0, 0.3);
-            color: var(--foreground);
+            background: var(--primary);
+            color: white;
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
         
         ::-webkit-scrollbar-track {
@@ -55,36 +51,12 @@
         }
         
         ::-webkit-scrollbar-thumb {
-            background: var(--matrix-green-dim);
-            border-radius: 4px;
+            background: var(--border);
+            border-radius: 5px;
         }
         
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--matrix-green);
-        }
-
-     
-        .matrix-rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .rain-column {
-            position: absolute;
-            top: -100%;
-            font-family: 'Courier Prime', monospace;
-            font-size: 14px;
-            color: var(--matrix-green);
-            text-shadow: 0 0 5px var(--matrix-green);
-            animation: matrix-fall linear infinite;
-            white-space: pre;
-            line-height: 1.2;
+            background: var(--primary);
         }
 
         .navbar {
@@ -93,26 +65,25 @@
             left: 0;
             right: 0;
             z-index: 100;
+            background: rgba(20, 18, 30, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--terminal-border);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            border-bottom: 1px solid var(--border);
         }
 
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 4rem;
+            height: 70px;
         }
 
         .nav-logo {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--matrix-green);
-            text-shadow: 0 0 10px var(--matrix-green);
+            font-weight: 700;
+            color: var(--primary);
         }
 
         .nav-links {
@@ -123,158 +94,136 @@
         }
 
         .nav-link {
-            color: var(--muted-foreground);
+            color: var(--text-muted);
             text-decoration: none;
             padding: 0.5rem 1rem;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
+            font-weight: 500;
+            border-radius: 6px;
         }
 
         .nav-link:hover, .nav-link.active {
-            color: var(--matrix-green);
-            text-shadow: 0 0 10px var(--matrix-green);
-            border-bottom: 2px solid var(--matrix-green);
+            color: var(--text);
+            background: var(--surface-hover);
         }
 
         .admin-toggle {
-            background: transparent;
-            border: 2px solid var(--matrix-green);
-            color: var(--matrix-green);
-            padding: 0.5rem 1rem;
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 0.5rem 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 2px;
+            font-weight: 600;
             font-family: inherit;
+            border-radius: 6px;
         }
 
-        .admin-toggle:hover, .admin-toggle.active {
-            background: var(--matrix-green);
-            color: var(--background);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+        .admin-toggle:hover {
+            background: var(--primary-dark);
+        }
+
+        .admin-toggle.active {
+            background: var(--success);
         }
 
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
-            color: var(--matrix-green);
+            color: var(--text);
             font-size: 1.5rem;
             cursor: pointer;
         }
 
         .main-content {
-            margin-top: 4rem;
-            min-height: calc(100vh - 4rem);
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
         }
 
         .page {
             display: none;
             opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
+            animation: fadeIn 0.5s ease forwards;
         }
 
         .page.active {
             display: block;
-            opacity: 1;
-            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .glitch {
-            position: relative;
-            animation: glitch 2s infinite;
-        }
-
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .glitch::before {
-            animation: glitch-before 2s infinite;
-            color: #ff0000;
-            z-index: -1;
-        }
-
-        .glitch::after {
-            animation: glitch-after 2s infinite;
-            color: #00ffff;
-            z-index: -2;
-        }
-
-        .matrix-glow {
-            text-shadow: 0 0 10px var(--matrix-green);
-        }
-
-        .typing-text {
-            overflow: hidden;
-            border-right: 2px solid var(--matrix-green);
-            white-space: nowrap;
-            animation: typing 3s steps(40, end), blink-cursor 0.75s step-end infinite;
-        }
-
-        .terminal-window {
-            background: var(--terminal-bg);
-            border: 2px solid var(--terminal-border);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-            backdrop-filter: blur(5px);
-            padding: 1.5rem;
-            margin: 1rem 0;
-        }
-
-        .terminal-window:hover {
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.7);
+            padding: 0 2rem;
         }
 
         .card {
-            background: var(--terminal-bg);
-            border: 2px solid var(--terminal-border);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-            padding: 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
             margin: 1rem 0;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
         .card:hover {
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
         }
 
         .btn {
-            background: transparent;
-            border: 2px solid var(--matrix-green);
-            color: var(--matrix-green);
+            background: var(--primary);
+            border: none;
+            color: white;
             padding: 0.75rem 2rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
+            font-weight: 600;
             font-family: inherit;
             text-decoration: none;
             display: inline-block;
             text-align: center;
+            border-radius: 6px;
+            font-size: 1rem;
         }
 
         .btn:hover {
-            background: var(--matrix-green);
-            color: var(--background);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
-            text-shadow: none;
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-hover);
         }
 
         .btn-full {
@@ -282,23 +231,31 @@
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
         }
 
         .form-input, .form-textarea, .form-select {
             width: 100%;
-            background: var(--terminal-bg);
-            border: 2px solid var(--terminal-border);
-            color: var(--matrix-green);
-            padding: 0.75rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.75rem 1rem;
             font-family: inherit;
             font-size: 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
         }
 
         .form-input:focus, .form-textarea:focus, .form-select:focus {
             outline: none;
-            border-color: var(--matrix-green);
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            border-color: var(--primary);
         }
 
         .grid {
@@ -311,33 +268,37 @@
         .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
 
         .hero-section {
-            min-height: 100vh;
+            min-height: calc(100vh - 70px);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem 0;
+            padding: 4rem 2rem;
         }
 
         .hero-title {
-            font-size: 5rem;
-            font-weight: bold;
-            color: var(--matrix-green);
-            text-shadow: 0 0 20px var(--matrix-green);
-            margin-bottom: 2rem;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
         }
 
         .hero-subtitle {
             font-size: 1.5rem;
-            color: var(--muted-foreground);
+            color: var(--text-muted);
             margin-bottom: 2rem;
         }
 
         .hero-description {
             font-size: 1.1rem;
-            color: var(--muted-foreground);
+            color: var(--text-muted);
             margin-bottom: 3rem;
-            max-width: 50rem;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -351,45 +312,57 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
         .project-card {
-            background: var(--terminal-bg);
-            border: 2px solid var(--terminal-border);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
-            padding: 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
             transition: all 0.3s ease;
         }
 
         .project-card:hover {
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+            border-color: var(--primary);
+            transform: translateY(-4px);
         }
 
         .project-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--matrix-green);
-            text-shadow: 0 0 10px var(--matrix-green);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
             margin-bottom: 0.5rem;
         }
 
         .project-status {
             font-size: 0.875rem;
-            font-weight: bold;
+            font-weight: 600;
             text-transform: uppercase;
             margin-bottom: 1rem;
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
         }
 
-        .project-status.active { color: var(--matrix-green); }
-        .project-status.completed { color: #00ff88; }
-        .project-status.archived { color: var(--muted-foreground); }
+        .project-status.active { 
+            background: hsla(140, 70%, 50%, 0.2);
+            color: var(--success);
+        }
+        .project-status.completed { 
+            background: hsla(200, 70%, 50%, 0.2);
+            color: hsl(200, 70%, 50%);
+        }
+        .project-status.archived { 
+            background: hsla(0, 0%, 50%, 0.2);
+            color: var(--text-muted);
+        }
 
         .project-description {
-            color: var(--muted-foreground);
-            margin-bottom: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
         }
 
         .tech-stack {
@@ -400,186 +373,209 @@
         }
 
         .tech-tag {
-            background: var(--background);
-            color: var(--matrix-green);
-            padding: 0.25rem 0.5rem;
-            font-size: 0.75rem;
-            border: 1px solid var(--terminal-border);
+            background: var(--surface-hover);
+            color: var(--primary);
+            padding: 0.35rem 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 6px;
+            font-weight: 500;
         }
 
         .project-date {
-            font-size: 0.75rem;
-            color: var(--muted-foreground);
+            font-size: 0.875rem;
+            color: var(--text-muted);
         }
 
         .skill-item {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .skill-header {
             display: flex;
-            justify-content: between;
-            margin-bottom: 0.5rem;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
         }
 
         .skill-name {
-            font-size: 0.875rem;
-            font-weight: bold;
-            color: var(--matrix-green);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
         }
 
         .skill-percentage {
-            font-size: 0.875rem;
-            color: var(--muted-foreground);
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 600;
         }
 
         .skill-bar {
             width: 100%;
-            height: 8px;
-            background: var(--background);
-            border-radius: 4px;
+            height: 10px;
+            background: var(--surface-hover);
+            border-radius: 10px;
             overflow: hidden;
         }
 
         .skill-fill {
             height: 100%;
-            background: var(--matrix-green);
-            box-shadow: 0 0 10px var(--matrix-green);
-            transition: width 2s ease-out;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            transition: width 1.5s ease-out;
             width: 0%;
+            border-radius: 10px;
         }
 
-        .terminal-sim {
-            background: var(--background);
-            border: 2px solid var(--terminal-border);
-            padding: 1rem;
-            font-family: 'Courier Prime', monospace;
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .monitor-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .monitor-label {
             font-size: 0.875rem;
-            color: var(--matrix-green);
-            margin: 2rem 0;
-        }
-
-        .terminal-line {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        .terminal-prompt {
-            color: var(--matrix-green);
+        .monitor-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
         }
 
-        .terminal-command {
-            color: var(--muted-foreground);
+        .monitor-unit {
+            font-size: 1rem;
+            color: var(--text-muted);
         }
 
-        .terminal-output {
-            color: var(--matrix-green);
-            text-shadow: 0 0 5px var(--matrix-green);
+        .log-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
         }
 
-        .terminal-error {
-            color: var(--error);
+        .log-line {
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .log-time {
+            color: var(--primary);
         }
 
         .toast {
             position: fixed;
-            top: 5rem;
-            right: 1rem;
-            background: var(--terminal-bg);
-            border: 2px solid var(--terminal-border);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-            padding: 1rem;
-            max-width: 20rem;
+            top: 90px;
+            right: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            max-width: 350px;
             z-index: 200;
-            transform: translateX(100%);
+            transform: translateX(400px);
             transition: transform 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
         .toast.show {
             transform: translateX(0);
         }
 
+        .toast.success {
+            border-color: var(--success);
+        }
+
         .toast.error {
             border-color: var(--error);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
         }
 
-        .loading-dots::after {
-            content: '';
-            animation: loading-dots 1.5s infinite;
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
         }
 
-        @keyframes matrix-fall {
-            to {
-                transform: translateY(calc(100vh + 100%));
-            }
+        .toast.success .toast-title {
+            color: var(--success);
         }
 
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); }
-            10% { transform: translate(-2px, 2px); }
-            20% { transform: translate(-2px, -2px); }
-            30% { transform: translate(2px, 2px); }
-            40% { transform: translate(2px, -2px); }
-            50% { transform: translate(-2px, 2px); }
-            60% { transform: translate(-2px, -2px); }
-            70% { transform: translate(2px, 2px); }
-            80% { transform: translate(-2px, -2px); }
-            90% { transform: translate(2px, 2px); }
+        .toast.error .toast-title {
+            color: var(--error);
         }
 
-        @keyframes glitch-before {
-            0%, 100% { clip-path: inset(0 0 0 0); }
-            10% { clip-path: inset(10% 0 85% 0); }
-            20% { clip-path: inset(80% 0 10% 0); }
-            30% { clip-path: inset(10% 0 85% 0); }
-            40% { clip-path: inset(80% 0 10% 0); }
-            50% { clip-path: inset(10% 0 85% 0); }
-            60% { clip-path: inset(80% 0 10% 0); }
-            70% { clip-path: inset(10% 0 85% 0); }
-            80% { clip-path: inset(80% 0 10% 0); }
-            90% { clip-path: inset(10% 0 85% 0); }
+        .section-header {
+            margin-bottom: 3rem;
         }
 
-        @keyframes glitch-after {
-            0%, 100% { clip-path: inset(0 0 0 0); }
-            15% { clip-path: inset(90% 0 5% 0); }
-            25% { clip-path: inset(5% 0 90% 0); }
-            35% { clip-path: inset(90% 0 5% 0); }
-            45% { clip-path: inset(5% 0 90% 0); }
-            55% { clip-path: inset(90% 0 5% 0); }
-            65% { clip-path: inset(5% 0 90% 0); }
-            75% { clip-path: inset(90% 0 5% 0); }
-            85% { clip-path: inset(5% 0 90% 0); }
-            95% { clip-path: inset(90% 0 5% 0); }
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.5rem;
         }
 
-        @keyframes loading-dots {
-            0%, 20% { content: ''; }
-            25% { content: '.'; }
-            50% { content: '..'; }
-            75% { content: '...'; }
-            100% { content: '....'; }
+        .section-description {
+            color: var(--text-muted);
+            font-size: 1.125rem;
         }
 
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
+        .feature-card {
+            text-align: center;
         }
 
-        @keyframes blink-cursor {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--matrix-green); }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
         }
 
-        @keyframes fade-in-up {
-            from { 
-                opacity: 0; 
-                transform: translateY(30px); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-description {
+            color: var(--text-muted);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
@@ -589,14 +585,20 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(13, 13, 13, 0.95);
+                background: rgba(20, 18, 30, 0.98);
                 flex-direction: column;
                 padding: 1rem;
-                gap: 1rem;
+                gap: 0;
+                border-bottom: 1px solid var(--border);
             }
 
             .nav-links.mobile-open {
                 display: flex;
+            }
+
+            .nav-link {
+                width: 100%;
+                padding: 1rem;
             }
 
             .mobile-menu-btn {
@@ -604,57 +606,42 @@
             }
 
             .hero-title {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
 
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
+            .section-title {
+                font-size: 2rem;
             }
 
             .grid-cols-2, .grid-cols-3 {
                 grid-template-columns: 1fr;
             }
 
-            .rain-column {
-                font-size: 12px;
+            .container {
+                padding: 0 1rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
             }
         }
 
-        .fade-in-up {
-            animation: fade-in-up 0.6s ease-out forwards;
+        .admin-only {
+            display: none;
         }
-
-        .fade-in-up-delay-1 { animation-delay: 0.1s; }
-        .fade-in-up-delay-2 { animation-delay: 0.2s; }
-        .fade-in-up-delay-3 { animation-delay: 0.3s; }
-        .fade-in-up-delay-4 { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
-    <div id="loadingScreen" class="loading-screen">
-        <div class="loading-content">
-            <div class="loading-title glitch" data-text="MATRIX">GBRR's PAGE</div>
-            <div id="loadingText" class="loading-text">INITIALIZING DATE</div>
-            <div class="progress-bar">
-                <div id="progressFill" class="progress-fill"></div>
-            </div>
-            <div id="progressPercent">0%</div>
-        </div>
-    </div>
-
-    <div id="matrixRain" class="matrix-rain"></div>
-
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo glitch" data-text="MATRIX">GBRR</div>
+            <div class="nav-logo" title="FINALLY DROPPED">GBRR'page</div>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#" class="nav-link active" data-page="home">HOME</a></li>
-                <li><a href="#" class="nav-link" data-page="projects">PROJECTS</a></li>
-                <li><a href="#" class="nav-link" data-page="contact">CONTACT</a></li>
-                <li><a href="#" class="nav-link" data-page="about">ABOUT</a></li>
-                <li class="admin-only" style="display: none;"><a href="#" class="nav-link" data-page="system">SYSTEM</a></li>
-                <li><button class="admin-toggle" id="adminToggle">LOGIN</button></li>
+                <li><a href="#" class="nav-link active" data-page="home">home</a></li>
+                <li><a href="#" class="nav-link" data-page="projects">projects</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">contact</a></li>
+                <li><a href="#" class="nav-link" data-page="about" title="I love Csenge VERYYY MUCH!! <3">about</a></li>
+                <li class="admin-only"><a href="#" class="nav-link" data-page="system">system</a></li>
+                <li><button class="admin-toggle" id="adminToggle">login</button></li>
             </ul>
             <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
         </div>
@@ -662,68 +649,48 @@
 
     <div class="main-content">
         <div id="homePage" class="page active">
-             <section class="hero-section">
+            <section class="hero-section">
                 <div class="container">
-                    <div class="hero-title glitch">GBRR</div>
-                    <div class="hero-subtitle typing-text" id="heroSubtitle">Welcome to the real world, TG...</div>
+                    <h1 class="hero-title">hey, I'm GBRR 👋</h1>
+                    <p class="hero-subtitle">i make stuff on the web (sometimes it works)</p>
                     <p class="hero-description">
-                        Im GBRR a programmer i think... i made many projects, some of them are here, some of them are secret.
-                        Explore my digital realm, where code meets creativity and innovation knows no bounds.
+                        so basically i write code and hope for the best. mostly html, css, and js.
+                        i'm always hungry btw, so if you're bringing snacks that'd be cool 🍕
                     </p>
                     <div class="hero-buttons">
-                        <a href="#" class="btn" data-page="projects">ENTER THE MATRIX</a>
-                        <a href="#" class="btn" data-page="about">LEARN THE TRUTH</a>
+                        <a href="#" class="btn" data-page="projects">check out my stuff</a>
+                        <a href="#" class="btn btn-secondary" data-page="about">more about me</a>
                     </div>
                 </div>
             </section>
 
-             <section style="padding: 5rem 0;">
+            <section style="padding: 5rem 0; background: var(--surface);">
                 <div class="container">
-                    <h2 style="text-align: center; font-size: 2.5rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 3rem;">
-                        SYSTEM CAPABILITIES
-                    </h2>
+                    <div style="text-align: center; margin-bottom: 4rem;">
+                        <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">what i'm good at</h2>
+                        <p style="color: var(--text-muted); font-size: 1.125rem;">(or at least trying to be)</p>
+                    </div>
                     <div class="grid grid-cols-3">
-                        <div class="card">
-                            <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">⚡</div>
-                            <h3 style="text-align: center; font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">NEURAL INTERFACE</h3>
-                            <p style="text-align: center; color: var(--muted-foreground);">
-                                Idk what is this tbh
+                        <div class="card feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <h3 class="feature-title">fast & (mostly) working</h3>
+                            <p class="feature-description">
+                                i build things quick. sometimes they even work on the first try (rare but it happens)
                             </p>
                         </div>
-                        <div class="card">
-                            <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">🔒</div>
-                            <h3 style="text-align: center; font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">QUANTUM ENCRYPTION</h3>
-                            <p style="text-align: center; color: var(--muted-foreground);">
-                                Idk that i putted this here just for the icon
+                        <div class="card feature-card">
+                            <div class="feature-icon">🎨</div>
+                            <h3 class="feature-title">makes it look nice</h3>
+                            <p class="feature-description">
+                                if it doesn't look good, what's the point? style matters, even for buttons
                             </p>
                         </div>
-                        <div class="card">
-                            <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">🌐</div>
-                            <h3 style="text-align: center; font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">WEBCODING</h3>
-                            <p style="text-align: center; color: var(--muted-foreground);">
-                                Advanced web development frameworks for building dynamic digital environments.
+                        <div class="card feature-card">
+                            <div class="feature-icon">🌐</div>
+                            <h3 class="feature-title">web stuff</h3>
+                            <p class="feature-description">
+                                html, css, js, and whatever else makes the internet work these days
                             </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-             <section style="padding: 5rem 0;">
-                <div class="container">
-                    <div class="terminal-window" style="max-width: 50rem; margin: 0 auto;">
-                        <h3 style="font-size: 1.5rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 2rem;">
-                            SYSTEM TERMINAL
-                        </h3>
-                        <div class="terminal-sim">
-                            <div class="terminal-line"><span class="terminal-prompt">gbrr@muaves:~$</span> <span class="terminal-command">whoami</span></div>
-                            <div class="terminal-line terminal-output">The One</div>
-                            <div class="terminal-line"><span class="terminal-prompt">gbrr@muaves:~$</span> <span class="terminal-command">ls -la reality/</span></div>
-                            <div class="terminal-line" style="color: var(--muted-foreground);">drwxr-xr-x 2 neo matrix 4096 Jan 01 1999 simulation/</div>
-                            <div class="terminal-line" style="color: var(--muted-foreground);">-rw-r--r-- 1 neo matrix 1337 Jan 01 1999 truth.txt</div>
-                            <div class="terminal-line" style="color: var(--muted-foreground);">-rw-r--r-- 1 neo matrix  666 Jan 01 1999 illusion.exe</div>
-                            <div class="terminal-line"><span class="terminal-prompt">gbrr@muaves:~$</span> <span class="terminal-command">cat truth.txt</span></div>
-                            <div class="terminal-line terminal-output matrix-glow">The Matrix has you...</div>
-                            <div class="terminal-line"><span class="terminal-prompt">gbrr@muaves:~$</span> <span class="terminal-command loading-dots">_</span></div>
                         </div>
                     </div>
                 </div>
@@ -731,22 +698,18 @@
         </div>
 
         <div id="projectsPage" class="page">
-            <div class="container" style="padding: 3rem 0;">
-                <div style="margin-bottom: 3rem;">
-                    <h1 style="font-size: 3rem; font-weight: bold; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 1rem;" class="glitch" data-text="PROJECTS">
-                        PROJECTS
-                    </h1>
-                    <p style="color: var(--muted-foreground); font-size: 1.125rem;">
-                        Active operations and completed missions
-                    </p>
+            <div class="container" style="padding: 4rem 0;">
+                <div class="section-header">
+                    <h1 class="section-title">stuff i've built</h1>
+                    <p class="section-description">here's what i've been working on (when i'm not procrastinating)</p>
                 </div>
 
-                <div id="addProjectSection" class="admin-only" style="display: none; margin-bottom: 2rem;">
-                    <button class="btn" id="showAddFormBtn">+ ADD PROJECT</button>
+                <div id="addProjectSection" class="admin-only" style="margin-bottom: 2rem;">
+                    <button class="btn" id="showAddFormBtn">+ add new project</button>
                 </div>
 
-                <div id="addProjectForm" class="admin-only terminal-window" style="display: none; margin-bottom: 2rem;">
-                    <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">ADD NEW PROJECT</h3>
+                <div id="addProjectForm" class="admin-only card" style="display: none; margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">add a new project</h3>
                     <form id="projectForm">
                         <div class="form-group">
                             <input type="text" id="projectTitle" class="form-input" placeholder="Project Title" required>
@@ -765,8 +728,8 @@
                             </select>
                         </div>
                         <div style="display: flex; gap: 1rem;">
-                            <button type="submit" class="btn">CREATE PROJECT</button>
-                            <button type="button" class="btn" id="cancelAddBtn">CANCEL</button>
+                            <button type="submit" class="btn">create it</button>
+                            <button type="button" class="btn btn-secondary" id="cancelAddBtn">nevermind</button>
                         </div>
                     </form>
                 </div>
@@ -776,65 +739,61 @@
         </div>
 
         <div id="contactPage" class="page">
-            <div class="container" style="padding: 3rem 0;">
-                <div style="margin-bottom: 3rem;">
-                    <h1 style="font-size: 3rem; font-weight: bold; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 1rem;" class="glitch" data-text="CONTACT">
-                        CONTACT
-                    </h1>
-                    <p style="color: var(--muted-foreground); font-size: 1.125rem;">
-                        Establish secure communication channel
-                    </p>
+            <div class="container" style="padding: 4rem 0;">
+                <div class="section-header">
+                    <h1 class="section-title">hit me up</h1>
+                    <p class="section-description">want to chat? send me a message (i actually read them)</p>
                 </div>
 
                 <div class="grid grid-cols-2">
-                    <div class="terminal-window">
-                        <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1.5rem;">SEND TRANSMISSION</h3>
+                    <div class="card">
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">drop me a line</h3>
                         <form id="contactForm">
                             <div class="form-group">
-                                <input type="text" id="contactName" class="form-input" placeholder="Name" required>
+                                <input type="text" id="contactName" class="form-input" placeholder="Your Name" required>
                             </div>
                             <div class="form-group">
-                                <input type="email" id="contactEmail" class="form-input" placeholder="Email" required>
+                                <input type="email" id="contactEmail" class="form-input" placeholder="Your Email" required>
                             </div>
                             <div class="form-group">
                                 <input type="text" id="contactSubject" class="form-input" placeholder="Subject">
                             </div>
                             <div class="form-group">
-                                <textarea id="contactMessage" class="form-textarea" placeholder="Message" rows="6" required></textarea>
+                                <textarea id="contactMessage" class="form-textarea" placeholder="Your Message" rows="6" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-full">TRANSMIT MESSAGE</button>
+                            <button type="submit" class="btn btn-full">send it 📨</button>
                         </form>
                     </div>
 
                     <div>
-                        <div class="terminal-window">
-                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">MATRIX COORDINATES</h3>
+                        <div class="card" style="margin-bottom: 2rem;">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">where to find me</h3>
                             <div style="margin-bottom: 1rem;">
-                                <div style="font-size: 0.875rem; color: var(--matrix-green); font-weight: bold;">LOCATION:</div>
-                                <div style="color: var(--muted-foreground);">Unknown</div>
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">location:</div>
+                                <div style="color: var(--text-muted);">probably at my desk with some snakcs</div>
                             </div>
                             <div style="margin-bottom: 1rem;">
-                                <div style="font-size: 0.875rem; color: var(--matrix-green); font-weight: bold;">FREQUENCY:</div>
-                                <div style="color: var(--muted-foreground);">10</div>
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">response time:</div>
+                                <div style="color: var(--text-muted);" title="XDDD thats not 100% true but nobody will know!">usually pretty quick (unless i'm debugging)</div>
                             </div>
                             <div>
-                                <div style="font-size: 0.875rem; color: var(--matrix-green); font-weight: bold;">SECURE LINE:</div>
-                                <div style="color: var(--muted-foreground);">NONE</div>
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">discord:</div>
+                                <div style="color: var(--text-muted);"><a href="https://discord.com/users/1198173046196944962" target="_blank" style="text-decoration: none;">click here for discord</a></div>
                             </div>
                         </div>
 
-                        <div class="terminal-window">
-                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">OPERATIONAL HOURS</h3>
+                        <div class="card">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">when i'm around</h3>
                             <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span style="color: var(--muted-foreground);">MON - FRI:</span>
-                                <span style="color: var(--matrix-green);">24/7</span>
+                                <span>weekdays:</span>
+                                <span style="color: var(--primary); font-weight: 600;">most of the time</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                                <span style="color: var(--muted-foreground);">SAT - SUN:</span>
-                                <span style="color: var(--matrix-green);">24/7</span>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                                <span>weekends:</span>
+                                <span style="color: var(--primary); font-weight: 600;">sometimes</span>
                             </div>
-                            <div style="font-size: 0.75rem; color: var(--muted-foreground);">
-                                * The Matrix never sleeps
+                            <div style="font-size: 0.875rem; color: var(--text-muted); font-style: italic;">
+                                * might be slower if i'm working on something cool
                             </div>
                         </div>
                     </div>
@@ -843,63 +802,55 @@
         </div>
 
         <div id="aboutPage" class="page">
-            <div class="container" style="padding: 3rem 0;">
-                <div style="margin-bottom: 3rem;">
-                    <h1 style="font-size: 3rem; font-weight: bold; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 1rem;" class="glitch" data-text="ABOUT">
-                        ABOUT
-                    </h1>
-                    <p style="color: var(--muted-foreground); font-size: 1.125rem;">
-                        The truth about the simulation
-                    </p>
+            <div class="container" style="padding: 4rem 0;">
+                <div class="section-header">
+                    <h1 class="section-title">about me</h1>
+                    <p class="section-description">the person behind the code (spoiler: it's me)</p>
                 </div>
 
                 <div class="grid grid-cols-2">
-                     <div>
-                        <div class="terminal-window">
-                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">IDENTITY PROFILE</h3>
-                            <p style="color: var(--muted-foreground); margin-bottom: 1rem;">
-                                Welcome to my digital domain. I am GBRR, a programmer, mostly in css html and js!
-                                I'm ALWAYS hungry so bring food.
-                               
+                    <div>
+                        <div class="card" style="margin-bottom: 2rem;">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">who am i?</h3>
+                            <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                                hey! i'm GBRR, and i write code. mostly web stuff - html, css, javascript, that whole thing.
+                                been doing this for a while now and honestly? still love it.
                             </p>
-                            <p style="color: var(--muted-foreground);">
-                               My projects are idk what do u think?
+                            <p style="color: var(--text-muted);">
+                                i make websites, web apps, and sometimes they're actually good. 
+                                oh and i'm ALWAYS hungry. seriously, bring snacks. 🍕🌮
                             </p>
                         </div>
 
-                        <div class="terminal-window">
-                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">NOTES</h3>
-                            <div id="matrixQuotes">
-                                <div style="display: flex; align-items: start; margin-bottom: 0.75rem;">
-                                    <span style="color: var(--matrix-green); margin-right: 0.5rem;">&gt;</span>
-                                    <span style="color: var(--muted-foreground);" class="typing-text">TG has you...</span>
-                                </div>
-                                <div style="display: flex; align-items: start; margin-bottom: 0.75rem;">
-                                    <span style="color: var(--matrix-green); margin-right: 0.5rem;">&gt;</span>
-                                    <span style="color: var(--muted-foreground);">There is no spoon</span>
-                                </div>
-                                <div style="display: flex; align-items: start; margin-bottom: 0.75rem;">
-                                    <span style="color: var(--matrix-green); margin-right: 0.5rem;">&gt;</span>
-                                    <span style="color: var(--muted-foreground);">Welcome to the real world</span>
-                                </div>
-                                <div style="display: flex; align-items: start; margin-bottom: 0.75rem;">
-                                    <span style="color: var(--matrix-green); margin-right: 0.5rem;">&gt;</span>
-                                    <span style="color: var(--muted-foreground);">Follow the white rabbit</span>
-                                </div>
-                                <div style="display: flex; align-items: start;">
-                                    <span style="color: var(--matrix-green); margin-right: 0.5rem;">&gt;</span>
-                                    <span style="color: var(--muted-foreground);">Take the kifli</span>
-                                </div>
-                            </div>
+                        <div class="card">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">things i care about</h3>
+                            <ul style="list-style: none;">
+                                <li style="margin-bottom: 0.75rem; display: flex; align-items: start;">
+                                    <span style="color: var(--primary); margin-right: 0.5rem;">→</span>
+                                    <span style="color: var(--text-muted);">making stuff that actually works (revolutionary, i know)</span>
+                                </li>
+                                <li style="margin-bottom: 0.75rem; display: flex; align-items: start;">
+                                    <span style="color: var(--primary); margin-right: 0.5rem;">→</span>
+                                    <span style="color: var(--text-muted);">clean code (because future me will thank present me)</span>
+                                </li>
+                                <li style="margin-bottom: 0.75rem; display: flex; align-items: start;">
+                                    <span style="color: var(--primary); margin-right: 0.5rem;">→</span>
+                                    <span style="color: var(--text-muted);">design that doesn't hurt your eyes</span>
+                                </li>
+                                <li style="display: flex; align-items: start;">
+                                    <span style="color: var(--primary); margin-right: 0.5rem;">→</span>
+                                    <span style="color: var(--text-muted);">learning new things (when i'm not lazy)</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
                     <div>
-                        <div class="terminal-window">
-                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">SKILLS:</h3>
+                        <div class="card" style="margin-bottom: 2rem;">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">what i know</h3>
                             <div id="skillsContainer">
                                 <div class="skill-item">
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <div class="skill-header">
                                         <span class="skill-name">HTML</span>
                                         <span class="skill-percentage">95%</span>
                                     </div>
@@ -908,7 +859,7 @@
                                     </div>
                                 </div>
                                 <div class="skill-item">
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <div class="skill-header">
                                         <span class="skill-name">CSS</span>
                                         <span class="skill-percentage">88%</span>
                                     </div>
@@ -917,181 +868,137 @@
                                     </div>
                                 </div>
                                 <div class="skill-item">
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                        <span class="skill-name">PVP Skills</span>
-                                        <span class="skill-percentage">92%</span>
+                                    <div class="skill-header">
+                                        <span class="skill-name" title="DONT SAY 67">JavaScript</span>
+                                        <span class="skill-percentage">67%</span>
                                     </div>
                                     <div class="skill-bar">
-                                        <div class="skill-fill" data-width="92"></div>
+                                        <div class="skill-fill" data-width="67"></div>
                                     </div>
                                 </div>
                                 <div class="skill-item">
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                        <span class="skill-name">Server Programming</span>
-                                        <span class="skill-percentage">87%</span>
+                                    <div class="skill-header">
+                                        <span class="skill-name">React (im learning it rn)</span>
+                                        <span class="skill-percentage">11%</span>
                                     </div>
                                     <div class="skill-bar">
-                                        <div class="skill-fill" data-width="87"></div>
+                                        <div class="skill-fill" data-width="11"></div>
                                     </div>
                                 </div>
-                                <div class="skill-item">
-                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                        <span class="skill-name">AI asking skill</span>
-                                        <span class="skill-percentage">90%</span>
-                                    </div>
-                                    <div class="skill-bar">
-                                        <div class="skill-fill" data-width="90"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="terminal-window">
-                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">SYSTEM STATS</h3>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
-                                <span style="color: var(--muted-foreground);">Fav. Color</span>
-                                <span style="color: var(--matrix-green);">Red</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
-                                <span style="color: var(--muted-foreground);">How many days TG annoyed me</span>
-                                <span style="color: var(--matrix-green);">47</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
-                                <span style="color: var(--muted-foreground);">Ideas</span>
-                                <span style="color: var(--matrix-green);">1,337</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between;">
-                                <span style="color: var(--muted-foreground);">STATUS:</span>
-                                <span style="color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green);">THE ONE</span>
                             </div>
                         </div>
 
-                        <div class="terminal-window">
-                            <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">DOWNLOAD CV</h3>
-                            <p style="color: var(--muted-foreground); margin-bottom: 1rem;">
-                                Access my complete digital profile and experience matrix.
-                            </p>
-                            <button class="btn btn full" onclick="alert('LOL.')">DOWNLOAD cv.exe</button>
+                        <div class="card">
+                            <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">fun facts</h3>
+                            <div style="margin-bottom: 1rem; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px;">
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">favorite color:</div>
+                                <div style="color: var(--text-muted);">red (obviously the best one)</div>
+                            </div>
+                            <div style="margin-bottom: 1rem; padding: 0.75rem; background: var(--surface-hover); border-radius: 8px;">
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">days TG has annoyed me:</div>
+                                <div style="color: var(--text-muted);">47 and counting...</div>
+                            </div>
+                            <div style="padding: 0.75rem; background: var(--surface-hover); border-radius: 8px;">
+                                <div style="font-weight: 600; margin-bottom: 0.25rem;">current status:</div>
+                                <div style="color: var(--primary);">probably coding (or eating)</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                  <div class="terminal-window" style="text-align: center; margin-top: 3rem;">
-                    <h3 style="font-size: 1.5rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 2rem;">
-                        MISSION STATEMENT
-                    </h3>
-                    <p style="font-size: 1.125rem; color: var(--muted-foreground); margin-bottom: 2rem; max-width: 48rem; margin-left: auto; margin-right: auto;">
-                        This website is a testament to the power of code and creativity. and i ran out of ideas here...
-                    <p style="color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); font-weight: bold;">
-                        Together, we will build a world where the truth prevails over illusion.
-                    </p>
                 </div>
             </div>
         </div>
 
-        <div id="systemPage" class="page">
-            <div class="container" style="padding: 3rem 0;">
-                <div style="margin-bottom: 3rem;">
-                    <h1 style="font-size: 3rem; font-weight: bold; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); margin-bottom: 1rem;" class="glitch" data-text="SYSTEM">
-                        SYSTEM MONITOR
-                    </h1>
-                    <p style="color: var(--muted-foreground); font-size: 1.125rem;">
-                        Real-time system diagnostics and monitoring
-                    </p>
+        <!-- System Page (Admin Only) -->
+        <div id="systemPage" class="page admin-only">
+            <div class="container" style="padding: 4rem 0;">
+                <div class="section-header">
+                    <h1 class="section-title">system stats</h1>
+                    <p class="section-description">real-time monitoring (because why not)</p>
                 </div>
 
-                <div class="grid grid-cols-2">
-                    <div class="terminal-window">
-                        <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">SYSTEM TIME</h3>
-                        <div style="font-size: 2rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); font-weight: bold;" id="systemTime">
-                            00:00:00
-                        </div>
-                        <div style="font-size: 1rem; color: var(--muted-foreground); margin-top: 0.5rem;" id="systemDate">
-                            Loading...
-                        </div>
+                <div class="monitor-grid">
+                    <div class="monitor-card">
+                        <div class="monitor-label">Current Time</div>
+                        <div class="monitor-value" id="currentTime">--:--:--</div>
                     </div>
-
-                    <div class="terminal-window">
-                        <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">UPTIME</h3>
-                        <div style="font-size: 2rem; color: var(--matrix-green); text-shadow: 0 0 10px var(--matrix-green); font-weight: bold;" id="uptime">
-                            00:00:00
-                        </div>
-                        <div style="font-size: 0.875rem; color: var(--muted-foreground); margin-top: 0.5rem;">
-                            System operational
-                        </div>
+                    <div class="monitor-card">
+                        <div class="monitor-label">System Uptime</div>
+                        <div class="monitor-value" id="systemUptime">0<span class="monitor-unit">s</span></div>
+                    </div>
+                    <div class="monitor-card">
+                        <div class="monitor-label">CPU Usage</div>
+                        <div class="monitor-value" id="cpuUsage">0<span class="monitor-unit">%</span></div>
+                    </div>
+                    <div class="monitor-card">
+                        <div class="monitor-label">Memory Usage</div>
+                        <div class="monitor-value" id="memoryUsage">0<span class="monitor-unit">%</span></div>
                     </div>
                 </div>
 
-                <div class="terminal-window" style="margin-top: 2rem;">
-                    <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1.5rem;">CPU USAGE</h3>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span class="skill-name">CPU Load</span>
-                        <span class="skill-percentage" id="cpuPercentage">0%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-fill" id="cpuBar" style="width: 0%;"></div>
-                    </div>
-                    <div style="margin-top: 1rem; font-size: 0.875rem; color: var(--muted-foreground);">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Core 1:</span>
-                            <span id="core1">0%</span>
+                <div style="margin-top: 3rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">CPU Cores</h3>
+                    <div class="grid grid-cols-2">
+                        <div class="card">
+                            <div style="margin-bottom: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Core 1</span>
+                                    <span style="color: var(--primary); font-weight: 600;" id="core1">0%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" id="core1Bar"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Core 2</span>
+                                    <span style="color: var(--primary); font-weight: 600;" id="core2">0%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" id="core2Bar"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Core 2:</span>
-                            <span id="core2">0%</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Core 3:</span>
-                            <span id="core3">0%</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>Core 4:</span>
-                            <span id="core4">0%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="terminal-window" style="margin-top: 2rem;">
-                    <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1.5rem;">MEMORY USAGE</h3>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span class="skill-name">RAM</span>
-                        <span class="skill-percentage" id="memoryPercentage">0%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-fill" id="memoryBar" style="width: 0%;"></div>
-                    </div>
-                    <div style="margin-top: 1rem; display: flex; justify-content: space-between; color: var(--muted-foreground); font-size: 0.875rem;">
-                        <span>Used: <span id="memoryUsed">0 GB</span></span>
-                        <span>Total: <span id="memoryTotal">16 GB</span></span>
-                    </div>
-                </div>
-
-                <div class="terminal-window" style="margin-top: 2rem;">
-                    <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1.5rem;">NETWORK ACTIVITY</h3>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; font-size: 0.875rem;">
-                        <div>
-                            <div style="color: var(--muted-foreground); margin-bottom: 0.5rem;">DOWNLOAD:</div>
-                            <div style="color: var(--matrix-green); font-size: 1.25rem; font-weight: bold;" id="downloadSpeed">0 KB/s</div>
-                        </div>
-                        <div>
-                            <div style="color: var(--muted-foreground); margin-bottom: 0.5rem;">UPLOAD:</div>
-                            <div style="color: var(--matrix-green); font-size: 1.25rem; font-weight: bold;" id="uploadSpeed">0 KB/s</div>
-                        </div>
-                        <div>
-                            <div style="color: var(--muted-foreground); margin-bottom: 0.5rem;">PACKETS SENT:</div>
-                            <div style="color: var(--matrix-green);" id="packetsSent">0</div>
-                        </div>
-                        <div>
-                            <div style="color: var(--muted-foreground); margin-bottom: 0.5rem;">PACKETS RECEIVED:</div>
-                            <div style="color: var(--matrix-green);" id="packetsReceived">0</div>
+                        <div class="card">
+                            <div style="margin-bottom: 1rem;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Core 3</span>
+                                    <span style="color: var(--primary); font-weight: 600;" id="core3">0%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" id="core3Bar"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                    <span>Core 4</span>
+                                    <span style="color: var(--primary); font-weight: 600;" id="core4">0%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" id="core4Bar"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="terminal-window" style="margin-top: 2rem;">
-                    <h3 style="font-size: 1.25rem; color: var(--matrix-green); margin-bottom: 1rem;">SYSTEM LOGS</h3>
-                    <div id="systemLogs" style="max-height: 300px; overflow-y: auto; font-size: 0.875rem; font-family: 'Courier Prime', monospace;">
-                        <div class="terminal-line"><span style="color: var(--muted-foreground);">[00:00:00]</span> <span style="color: var(--matrix-green);">System initialized</span></div>
+                <div style="margin-top: 3rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Network Activity</h3>
+                    <div class="grid grid-cols-2">
+                        <div class="card">
+                            <div class="monitor-label">Download Speed</div>
+                            <div class="monitor-value" id="downloadSpeed">0<span class="monitor-unit"> MB/s</span></div>
+                        </div>
+                        <div class="card">
+                            <div class="monitor-label">Upload Speed</div>
+                            <div class="monitor-value" id="uploadSpeed">0<span class="monitor-unit"> MB/s</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">System Logs</h3>
+                    <div class="log-container" id="systemLogs">
+                        <div class="log-line"><span class="log-time">[00:00:00]</span> System initialized</div>
                     </div>
                 </div>
             </div>
@@ -1101,122 +1008,43 @@
     <div id="toastContainer"></div>
 
     <script>
-        const ADMIN_PASSWORD = 'iloveyou<3';
         let isAdmin = false;
         let currentPage = 'home';
-        let systemStartTime = Date.now();
-        let monitoringIntervals = [];
         let projects = [
             {
                 id: 1,
                 title: 'ProTiers',
-                description: 'Uhm... idk something with tiers',
-                tech: ['HTML', 'CSS', 'JS'],
+                description: 'uhm... something with tier lists. it works tho',
+                tech: ['HTML', 'CSS', 'JavaScript'],
                 status: 'active',
                 createdAt: '2025-03-12'
             },
             {
                 id: 2,
                 title: 'EzCraft',
-                description: 'Minecraft economy server with custom plugins',
-                tech: ['CSS', 'Java', 'Python'],
+                description: 'minecraft server i made. economy plugins and all that jazz',
+                tech: ['Java', 'Python', 'CSS'],
                 status: 'completed',
                 createdAt: '2024-11-20'
             },
             {
                 id: 3,
                 title: 'Redstone Launcher',
-                description: 'THE BEST MINECRAFT LAUNCHER!!! www.redstone-launcher.com',
+                description: 'THE BEST minecraft launcher!! check it out at redstone-launcher.com',
                 tech: ['JavaScript', 'CSS', 'HTML'],
-                status: 'Not completed',
+                status: 'active',
                 createdAt: '2025-07-10'
             }
         ];
 
-        function initLoadingScreen() {
-            const loadingSteps = [
-                'LOADING SYSTEM',
-                'LOADING RESOURCES',
-                'ESTABLISHING CONNECTION',
-                'DECRYPTING DATA',
-                'ACCESSING TGs BRAIN',
-                'WELCOME TO MY PAGE'
-            ];
+        let monitoringInterval = null;
+        let systemStartTime = Date.now();
 
-            const loadingText = document.getElementById('loadingText');
-            const progressFill = document.getElementById('progressFill');
-            const progressPercent = document.getElementById('progressPercent');
-            const loadingScreen = document.getElementById('loadingScreen');
-
-            let stepIndex = 0;
-            const interval = setInterval(() => {
-                if (stepIndex < loadingSteps.length) {
-                    loadingText.textContent = loadingSteps[stepIndex];
-                    const progress = ((stepIndex + 1) / loadingSteps.length) * 100;
-                    progressFill.style.width = progress + '%';
-                    progressPercent.textContent = Math.round(progress) + '%';
-                    stepIndex++;
-                } else {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        loadingScreen.classList.add('fade-out');
-                        setTimeout(() => {
-                            loadingScreen.style.display = 'none';
-                            initAnimations();
-                        }, 500);
-                    }, 1000);
-                }
-            }, 800);
-        }
-
-        function initMatrixRain() {
-            const container = document.getElementById('matrixRain');
-            const columns = Math.floor(window.innerWidth / 20);
-            const characters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            
-            const createRainColumn = (x) => {
-                const column = document.createElement('div');
-                column.className = 'rain-column';
-                column.style.left = x + 'px';
-                column.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                column.style.animationDelay = (Math.random() * 2) + 's';
-                
-                let text = '';
-                const height = Math.random() * 50 + 10;
-                for (let i = 0; i < height; i++) {
-                    text += characters.charAt(Math.floor(Math.random() * characters.length)) + '\n';
-                }
-                column.textContent = text;
-                
-                return column;
-            };
-
-            const addColumns = () => {
-                container.innerHTML = '';
-                for (let i = 0; i < columns; i++) {
-                    const column = createRainColumn(i * 20);
-                    container.appendChild(column);
-                }
-            };
-
-            addColumns();
-
-            window.addEventListener('resize', () => {
-                const newColumns = Math.floor(window.innerWidth / 20);
-                if (newColumns !== columns) {
-                    addColumns();
-                }
-            });
-            
-            setInterval(() => {
-                const randomColumn = Math.floor(Math.random() * container.children.length);
-                const column = container.children[randomColumn];
-                if (column) {
-                    const newColumn = createRainColumn(randomColumn * 20);
-                    container.replaceChild(newColumn, column);
-                }
-            }, 2000);
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavigation();
+            initProjects();
+            renderProjects();
+        });
 
         function initNavigation() {
             const navLinks = document.querySelectorAll('.nav-link');
@@ -1243,28 +1071,28 @@
             });
 
             adminToggle.addEventListener('click', () => {
-                if (isAdmin) {
-                    isAdmin = false;
-                    adminToggle.textContent = 'LOGIN';
-                    adminToggle.classList.remove('active');
-                    updateAdminVisibility();
-                    stopMonitoring();
-                    showToast('Logged out successfully', false);
-                    if (currentPage === 'system') {
-                        navigateToPage('home');
-                    }
-                } else {
+                if (!isAdmin) {
                     const password = prompt('Enter admin password:');
-                    if (password === ADMIN_PASSWORD) {
+                    if (password === 'iloveyou<3') {
                         isAdmin = true;
-                        adminToggle.textContent = 'LOGOUT';
+                        adminToggle.textContent = 'logout';
                         adminToggle.classList.add('active');
                         updateAdminVisibility();
                         startMonitoring();
-                        showToast('Admin access granted', false);
-                    } else if (password !== null) {
-                        showToast('Access denied: Invalid password', true);
+                        showToast('ayy welcome back boss 🎉', 'success');
+                    } else {
+                        showToast('nope, wrong password buddy', 'error');
                     }
+                } else {
+                    isAdmin = false;
+                    adminToggle.textContent = 'login';
+                    adminToggle.classList.remove('active');
+                    updateAdminVisibility();
+                    stopMonitoring();
+                    if (currentPage === 'system') {
+                        navigateToPage('home');
+                    }
+                    showToast('see ya later! 👋', 'success');
                 }
             });
 
@@ -1296,7 +1124,6 @@
                     if (page === 'projects') {
                         renderProjects();
                     }
-                    addFadeInUpAnimations(targetPage);
                 }, 50);
             }
 
@@ -1310,334 +1137,82 @@
             });
         }
 
-        function startMonitoring() {
-            const timeInterval = setInterval(updateTime, 1000);
-            monitoringIntervals.push(timeInterval);
-
-            const statsInterval = setInterval(updateSystemStats, 2000);
-            monitoringIntervals.push(statsInterval);
-
-            const logsInterval = setInterval(addSystemLog, 5000);
-            monitoringIntervals.push(logsInterval);
-
-            updateTime();
-            updateSystemStats();
-        }
-
-        function stopMonitoring() {
-            monitoringIntervals.forEach(interval => clearInterval(interval));
-            monitoringIntervals = [];
-        }
-
-        function updateTime() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
-            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            
-            const timeEl = document.getElementById('systemTime');
-            const dateEl = document.getElementById('systemDate');
-            if (timeEl) timeEl.textContent = timeStr;
-            if (dateEl) dateEl.textContent = dateStr;
-
-            const uptime = Date.now() - systemStartTime;
-            const hours = Math.floor(uptime / 3600000);
-            const minutes = Math.floor((uptime % 3600000) / 60000);
-            const seconds = Math.floor((uptime % 60000) / 1000);
-            const uptimeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            
-            const uptimeEl = document.getElementById('uptime');
-            if (uptimeEl) uptimeEl.textContent = uptimeStr;
-        }
-
-        function updateSystemStats() {
-            const cpuUsage = Math.floor(Math.random() * 40 + 20); // 20-60%
-            const cpuBar = document.getElementById('cpuBar');
-            const cpuPercentage = document.getElementById('cpuPercentage');
-            if (cpuBar) cpuBar.style.width = cpuUsage + '%';
-            if (cpuPercentage) cpuPercentage.textContent = cpuUsage + '%';
-
-            ['core1', 'core2', 'core3', 'core4'].forEach(coreId => {
-                const coreEl = document.getElementById(coreId);
-                if (coreEl) coreEl.textContent = Math.floor(Math.random() * 80 + 10) + '%';
-            });
-
-            const memoryUsage = Math.floor(Math.random() * 30 + 40); // 40-70%
-            const memoryUsed = (16 * memoryUsage / 100).toFixed(1);
-            const memoryBar = document.getElementById('memoryBar');
-            const memoryPercentage = document.getElementById('memoryPercentage');
-            const memoryUsedEl = document.getElementById('memoryUsed');
-            if (memoryBar) memoryBar.style.width = memoryUsage + '%';
-            if (memoryPercentage) memoryPercentage.textContent = memoryUsage + '%';
-            if (memoryUsedEl) memoryUsedEl.textContent = memoryUsed + ' GB';
-
-            const downloadSpeed = Math.floor(Math.random() * 1000 + 100);
-            const uploadSpeed = Math.floor(Math.random() * 500 + 50);
-            const packetsSent = Math.floor(Math.random() * 10000 + 50000);
-            const packetsReceived = Math.floor(Math.random() * 10000 + 50000);
-
-            const downloadEl = document.getElementById('downloadSpeed');
-            const uploadEl = document.getElementById('uploadSpeed');
-            const sentEl = document.getElementById('packetsSent');
-            const receivedEl = document.getElementById('packetsReceived');
-
-            if (downloadEl) downloadEl.textContent = downloadSpeed + ' KB/s';
-            if (uploadEl) uploadEl.textContent = uploadSpeed + ' KB/s';
-            if (sentEl) sentEl.textContent = packetsSent.toLocaleString();
-            if (receivedEl) receivedEl.textContent = packetsReceived.toLocaleString();
-        }
-
-        function addSystemLog() {
-            const logs = [
-                'Process completed successfully',
-                'Connection established',
-                'Data synchronization complete',
-                'Security scan passed',
-                'Cache cleared',
-                'System optimization complete',
-                'Backup created successfully',
-                'Network latency: 12ms',
-                'Database query executed',
-                'API response: 200 OK'
-            ];
-
-            const logsContainer = document.getElementById('systemLogs');
-            if (logsContainer) {
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
-                const randomLog = logs[Math.floor(Math.random() * logs.length)];
-                
-                const logLine = document.createElement('div');
-                logLine.className = 'terminal-line';
-                logLine.innerHTML = `<span style="color: var(--muted-foreground);">[${timeStr}]</span> <span style="color: var(--matrix-green);">${randomLog}</span>`;
-                
-                logsContainer.appendChild(logLine);
-                
-                while (logsContainer.children.length > 20) {
-                    logsContainer.removeChild(logsContainer.firstChild);
-                }
-                
-                logsContainer.scrollTop = logsContainer.scrollHeight;
-            }
-        }
-
-        function startMonitoring() {
-            const timeInterval = setInterval(updateTime, 1000);
-            monitoringIntervals.push(timeInterval);
-
-            const statsInterval = setInterval(updateSystemStats, 2000);
-            monitoringIntervals.push(statsInterval);
-
-            const logsInterval = setInterval(addSystemLog, 5000);
-            monitoringIntervals.push(logsInterval);
-
-            updateTime();
-            updateSystemStats();
-        }
-
-        function stopMonitoring() {
-            monitoringIntervals.forEach(interval => clearInterval(interval));
-            monitoringIntervals = [];
-        }
-
-        function updateTime() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
-            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            
-            const timeEl = document.getElementById('systemTime');
-            const dateEl = document.getElementById('systemDate');
-            if (timeEl) timeEl.textContent = timeStr;
-            if (dateEl) dateEl.textContent = dateStr;
-
-            const uptime = Date.now() - systemStartTime;
-            const hours = Math.floor(uptime / 3600000);
-            const minutes = Math.floor((uptime % 3600000) / 60000);
-            const seconds = Math.floor((uptime % 60000) / 1000);
-            const uptimeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            
-            const uptimeEl = document.getElementById('uptime');
-            if (uptimeEl) uptimeEl.textContent = uptimeStr;
-        }
-
-        function updateSystemStats() {
-            const cpuUsage = Math.floor(Math.random() * 40 + 20); // 20-60%
-            const cpuBar = document.getElementById('cpuBar');
-            const cpuPercentage = document.getElementById('cpuPercentage');
-            if (cpuBar) cpuBar.style.width = cpuUsage + '%';
-            if (cpuPercentage) cpuPercentage.textContent = cpuUsage + '%';
-
-            ['core1', 'core2', 'core3', 'core4'].forEach(coreId => {
-                const coreEl = document.getElementById(coreId);
-                if (coreEl) coreEl.textContent = Math.floor(Math.random() * 80 + 10) + '%';
-            });
-
-            const memoryUsage = Math.floor(Math.random() * 30 + 40); // 40-70%
-            const memoryUsed = (16 * memoryUsage / 100).toFixed(1);
-            const memoryBar = document.getElementById('memoryBar');
-            const memoryPercentage = document.getElementById('memoryPercentage');
-            const memoryUsedEl = document.getElementById('memoryUsed');
-            if (memoryBar) memoryBar.style.width = memoryUsage + '%';
-            if (memoryPercentage) memoryPercentage.textContent = memoryUsage + '%';
-            if (memoryUsedEl) memoryUsedEl.textContent = memoryUsed + ' GB';
-
-            const downloadSpeed = Math.floor(Math.random() * 1000 + 100);
-            const uploadSpeed = Math.floor(Math.random() * 500 + 50);
-            const packetsSent = Math.floor(Math.random() * 10000 + 50000);
-            const packetsReceived = Math.floor(Math.random() * 10000 + 50000);
-
-            const downloadEl = document.getElementById('downloadSpeed');
-            const uploadEl = document.getElementById('uploadSpeed');
-            const sentEl = document.getElementById('packetsSent');
-            const receivedEl = document.getElementById('packetsReceived');
-
-            if (downloadEl) downloadEl.textContent = downloadSpeed + ' KB/s';
-            if (uploadEl) uploadEl.textContent = uploadSpeed + ' KB/s';
-            if (sentEl) sentEl.textContent = packetsSent.toLocaleString();
-            if (receivedEl) receivedEl.textContent = packetsReceived.toLocaleString();
-        }
-
-        function addSystemLog() {
-            const logs = [
-                'Process completed successfully',
-                'Connection established',
-                'Data synchronization complete',
-                'Security scan passed',
-                'Cache cleared',
-                'System optimization complete',
-                'Backup created successfully',
-                'Network latency: 12ms',
-                'Database query executed',
-                'API response: 200 OK'
-            ];
-
-            const logsContainer = document.getElementById('systemLogs');
-            if (logsContainer) {
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
-                const randomLog = logs[Math.floor(Math.random() * logs.length)];
-                
-                const logLine = document.createElement('div');
-                logLine.className = 'terminal-line';
-                logLine.innerHTML = `<span style="color: var(--muted-foreground);">[${timeStr}]</span> <span style="color: var(--matrix-green);">${randomLog}</span>`;
-                
-                logsContainer.appendChild(logLine);
-                
-                while (logsContainer.children.length > 20) {
-                    logsContainer.removeChild(logsContainer.firstChild);
-                }
-                
-                logsContainer.scrollTop = logsContainer.scrollHeight;
-            }
-        }
-
         function initProjects() {
             const showAddFormBtn = document.getElementById('showAddFormBtn');
             const cancelAddBtn = document.getElementById('cancelAddBtn');
             const projectForm = document.getElementById('projectForm');
             const addProjectForm = document.getElementById('addProjectForm');
 
-            showAddFormBtn.addEventListener('click', () => {
-                addProjectForm.style.display = 'block';
-            });
+            if (showAddFormBtn) {
+                showAddFormBtn.addEventListener('click', () => {
+                    addProjectForm.style.display = 'block';
+                });
+            }
 
-            cancelAddBtn.addEventListener('click', () => {
-                addProjectForm.style.display = 'none';
-                projectForm.reset();
-            });
+            if (cancelAddBtn) {
+                cancelAddBtn.addEventListener('click', () => {
+                    addProjectForm.style.display = 'none';
+                    projectForm.reset();
+                });
+            }
 
-            projectForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                const title = document.getElementById('projectTitle').value;
-                const description = document.getElementById('projectDescription').value;
-                const tech = document.getElementById('projectTech').value;
-                const status = document.getElementById('projectStatus').value;
+            if (projectForm) {
+                projectForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const newProject = {
+                        id: Date.now(),
+                        title: document.getElementById('projectTitle').value,
+                        description: document.getElementById('projectDescription').value,
+                        tech: document.getElementById('projectTech').value.split(',').map(t => t.trim()).filter(t => t),
+                        status: document.getElementById('projectStatus').value,
+                        createdAt: new Date().toISOString().split('T')[0]
+                    };
 
-                if (!title || !description) {
-                    showToast('Please fill in all required fields', 'error');
-                    return;
-                }
+                    projects.unshift(newProject);
+                    renderProjects();
+                    projectForm.reset();
+                    addProjectForm.style.display = 'none';
+                    showToast('project added! nice one 🚀', 'success');
+                });
+            }
 
-                const newProject = {
-                    id: Date.now(),
-                    title: title,
-                    description: description,
-                    tech: tech ? tech.split(',').map(t => t.trim()).filter(t => t) : [],
-                    status: status,
-                    createdAt: new Date().toISOString().split('T')[0]
-                };
-
-                projects.unshift(newProject);
-                renderProjects();
-                addProjectForm.style.display = 'none';
-                projectForm.reset();
-                showToast('Project added successfully');
-            });
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    showToast('message sent! i\'ll get back to you soon 📬', 'success');
+                    contactForm.reset();
+                });
+            }
         }
 
         function renderProjects() {
             const grid = document.getElementById('projectsGrid');
-            
-            if (projects.length === 0) {
-                grid.innerHTML = `
-                    <div style="text-align: center; padding: 3rem 0; grid-column: 1 / -1;">
-                        <div style="font-size: 4rem; color: var(--muted-foreground); margin-bottom: 1rem;">404</div>
-                        <div style="font-size: 1.25rem; color: var(--muted-foreground);">No projects found</div>
-                        <div style="color: var(--muted-foreground); margin-top: 0.5rem;">
-                            The Matrix is empty... for now.
-                        </div>
-                    </div>
-                `;
-                return;
-            }
+            if (!grid) return;
 
-            grid.innerHTML = projects.map((project, index) => `
-                <div class="project-card fade-in-up-delay-${Math.min(index + 1, 4)}">
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-                        <h3 class="project-title">${project.title}</h3>
-                        <span class="project-status ${project.status}">${project.status.toUpperCase()}</span>
-                    </div>
+            grid.innerHTML = projects.map(project => `
+                <div class="project-card">
+                    <h3 class="project-title">${project.title}</h3>
+                    <div class="project-status ${project.status}">${project.status}</div>
                     <p class="project-description">${project.description}</p>
                     ${project.tech.length > 0 ? `
-                        <div style="margin-bottom: 1rem;">
-                            <h4 style="font-size: 0.875rem; color: var(--matrix-green); margin-bottom: 0.5rem;">TECH STACK:</h4>
-                            <div class="tech-stack">
-                                ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
-                            </div>
+                        <div class="tech-stack">
+                            ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
                         </div>
                     ` : ''}
-                    <div class="project-date">CREATED: ${project.createdAt}</div>
+                    <div class="project-date">Created: ${project.createdAt}</div>
                 </div>
             `).join('');
         }
 
-        function initContact() {
-            const contactForm = document.getElementById('contactForm');
-            
-            contactForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                
-                const name = document.getElementById('contactName').value;
-                const email = document.getElementById('contactEmail').value;
-                const message = document.getElementById('contactMessage').value;
-
-                if (!name || !email || !message) {
-                    showToast('Please fill in all required fields', 'error');
-                    return;
-                }
-
-                showToast('Your transmission has been received');
-                contactForm.reset();
-            });
-        }
-
         function animateSkills() {
             const skillFills = document.querySelectorAll('.skill-fill');
-            skillFills.forEach((fill, index) => {
+            skillFills.forEach(fill => {
+                const width = fill.getAttribute('data-width');
                 setTimeout(() => {
-                    const width = fill.getAttribute('data-width');
                     fill.style.width = width + '%';
-                }, index * 200);
+                }, 100);
             });
         }
 
@@ -1646,76 +1221,73 @@
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             toast.innerHTML = `
-                <div style="font-weight: bold; margin-bottom: 0.5rem;">${type === 'error' ? 'ERROR' : 'SUCCESS'}</div>
+                <div class="toast-title">${type === 'success' ? '✓' : '✗'}</div>
                 <div>${message}</div>
             `;
-            
             container.appendChild(toast);
-            
+
             setTimeout(() => toast.classList.add('show'), 100);
-            
             setTimeout(() => {
                 toast.classList.remove('show');
-                setTimeout(() => {
-                    if (container.contains(toast)) {
-                        container.removeChild(toast);
-                    }
-                }, 300);
+                setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
 
-        function typeText(element, text, speed = 50) {
-            element.textContent = '';
-            element.style.borderRight = '2px solid var(--matrix-green)';
-            
-            let i = 0;
-            const typeInterval = setInterval(() => {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(typeInterval);
-                    setTimeout(() => {
-                        element.style.borderRight = 'none';
-                    }, 500);
-                }
-            }, speed);
+        function startMonitoring() {
+            systemStartTime = Date.now();
+            updateMonitoring();
+            monitoringInterval = setInterval(updateMonitoring, 1000);
         }
 
-        function addFadeInUpAnimations(container) {
-            const elements = container.querySelectorAll('.terminal-window, .card, .project-card');
-            elements.forEach((el, index) => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                setTimeout(() => {
-                    el.style.transition = 'all 0.6s ease-out';
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        }
-
-        function initAnimations() {
-            const heroSubtitle = document.getElementById('heroSubtitle');
-            if (heroSubtitle) {
-                typeText(heroSubtitle, 'Welcome to the real world, Neo...', 80);
+        function stopMonitoring() {
+            if (monitoringInterval) {
+                clearInterval(monitoringInterval);
+                monitoringInterval = null;
             }
-            
-            addFadeInUpAnimations(document.getElementById('homePage'));
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initMatrixRain();
-            initNavigation();
-            initProjects();
-            initContact();
-            initLoadingScreen();
-            updateAdminVisibility();
-        });
+        function updateMonitoring() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+
+            const uptime = Math.floor((Date.now() - systemStartTime) / 1000);
+            document.getElementById('systemUptime').innerHTML = `${uptime}<span class="monitor-unit">s</span>`;
+
+            const cpuUsage = Math.floor(Math.random() * 30 + 20);
+            document.getElementById('cpuUsage').innerHTML = `${cpuUsage}<span class="monitor-unit">%</span>`;
+
+            const memUsage = Math.floor(Math.random() * 20 + 50);
+            document.getElementById('memoryUsage').innerHTML = `${memUsage}<span class="monitor-unit">%</span>`;
+
+            for (let i = 1; i <= 4; i++) {
+                const coreUsage = Math.floor(Math.random() * 40 + 10);
+                document.getElementById(`core${i}`).textContent = `${coreUsage}%`;
+                document.getElementById(`core${i}Bar`).style.width = `${coreUsage}%`;
+            }
+
+            const download = (Math.random() * 5).toFixed(2);
+            const upload = (Math.random() * 2).toFixed(2);
+            document.getElementById('downloadSpeed').innerHTML = `${download}<span class="monitor-unit"> MB/s</span>`;
+            document.getElementById('uploadSpeed').innerHTML = `${upload}<span class="monitor-unit"> MB/s</span>`;
+
+            if (Math.random() > 0.7) {
+                const logs = document.getElementById('systemLogs');
+                const time = now.toLocaleTimeString();
+                const messages = [
+                    'System check completed',
+                    'Network connection stable',
+                    'Memory optimization complete',
+                    'CPU temperature normal',
+                    'Background process completed'
+                ];
+                const message = messages[Math.floor(Math.random() * messages.length)];
+                const logLine = document.createElement('div');
+                logLine.className = 'log-line';
+                logLine.innerHTML = `<span class="log-time">[${time}]</span> ${message}`;
+                logs.appendChild(logLine);
+                logs.scrollTop = logs.scrollHeight;
+            }
+        }
     </script>
 </body>
 </html>
-
-
-
-
