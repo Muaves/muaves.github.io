@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muaves</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Muaves's page" />
+        <meta property="og:image" content="https://github.com/Muaves/muaves.github.io/blob/main/fav_cat.png?raw=true"/>
+        <meta property="og:description" content="My page" />
+        <meta name="theme-color" content="#c644af">
+        <meta name="twitter:card" content="summary_large_image">
+    <link rel="shortcut icon" href="../GBRR - PAGE.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            background: #e0e0e0;
+            color: #1a1a1a;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .banner {
+            background: linear-gradient(180deg, #1a4480, #0d2240);
+            color: #fff;
+            text-align: center;
+            padding: 8px;
+            font-size: 20px;
+            border-bottom: 3px solid #c41e3a;
+        }
+
+        header {
+            background: #fff;
+            text-align: center;
+            padding: 30px 16px;
+            border-bottom: 3px solid #999;
+        }
+
+        header h1 {
+            font-size: 48px;
+            color: #1a4480;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 20px;
+        }
+
+        nav {
+            background: #c0c0c0;
+            border-top: 2px solid #fff;
+            border-bottom: 2px solid #555;
+            padding: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(180deg, #e8e8e8, #c0c0c0);
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #555;
+            border-right: 2px solid #555;
+            padding: 6px 16px;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            color: #1a1a1a;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(180deg, #f0f0f0, #d0d0d0);
+        }
+
+        .nav-btn:active,
+        .nav-btn.active {
+            border-top: 2px solid #555;
+            border-left: 2px solid #555;
+            border-bottom: 2px solid #fff;
+            border-right: 2px solid #fff;
+            background: #b0b0b0;
+        }
+
+        main {
+            padding: 24px 0;
+        }
+
+        section {
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: #fff;
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            border-bottom: 2px solid #666;
+            border-right: 2px solid #666;
+            box-shadow: 3px 3px 0 #888;
+            padding: 20px;
+        }
+
+        .card h2 {
+            color: #c41e3a;
+            font-size: 28px;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            color: #1a4480;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .divider {
+            height: 3px;
+            background: linear-gradient(90deg, #e74c3c, #f39c12, #2ecc71, #3498db, #9b59b6, #e74c3c);
+            margin: 32px 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .service-box {
+            background: #f0f0f0;
+            border: 2px solid #999;
+            padding: 16px;
+        }
+
+        .service-box h4 {
+            color: #1a4480;
+            margin-bottom: 8px;
+        }
+
+        .service-box p {
+            color: #555;
+            font-size: 16px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .gallery-item {
+            background: #d0d0d0;
+            border: 2px solid #888;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .link-list {
+            list-style: none;
+        }
+
+        .link-list li {
+            margin-bottom: 8px;
+        }
+
+        .link-list a {
+            color: #1a4480;
+            text-decoration: underline;
+            font-size: 20px;
+        }
+
+        .link-list a:hover {
+            color: #c41e3a;
+        }
+
+        .link-list a:visited {
+            color: #6a3093;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            border: 2px inset #999;
+            background: #fff;
+            margin-bottom: 12px;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #1a4480;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .webring {
+            text-align: center;
+            margin: 32px 0;
+        }
+
+        .webring-box {
+            display: inline-block;
+            background: #fff;
+            border: 2px solid #888;
+            padding: 16px 24px;
+        }
+
+        .webring-box p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .webring-box h4 {
+            color: #c41e3a;
+            margin-bottom: 12px;
+        }
+
+        .webring-btns {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        footer {
+            background: #fff;
+            border-top: 3px solid #999;
+            padding: 24px 16px;
+            text-align: center;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #f0f0f0;
+            border: 2px solid #888;
+            padding: 4px 12px;
+            font-size: 14px;
+        }
+
+        footer p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        #visitor-count {
+            font-weight: bold;
+            color: #1a4480;
+        }
+
+        .contact-info p {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+        Welcome to my page!
+    </div>
+
+    <header>
+        <h1>MUAVES</h1>
+        <p>- Web developer -</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home" class="nav-btn" onclick="setActive(this)">HOME</a></li>
+            <li><a href="#about" class="nav-btn" onclick="setActive(this)">ABOUT</a></li>
+            <li><a href="#services" class="nav-btn" onclick="setActive(this)">SERVICES</a></li>
+            <li><a href="#links" class="nav-btn" onclick="setActive(this)">LINKS</a></li>
+            <li><a href="#contact" class="nav-btn" onclick="setActive(this)">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="card">
+            <h2>Welcome, Visitor</h2>
+            <p>Hi, Im Muaves a developer, mainly in HTML, CSS, JS, but i use other languages too. And I like to use
+                animate.css :)</p>
+            <p>This site is best viewed at 800x600 resolution with Netscape Navigator 4.0 or higher Because its retro
+                :).</p>
+        </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="about">
+            <div class="card">
+                <h2>About This Site</h2>
+                <div class="grid-2">
+                    <div>
+                        <h3>Who am I?</h3>
+                        <p>Hey! i'm Muaves, and i write code. mostly web stuff - html, css, javascript, that whole
+                            thing. been doing this for a while now and honestly? still love it.</p>
+                    </div>
+                    <div>
+                        <h3>My Mission</h3>
+                        <p>I want to be a full stack developer, and own a server where i can put my stuff :) ofc.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="card">
+                <h2>Projects</h2>
+                <div class="grid-3">
+                    <div class="service-box">
+                        <a href="https://redstone-launcher.com/" style="text-decoration: none;">
+                            <h4>Redstone Launcher</h4>
+                            <p>The best launcher currently on the entire planet</p>
+                        </a>
+                    </div>
+                    <div class="service-box">
+                        <h4>ProTiers</h4>
+                        <p>Uhm, smth with tiers,</p>
+                        <p>(No link)</p>
+                    </div>
+                    <div class="service-box">
+                        <a href="https://muaves.github.io/lszszv" style="text-decoration: none;">
+                            <h4>LSZSZV</h4>
+                            <p>The best calculator ever existed</p>
+                        </a>
+                    </div>
+                    <div class="service-box">
+                        <a href="#" style="text-decoration: none;">
+                            <h4>This page</h4>
+                            <p>Yep, i created this website</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+        <!-- Majd, meg raer
+    <section id="gallery">
+      <div class="card">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item">IMAGE 1</div>
+          <div class="gallery-item">IMAGE 2</div>
+          <div class="gallery-item">IMAGE 3</div>
+          <div class="gallery-item">IMAGE 4</div>
+          <div class="gallery-item">IMAGE 5</div>
+          <div class="gallery-item">IMAGE 6</div>
+          <div class="gallery-item">IMAGE 7</div>
+          <div class="gallery-item">IMAGE 8</div>
+        </div>
+        <p style="text-align: center; color: #666; margin-top: 16px;">Click on any image to view full size</p>
+      </div>
+    </section>
+     -->
+
+        <section id="links">
+            <div class="card">
+                <h2>Useful Links</h2>
+                <div class="grid-2">
+                    <div>
+                        <h3>Socials</h3>
+                        <ul class="link-list">
+                            <li><a href="https://discord.com/users/1198173046196944962">Discord</a></li>
+                            <li><a href="https://github.com/muaves">Github</a></li>
+                            <li><a href="https://muaves.github.io/lszszv">lszszv</a></li>
+                            <li><a href="https://redstone-launcher.com/">Redstone Launcher</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Resources</h3>
+                        <ul class="link-list">
+                            <li style="text-decoration: line-through;"><a href="#">HTML Tutorial</a></li>
+                            <li style="text-decoration: line-through;"><a href="#">JavaScript Guide</a></li>
+                            <li style="text-decoration: line-through;"><a href="#">CSS Library</a></li>
+                            <li style="text-decoration: line-through;"><a href="#">Grading system</a></li>
+                            <li style="text-decoration: line-through;"><a href="#">Web Server</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section id="contact">
+            <div class="card">
+                <h2>Contact Us</h2>
+                <div class="grid-2">
+                    <div class="contact-info">
+                        <h3>Get In Touch</h3>
+                        <p>Discord: <a href="https://discord.com/users/1198173046196944962">here</a></p>
+                    </div>
+                    <div>
+                        <h3>Send a Message</h3>
+                        <form onsubmit="handleSubmit(event)">
+                            <input type="text" placeholder="Your Name" required>
+                            <input type="email" placeholder="Your Email" required>
+                            <textarea placeholder="Your Message" required></textarea>
+                            <button type="submit" class="nav-btn">SEND MESSAGE</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="webring">
+            <div class="webring-box">
+                <p>This site is part of the</p>
+                <h4>Web Masters Ring</h4>
+                <div class="webring-btns">
+                    <button class="nav-btn">PREV</button>
+                    <button class="nav-btn">LIST</button>
+                    <button class="nav-btn">RANDOM</button>
+                    <button class="nav-btn">NEXT</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="badges">
+            <span class="badge">Netscape Compatible</span>
+            <span class="badge">HTML 4.0 Validated</span>
+            <span class="badge">800x600 Optimized</span>
+        </div>
+        <p>Copyright 2026 Muaves. All Rights Reserved.</p>
+        <p title="Well, this actually indicates how many times you have accessed this website ;)">Visitor Count: <span id="visitor-count">0</span></p>
+    </footer>
+
+    <script>
+        function setActive(element) {
+            document.querySelectorAll('.nav-btn').forEach(function (btn) {
+                btn.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We will get back to you soon. Or not :)');
+            event.target.reset();
+        }
+
+        var count = parseInt(localStorage.getItem('visitorCount')) || 7;
+        count++;
+        localStorage.setItem('visitorCount', count);
+        document.getElementById('visitor-count').textContent = count.toLocaleString();
+
+        document.querySelector('.nav-btn').classList.add('active');
+    </script>
+</body>
+
+</html>
