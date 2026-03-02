@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piano - Muaves</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            font-family: 'Arial Black', sans-serif;
+            overflow: hidden;
+        }
+
+        .piano-hero {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .white-key {
+            flex: 1;
+            background: linear-gradient(to bottom, #eee 0%, #fff 100%);
+            border: 1px solid #999;
+            cursor: pointer;
+            outline: none;
+            z-index: 1;
+            border-radius: 0 0 10px 10px;
+            transition: background 0.1s;
+        }
+
+        .white-key:active {
+            background: #ccc;
+        }
+
+        .black-key {
+            width: 4vw;
+            height: 60vh;
+            background: linear-gradient(to bottom, #444 0%, #000 100%);
+            border: 1px solid #222;
+            cursor: pointer;
+            outline: none;
+            position: absolute;
+            z-index: 2;
+            margin-left: -2vw;
+            border-radius: 0 0 5px 5px;
+            transition: background 0.1s;
+        }
+
+        .black-key:active {
+            background: #333;
+        }
+
+        .db {
+            left: 14.28%;
+        }
+
+        .eb {
+            left: 28.56%;
+        }
+
+        .gb {
+            left: 57.12%;
+        }
+
+        .ab {
+            left: 71.40%;
+        }
+
+        .bb {
+            left: 85.68%;
+        }
+
+        h1 {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(0, 0, 0, 0.318);
+            font-size: 15vw;
+            pointer-events: none;
+            letter-spacing: 20px;
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>PIANO</h1>
+
+    <div class="piano-hero">
+        <button class="white-key" onclick="play('C4')"></button>
+        <button class="white-key" onclick="play('D4')"></button>
+        <button class="white-key" onclick="play('E4')"></button>
+        <button class="white-key" onclick="play('F4')"></button>
+        <button class="white-key" onclick="play('G4')"></button>
+        <button class="white-key" onclick="play('A4')"></button>
+        <button class="white-key" onclick="play('B4')"></button>
+
+        <button class="black-key db" onclick="play('Db4')"></button>
+        <button class="black-key eb" onclick="play('Eb4')"></button>
+        <button class="black-key gb" onclick="play('Gb4')"></button>
+        <button class="black-key ab" onclick="play('Ab4')"></button>
+        <button class="black-key bb" onclick="play('Bb4')"></button>
+    </div>
+
+    <script>
+        function play(note) {
+            const a = new Audio(`../audio/${note}.mp3`);
+            a.currentTime = 0;
+            a.play().catch(() => { });
+        }
+    </script>
+</body>
+
+</html>
