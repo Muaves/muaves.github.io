@@ -1,0 +1,135 @@
+# 1. A rendszer alapjai (A konyvtar es a fajl)
+
+eloszor is kellett egy hely a szerveren. ezt a parancsot irtam be legelőszor:
+mkdir ~/npm
+aztan beleptem:
+cd ~/npm
+
+utana letrehoztuk a mindent vivő fajlt:
+nano docker-compose.yml
+2. A TELJES docker-compose.yml (Minden szervizzel)
+
+ezt masoltuk bele a fájlba. ez az agya a szerverednek, minden ebben van:
+YAML
+
+version: '3.8'
+
+services:
+  # nginx proxy manager - o a forgalomiranyito a 81-es porton
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: always
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+
+  # mariadb - az adatbazis, itt laknak a jelszavak
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: alma
+      MYSQL_DATABASE: nextcloud
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+  # nextcloud - a te sajat felhod a 8080-as porton
+  nextcloud:
+    image: nextcloud:latest
+    restart: always
+    ports:
+      - '8080:80'
+    depends_on:
+      - db
+    volumes:
+      - ./nextcloud:/var/www/html
+
+  # php-web - a sajat weboldalad a 8000-es porton
+  php-web:
+    image: trafelet/php-nginx:latest
+    restart: always
+    ports:
+      - '8000:80'
+    volumes:
+      - ./webhelyek:/var/www/html
+
+3. A hibajavitasok
+
+lepes 1: a typo javitas
+mivel maraidb-t irtam veletlenul, ki kellett javitani:
+sed -i 's/maraidb/mariadb/g' docker-compose.yml
+
+lepes 2: a dns javitas
+amikor a gepem nem latta a netet es "misbehaving" hibat dobott:
+echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+
+lepes 3: az inditas
+kiadtam a fo parancsot, ami mindent felepitett:
+sudo docker-compose up -d
+
+lepes 4: nem indult el, ujrainditas
+sudo docker-compose restart
+4. Ellenorzes és Kapcsolódás
+
+hogy nezd meg mi fut:
+sudo docker ps
+(ez kiadja a listat a kontener id-vel es a statuszokkal.)
+
+hogy lepjek be a sajat gepedrol (sftp):
+nyitod a fajlkezelot a (debianodon), ctrl+l, es beirod:
+sftp://kfgzadmin@szerver-ip
+
+hol ered el oket a bongeszoben:
+
+    npm admin: http://szerver-ip:81
+
+    nextcloud: http://szerver-ip:8080
+
+    sajat weboldalad: http://szerver-ip:8000
+
+
+konyvtar letrehozasa
+azzal kezdtem, hogy csinaltunk egy mappat a szerveren, amiben az egesz cucc lakik.
+parancs: mkdir ~/npm
+ezutan beleptunk a mappaba: cd ~/npm
+
+a konfiguracios fajl letrehozasa
+megnyitottam a nano szerkesztot, hogy megirjuk a docker-compose.yml fajlt.
+parancs: nano docker-compose.yml
+ide masoltam be az egesz listat a szervizekkel (npm, db, nextcloud, php-web).
+
+a typo kijavitasa (maraidb hiba)
+elirtam a mariadb-t maraidb-re a fajlban. ezt a docker nem szerette, hibaüzenetet dobott.
+megoldas: sudo sed -i 's/maraidb/mariadb/g' docker-compose.yml
+ez a parancs megkereste az osszes rossz szot es kicserelte a jora.
+
+a dns hiba elharitasa (server misbehaving)
+amikor probaltuk elinditani, a gepem azt mondta, hogy nem talalja a szervereket a neten. ez azert volt, mert a dns beallitasok elszalltak.
+megoldas: echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+ezzel megmondtuk a linuxnak, hogy a google-on keresztul nezze a netet.
+
+a konténerek elinditasa
+kiadtam a fo parancsot, ami mindent letolt es elindit a hatterben.
+parancs: sudo docker-compose up -d
+itt kerdezte meg a gep, hogy akarsz-e uj image-et hasznalni, amire y-t (yes) nyomtal.
+
+ellenorzes, hogy fut-e minden
+megneztem, hogy tenyleg elindultak-e a konténerek.
+parancs: sudo docker ps
+itt lattuk, hogy az npm, a db, a nextcloud es a php-web is up statuszban van.
+
+a php-web hozzaadasa a listahoz
+kozben rajottem, hogy kell egy sima weboldal is, ezert modositottuk a docker-compose.yml-t, es beleirtuk a php-web reszt, ami a 8000-es porton fut.
+
+sftp elokeszitese
+ hogy a debian gepedrol hogy tudsz belepni fajlkezelovel.
+lepes: a sajat gepeden a fajlkezelobe beirod: sftp://kfgzadmin@szerver-ip
+ezzel tudsz fajlokat masolni a webhelyek mappaba.
+
+https csapda azonositasa
+ hogy azert nem tudtam belepni a bongeszobol, mert a bongeszo automatikusan https-t akart hasznalni, de a szerver meg csak http-n beszelt.
+megoldas: beirtuk a sima http-t az ip cim ele.
