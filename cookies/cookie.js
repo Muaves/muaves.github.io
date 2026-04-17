@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Cookie consent script initialized. Fetching snippet...");
 
-    fetch('cookies/cookie_snipet.html')
+    fetch('https://muaves.com/cookies/cookie_snipet.html')
         .then(response => {
             if (!response.ok) throw new Error('Could not find the cookie snippet file');
             return response.text();
