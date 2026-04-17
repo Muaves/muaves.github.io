@@ -21,7 +21,7 @@
 
         body {
             background: #000;
-            font-family: 'Arial Black', sans-serif;
+            font-family: sans-serif;
             overflow: hidden;
         }
 
@@ -30,71 +30,87 @@
             width: 100vw;
             height: 100vh;
             position: relative;
+            border-top: 20px solid #222;
         }
 
         .white-key {
             flex: 1;
-            background: linear-gradient(to bottom, #eee 0%, #fff 100%);
-            border: 1px solid #999;
+            background: linear-gradient(#eee, #fff);
+            border: 1px solid #000;
             cursor: pointer;
-            outline: none;
             z-index: 1;
-            border-radius: 0 0 10px 10px;
-            transition: background 0.1s;
+            border-radius: 0 0 5px 5px;
         }
 
         .white-key:active {
-            background: #ccc;
+            background: #ddd;
         }
 
         .black-key {
-            width: 4vw;
+            width: 3vw;
             height: 60vh;
-            background: linear-gradient(to bottom, #444 0%, #000 100%);
-            border: 1px solid #222;
-            cursor: pointer;
-            outline: none;
+            background: linear-gradient(#444, #000);
             position: absolute;
             z-index: 2;
-            margin-left: -2vw;
-            border-radius: 0 0 5px 5px;
-            transition: background 0.1s;
+            margin-left: -1.5vw;
+            border-radius: 0 0 3px 3px;
+            cursor: pointer;
         }
 
         .black-key:active {
-            background: #333;
+            background: #222;
         }
 
-        .db {
+        .db1 {
+            left: 7.14%;
+        }
+
+        .eb1 {
             left: 14.28%;
         }
 
-        .eb {
+        .gb1 {
             left: 28.56%;
         }
 
-        .gb {
+        .ab1 {
+            left: 35.70%;
+        }
+
+        .bb1 {
+            left: 42.84%;
+        }
+
+        .db2 {
             left: 57.12%;
         }
 
-        .ab {
-            left: 71.40%;
+        .eb2 {
+            left: 64.26%;
         }
 
-        .bb {
+        .gb2 {
+            left: 78.54%;
+        }
+
+        .ab2 {
             left: 85.68%;
+        }
+
+        .bb2 {
+            left: 92.82%;
         }
 
         h1 {
             position: absolute;
-            top: 10%;
+            top: 5%;
             left: 50%;
             transform: translateX(-50%);
-            color: rgba(0, 0, 0, 0.318);
-            font-size: 15vw;
+            color: rgba(0, 0, 0, 0.2);
+            font-size: 10vw;
             pointer-events: none;
-            letter-spacing: 20px;
             z-index: 100;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -103,7 +119,6 @@
     <div id="cookie-placeholder"></div>
     <script src="/cookies/cookie.js"></script>
     <h1>PIANO</h1>
-
     <div class="piano-hero">
         <button class="white-key" onclick="play('C4')"></button>
         <button class="white-key" onclick="play('D4')"></button>
@@ -112,14 +127,25 @@
         <button class="white-key" onclick="play('G4')"></button>
         <button class="white-key" onclick="play('A4')"></button>
         <button class="white-key" onclick="play('B4')"></button>
+        <button class="white-key" onclick="play('C5')"></button>
+        <button class="white-key" onclick="play('D5')"></button>
+        <button class="white-key" onclick="play('E5')"></button>
+        <button class="white-key" onclick="play('F5')"></button>
+        <button class="white-key" onclick="play('G5')"></button>
+        <button class="white-key" onclick="play('A5')"></button>
+        <button class="white-key" onclick="play('B5')"></button>
 
-        <button class="black-key db" onclick="play('Db4')"></button>
-        <button class="black-key eb" onclick="play('Eb4')"></button>
-        <button class="black-key gb" onclick="play('Gb4')"></button>
-        <button class="black-key ab" onclick="play('Ab4')"></button>
-        <button class="black-key bb" onclick="play('Bb4')"></button>
+        <button class="black-key db1" onclick="play('Db4')"></button>
+        <button class="black-key eb1" onclick="play('Eb4')"></button>
+        <button class="black-key gb1" onclick="play('Gb4')"></button>
+        <button class="black-key ab1" onclick="play('Ab4')"></button>
+        <button class="black-key bb1" onclick="play('Bb4')"></button>
+        <button class="black-key db2" onclick="play('Db5')"></button>
+        <button class="black-key eb2" onclick="play('Eb5')"></button>
+        <button class="black-key gb2" onclick="play('Gb5')"></button>
+        <button class="black-key ab2" onclick="play('Ab5')"></button>
+        <button class="black-key bb2" onclick="play('Bb5')"></button>
     </div>
-
     <script>
         function play(note) {
             const a = new Audio(`../audio/${note}.mp3`);
