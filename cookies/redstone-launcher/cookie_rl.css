@@ -8,10 +8,9 @@
     z-index: 9999;
     display: none;
     padding: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgb(0, 0, 0);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    color: black;
+    color: white;
 
 }
 
