@@ -24,8 +24,9 @@ function initCookieLogic() {
     const declineBtn = document.getElementById("decline-cookies");
 
     const consent = localStorage.getItem("cookieConsent");
+    const isClosed = sessionStorage.getItem("cookieClosed");
 
-    if (!consent) {
+    if (!consent && !isClosed) {
         popup.style.display = "block";
     } else if (consent === "accepted") {
         activateGA();
@@ -40,9 +41,9 @@ function initCookieLogic() {
     };
 
     declineBtn.onclick = () => {
-        localStorage.setItem("cookieConsent", "declined");
+        sessionStorage.setItem("cookieClosed", "true");
         popup.style.display = "none";
-        console.log("User declined. GA will stay off.");
+        console.log("User declined for this session. Will ask again on next visit.");
     };
 }
 
@@ -51,7 +52,7 @@ function activateGA() {
     if (typeof gtag === 'function') {
         gtag('config', 'G-3K03LYDK01');
     } else {
-        console.warn("gtag is not defined. Make sure the Google script is in your <head>!");
+        console.warn("gtag is not defined. Check your <head> script!");
     }
 }
 
