@@ -1,0 +1,69 @@
+html {
+    scroll-behavior: smooth;
+}
+
+.concert-one-regular {
+    font-family: "Concert One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+body {
+    background-color: #0d0d0d;
+    color: whitesmoke;
+    font-family: "Elms Sans", sans-serif;
+    scroll-behavior: smooth;
+}
+
+h1 {
+    font-weight: 700;
+    font-style: normal;
+    color: #ffffff;
+    text-align: center;
+}
+
+h2 {
+    font-weight: 700;
+    font-size: 60px;
+    font-style: normal;
+    color: #ffffff;
+    text-align: center;
+}
+
+a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    position: sticky;
+    background: linear-gradient(90deg, #0d1525 0%, #1a3a6a 100%);
+    height: 40px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    gap: 20px;
+}
+
+nav a {
+    color: #1e90ff;
+    font-weight: 700;
+    font-size: 18px;
+    position: sticky;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center;
+}
