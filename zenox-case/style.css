@@ -67,3 +67,45 @@ p {
     margin-bottom: 20px;
     text-align: center;
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+    cursor: help;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+h3 {
+    background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+    width: 100%;
+    text-align: center;
+    text-decoration: dotted underline;
+    scale: 1.5;
+}
+
+.magyar {
+    background: linear-gradient(180deg, #c01c28 18%, #ffffff 50%, #26a269 100%);
+    color: black;
+}

@@ -146,15 +146,10 @@
         <button class="black-key ab2" onclick="play('Ab5')"></button>
         <button class="black-key bb2" onclick="play('Bb5')"></button>
     </div>
-    <script>
-        function play(note) {
-            const a = new Audio(`../audio/${note}.mp3`);
-            a.currentTime = 0;
-            a.play().catch(() => { });
-        }
-    </script>
+
     <div id="cookie-placeholder"></div>
-<script src="https://muaves.com/cookies/cookie.js"></script>
+    <script src="script.js"></script>
+    <script src="https://muaves.com/cookies/cookie.js"></script>
 </body>
 
 </html>
