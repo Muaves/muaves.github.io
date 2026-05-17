@@ -303,3 +303,13 @@ footer p {
 .contact-info p {
     margin-bottom: 6px;
 }
+.ads {
+    align-items: center;
+    margin-left: 20px;
+    display: flex;
+    scale: 1.1;
+}
+.ads:hover {
+    
+   transform: scale(1.1);
+}
