@@ -1,0 +1,586 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>muavescli — portfolio in bash</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0c;
+  --bg1: #111116;
+  --bg2: #18181f;
+  --bg3: #1f1f28;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.1);
+  --text: #f0f0f5;
+  --text2: #a0a0b0;
+  --text3: #5a5a70;
+  --accent: #0a84ff;
+  --accent2: #30d158;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', -apple-system, sans-serif;
+  --r: 16px;
+  --r2: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+::selection { background: rgba(10,132,255,.25); }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px;
+  background: rgba(10,10,12,0.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 15px; font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: 13px; color: var(--text3); font-weight: 400; transition: color .15s; }
+.nav-links a:hover { color: var(--text2); }
+.nav-cta {
+  font-size: 13px; font-weight: 500;
+  background: var(--accent);
+  color: #fff; padding: 6px 16px;
+  border-radius: 980px;
+  border: none; cursor: pointer;
+  font-family: var(--sans);
+  transition: opacity .15s;
+}
+.nav-cta:hover { opacity: 0.85; }
+
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 80px 24px 64px;
+  position: relative;
+  text-align: center;
+}
+.hero-noise {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+.hero-orb {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(10,132,255,0.07) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500;
+  color: var(--accent);
+  background: rgba(10,132,255,0.1);
+  border: 1px solid rgba(10,132,255,0.2);
+  padding: 4px 12px; border-radius: 980px;
+  margin-bottom: 28px;
+  letter-spacing: 0.02em;
+}
+.hero-tag::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent2);
+}
+h1 {
+  font-family: var(--sans);
+  font-size: clamp(40px, 7vw, 76px);
+  font-weight: 300; line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+h1 em { font-style: normal; font-weight: 600; color: var(--text); }
+h1 .dim { color: var(--text3); font-weight: 300; }
+.hero-sub {
+  font-size: 17px; color: var(--text2); font-weight: 300;
+  max-width: 440px; margin: 0 auto 48px;
+  line-height: 1.65; letter-spacing: -0.01em;
+}
+.hero-sub code {
+  font-family: var(--mono); font-size: 14px;
+  color: var(--accent2); background: rgba(48,209,88,0.1);
+  padding: 1px 6px; border-radius: 5px;
+}
+.btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+.btn-dl {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: 980px;
+  font-size: 14px; font-weight: 500;
+  cursor: pointer; border: none; font-family: var(--sans);
+  transition: opacity .15s, transform .15s;
+  letter-spacing: -0.01em;
+}
+.btn-dl:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn-dl.primary { background: var(--accent); color: #fff; }
+.btn-dl.secondary { background: var(--bg3); color: var(--text); border: 1px solid var(--border2); }
+.btn-dl svg { flex-shrink: 0; }
+.hero-meta { font-size: 12px; color: var(--text3); }
+.hero-meta a { color: var(--text3); border-bottom: 1px solid var(--border2); transition: color .15s; }
+.hero-meta a:hover { color: var(--text2); }
+.hero-meta span { margin: 0 6px; }
+
+.terminal-wrap { margin-top: 56px; width: 100%; max-width: 840px; position: relative; }
+.window {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: 0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+}
+.window-bar {
+  background: var(--bg2);
+  padding: 11px 14px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.wdots { display: flex; gap: 6px; }
+.wdot { width: 12px; height: 12px; border-radius: 50%; }
+.wdot.r { background: #ff5f56; }
+.wdot.y { background: #febc2e; }
+.wdot.g { background: #28c840; }
+.wbar-title { flex: 1; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--text3); }
+.window-body { padding: 18px 22px; font-family: var(--mono); font-size: 13px; line-height: 1.8; min-height: 280px; }
+.tl { display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline; }
+.tp { color: var(--accent2); user-select: none; }
+.tc { color: var(--text); }
+.to { color: var(--text3); padding-left: 0; white-space: pre-wrap; }
+.tg { color: var(--accent2); }
+.tb { color: var(--accent); }
+.ty { color: #febc2e; }
+.tm { color: var(--text2); }
+.t_ { height: 6px; }
+.cursor { display: inline-block; width: 7px; height: 14px; background: var(--text); vertical-align: middle; margin-left: 1px; animation: blink 1.2s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.section-wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+.section-eyebrow { font-size: 12px; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+.section-h { font-size: clamp(26px, 4vw, 42px); font-weight: 300; letter-spacing: -0.03em; margin-bottom: 12px; line-height: 1.15; }
+.section-h strong { font-weight: 600; }
+.section-p { font-size: 15px; color: var(--text2); font-weight: 300; max-width: 420px; line-height: 1.65; }
+
+.commands-section { padding: 112px 0; }
+.cmds-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden; margin-top: 52px;
+}
+.cmd-card {
+  background: var(--bg1); padding: 22px 20px;
+  transition: background .15s;
+}
+.cmd-card:hover { background: var(--bg2); }
+.cmd-name { font-family: var(--mono); font-size: 13px; color: var(--accent2); margin-bottom: 8px; font-weight: 500; }
+.cmd-desc { font-size: 13px; color: var(--text3); line-height: 1.55; }
+
+.install-section { padding: 112px 0; background: var(--bg1); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.install-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 52px; }
+.install-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden;
+}
+.install-head {
+  padding: 14px 18px; background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+  color: var(--text2);
+}
+.install-body { padding: 18px; }
+.step-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+.step-n {
+  width: 20px; height: 20px; min-width: 20px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 10px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.step-t { font-size: 13px; color: var(--text2); line-height: 1.55; }
+.step-t code { font-family: var(--mono); font-size: 12px; color: var(--accent2); background: rgba(48,209,88,0.08); padding: 1px 5px; border-radius: 4px; }
+.code-snippet { background: var(--bg1); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-family: var(--mono); font-size: 12px; color: var(--text3); margin-top: 12px; line-height: 1.8; }
+.code-snippet .c { color: var(--text3); opacity: 0.5; }
+.code-snippet .k { color: var(--text); }
+
+.try-section { padding: 112px 0; }
+.live-terminal .window-body { min-height: 360px; max-height: 420px; overflow-y: auto; }
+.t-input-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 22px; border-top: 1px solid var(--border);
+  background: var(--bg2);
+}
+.t-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  color: var(--text); font-family: var(--mono); font-size: 13px;
+  caret-color: var(--accent2);
+}
+.t-run {
+  background: var(--accent); color: #fff; border: none;
+  padding: 5px 14px; border-radius: 980px;
+  font-family: var(--sans); font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: opacity .15s;
+}
+.t-run:hover { opacity: 0.85; }
+
+.download-section { padding: 112px 0; text-align: center; }
+.dl-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500; color: var(--accent2);
+  background: rgba(48,209,88,0.1); border: 1px solid rgba(48,209,88,0.2);
+  padding: 4px 12px; border-radius: 980px; margin-bottom: 20px;
+}
+.stats-row {
+  display: flex; margin: 44px auto 0;
+  border: 1px solid var(--border); border-radius: var(--r);
+  overflow: hidden; max-width: 600px;
+  background: var(--bg1);
+}
+.stat { flex: 1; padding: 24px 16px; text-align: center; border-right: 1px solid var(--border); }
+.stat:last-child { border-right: none; }
+.stat-n { font-size: 28px; font-weight: 300; letter-spacing: -0.03em; color: var(--text); }
+.stat-l { font-size: 11px; color: var(--text3); margin-top: 3px; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; }
+.dl-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+.dl-btn {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  padding: 14px 24px; border-radius: var(--r2);
+  cursor: pointer; transition: background .15s, transform .15s;
+  color: var(--text); font-family: var(--sans);
+}
+.dl-btn:hover { background: var(--bg3); transform: translateY(-2px); }
+.dl-btn-text { text-align: left; }
+.dl-btn-sub { font-size: 11px; color: var(--text3); margin-bottom: 2px; font-weight: 400; }
+.dl-btn-label { font-size: 14px; font-weight: 500; }
+.dl-btn-arrow { color: var(--text3); font-size: 14px; margin-left: 4px; }
+.dl-note { font-size: 12px; color: var(--text3); margin-top: 20px; }
+.dl-note a { color: var(--text3); border-bottom: 1px solid var(--border2); }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; color: var(--text3);
+}
+.footer-logo { font-family: var(--mono); font-size: 14px; color: var(--text2); font-weight: 500; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { color: var(--text3); transition: color .15s; }
+.footer-links a:hover { color: var(--text2); }
+
+.fade-in { opacity: 0; transform: translateY(16px); transition: opacity .5s, transform .5s; }
+.fade-in.in { opacity: 1; transform: none; }
+
+@media (max-width: 720px) {
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .section-wrap { padding: 0 20px; }
+  .install-grid { grid-template-columns: 1fr; }
+  .stats-row { flex-wrap: wrap; }
+  .stat { border-right: none; border-bottom: 1px solid var(--border); min-width: 50%; }
+  footer { flex-direction: column; gap: 14px; padding: 20px; text-align: center; }
+  .footer-links { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">muaves<span>cli</span></div>
+  <div class="nav-links">
+    <a href="#commands">Commands</a>
+    <a href="#install">Install</a>
+    <a href="#try">Try it</a>
+    <a href="maker.html">Maker</a>
+    <a href="https://github.com/Muaves/muavescli" target="_blank">GitHub</a>
+  </div>
+  <a href="https://github.com/Muaves/muavescli/releases/tag/v1.0.6" target="_blank">
+    <button class="nav-cta">Download</button>
+  </a>
+</nav>
+
+<section class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-tag">v1.0.6 — latest release</div>
+  <h1>Your portfolio,<br><em>in bash</em>.<span class="dim"></span></h1>
+  <p class="hero-sub">A CLI portfolio you can run from the terminal. Type <code>muaves</code> and explore projects, links, and info — no browser needed.</p>
+  <div class="btn-row">
+    <a href="https://github.com/Muaves/muavescli/releases/download/v1.0.6/muaves-portfolio-v1.0.6.zip" download>
+      <button class="btn-dl primary">
+        <svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.202zm35.67 33.529l.028 34.453L.028 75.48.026 45.7zm4.326-38.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg>
+        Windows
+      </button>
+    </a>
+    <a href="https://github.com/Muaves/muavescli/releases/download/v1.0.6/muaves-portfolio-v1.0.6.zip" download>
+      <button class="btn-dl secondary">
+        <svg width="14" height="14" viewBox="0 0 97 97" fill="currentColor"><path d="M93.8 90.2c-2.3-3.9-9-5.8-12.3-7.4-3.3-1.6-3.3-7.3-3.3-7.3.3-2.2 3.6-3.5 5-5.9 1.5-2.4 2.1-5.6 2.6-8.1.5-2.6 1.3-2.1 1.9-5.6.6-3.5-1.5-4.2-1.5-4.2 1.3-9.7-2-20.5-4.2-24.9-3.1-6.1-8.5-11.3-14.7-13.8-3.2-1.3-7.3-1.9-9.9-2-2.6-.1-6.6.7-9.8 2C41.4 15.6 36 20.8 32.9 27c-2.2 4.4-5.5 15.2-4.2 24.9 0 0-2 .7-1.5 4.2.6 3.5 1.4 3 1.9 5.6.5 2.5 1.2 5.7 2.6 8.1 1.5 2.4 4.7 3.7 5 5.9 0 0 0 5.7-3.3 7.3-3.3 1.6-10.1 3.5-12.3 7.4-1.2 2-.8 4.2 0 5.8h72.7c.8-1.6 1.2-3.8 0-5.8z"/></svg>
+        Linux / macOS
+      </button>
+    </a>
+  </div>
+  <p class="hero-meta">
+    <a href="https://github.com/Muaves/muavescli" target="_blank">GitHub</a><span>·</span>
+    <a href="https://github.com/Muaves/muavescli/releases" target="_blank">All releases</a><span>·</span>
+    <a href="https://muaves.com" target="_blank">muaves.com</a>
+  </p>
+
+  <div class="terminal-wrap">
+    <div class="window">
+      <div class="window-bar">
+        <div class="wdots"><div class="wdot r"></div><div class="wdot y"></div><div class="wdot g"></div></div>
+        <div class="wbar-title">bash — muaves</div>
+      </div>
+      <div class="window-body" id="hero-term"></div>
+    </div>
+  </div>
+</section>
+
+<div id="commands" class="commands-section fade-in">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Commands</div>
+    <div class="section-h">Everything you need,<br><strong>one flag away.</strong></div>
+    <p class="section-p">Simple, memorable flags. No man page required.</p>
+    <div class="cmds-grid">
+      <div class="cmd-card"><div class="cmd-name">muaves</div><div class="cmd-desc">Show the help message and all available commands</div></div>
+      <div class="cmd-card"><div class="cmd-name">muaves -oA</div><div class="cmd-desc">Display the About Me section with bio and info</div></div>
+      <div class="cmd-card"><div class="cmd-name">muaves -oP</div><div class="cmd-desc">List all projects with descriptions and links</div></div>
+      <div class="cmd-card"><div class="cmd-name">muaves -oH</div><div class="cmd-desc">Show help — same as running with no arguments</div></div>
+      <div class="cmd-card"><div class="cmd-name">muaves -OW</div><div class="cmd-desc">Open muaves.com directly in your default browser</div></div>
+      <div class="cmd-card"><div class="cmd-name">muaves -H:l</div><div class="cmd-desc">Show links and pick one to open interactively</div></div>
+      <div class="cmd-card"><div class="cmd-name">muaves --version</div><div class="cmd-desc">Print the current installed version string</div></div>
+      <div class="cmd-card"><div class="cmd-name">muaves --v</div><div class="cmd-desc">Shorthand alias for --version</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="install" class="install-section fade-in">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Installation</div>
+    <div class="section-h">Up and running<br><strong>in seconds.</strong></div>
+    <p class="section-p">Requires Python 3.6+. Zero external dependencies.</p>
+    <div class="install-grid">
+      <div class="install-card">
+        <div class="install-head">
+          <svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.202zm35.67 33.529l.028 34.453L.028 75.48.026 45.7zm4.326-38.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg>
+          Windows
+        </div>
+        <div class="install-body">
+          <div class="step-row"><div class="step-n">1</div><div class="step-t">Download and extract the ZIP file</div></div>
+          <div class="step-row"><div class="step-n">2</div><div class="step-t">Open Command Prompt or PowerShell</div></div>
+          <div class="step-row"><div class="step-n">3</div><div class="step-t">Navigate to the <code>windows</code> folder and run <code>muaves.bat</code></div></div>
+          <div class="step-row"><div class="step-n">4</div><div class="step-t">To use globally, run <code>install.bat</code></div></div>
+          <div class="code-snippet"><span class="c"># After install</span><br><span class="k">muaves -oA</span></div>
+        </div>
+      </div>
+      <div class="install-card">
+        <div class="install-head">
+          <svg width="14" height="14" viewBox="0 0 97 97" fill="currentColor"><path d="M93.8 90.2c-2.3-3.9-9-5.8-12.3-7.4-3.3-1.6-3.3-7.3-3.3-7.3.3-2.2 3.6-3.5 5-5.9 1.5-2.4 2.1-5.6 2.6-8.1.5-2.6 1.3-2.1 1.9-5.6.6-3.5-1.5-4.2-1.5-4.2 1.3-9.7-2-20.5-4.2-24.9-3.1-6.1-8.5-11.3-14.7-13.8-3.2-1.3-7.3-1.9-9.9-2-2.6-.1-6.6.7-9.8 2C41.4 15.6 36 20.8 32.9 27c-2.2 4.4-5.5 15.2-4.2 24.9 0 0-2 .7-1.5 4.2.6 3.5 1.4 3 1.9 5.6.5 2.5 1.2 5.7 2.6 8.1 1.5 2.4 4.7 3.7 5 5.9 0 0 0 5.7-3.3 7.3-3.3 1.6-10.1 3.5-12.3 7.4-1.2 2-.8 4.2 0 5.8h72.7c.8-1.6 1.2-3.8 0-5.8z"/></svg>
+          Linux / macOS
+        </div>
+        <div class="install-body">
+          <div class="step-row"><div class="step-n">1</div><div class="step-t">Download and extract the ZIP file</div></div>
+          <div class="step-row"><div class="step-n">2</div><div class="step-t">Open a terminal, navigate to the <code>linux</code> folder</div></div>
+          <div class="step-row"><div class="step-n">3</div><div class="step-t">Run <code>./muaves</code> to launch it</div></div>
+          <div class="step-row"><div class="step-n">4</div><div class="step-t">To use globally, run <code>./install.sh</code></div></div>
+          <div class="code-snippet"><span class="c"># After install</span><br><span class="k">muaves -oP</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="try" class="try-section fade-in">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Live Demo</div>
+    <div class="section-h">Try it<br><strong>right here.</strong></div>
+    <p class="section-p">Type any muaves command. Hits the live API at core.muaves.com.</p>
+    <div style="margin-top:44px" class="live-terminal">
+      <div class="window">
+        <div class="window-bar">
+          <div class="wdots"><div class="wdot r"></div><div class="wdot y"></div><div class="wdot g"></div></div>
+          <div class="wbar-title">interactive — muaves</div>
+        </div>
+        <div class="window-body" id="live-out">
+          <div class="to" style="margin-bottom:4px">Welcome to the muaves interactive terminal.</div>
+          <div class="to">Try: muaves -oA, muaves -oP, muaves -H:l, muaves --version</div>
+          <div class="t_"></div>
+        </div>
+        <div class="t-input-row">
+          <span class="tp" style="color:var(--accent2)">❯</span>
+          <input class="t-input" id="t-input" type="text" placeholder="muaves -oA" autocomplete="off" spellcheck="false">
+          <button class="t-run" onclick="runCmd()">Run</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="download" class="download-section fade-in">
+  <div class="section-wrap">
+    <div class="dl-badge">v1.0.6 — latest stable</div>
+    <div class="section-h" style="text-align:center"><strong>Download muavescli</strong></div>
+    <p class="section-p" style="margin:10px auto 0;text-align:center;max-width:360px">Requires Python 3.6+. Works on Windows, Linux, and macOS.</p>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n">6</div><div class="stat-l">Stars</div></div>
+      <div class="stat"><div class="stat-n">1.0.6</div><div class="stat-l">Version</div></div>
+      <div class="stat"><div class="stat-n">29</div><div class="stat-l">Commits</div></div>
+      <div class="stat"><div class="stat-n">0</div><div class="stat-l">Dependencies</div></div>
+    </div>
+    <div class="dl-btns">
+      <a href="https://github.com/Muaves/muavescli/releases/download/v1.0.6/muaves-portfolio-v1.0.6.zip" download>
+        <div class="dl-btn">
+          <svg width="20" height="20" viewBox="0 0 88 88" fill="currentColor" style="opacity:.7"><path d="M0 12.402l35.687-4.86.016 34.423-35.67.202zm35.67 33.529l.028 34.453L.028 75.48.026 45.7zm4.326-38.025L87.314 0v41.527l-47.318.376zm47.329 39.349l-.011 41.34-47.318-6.678-.066-34.739z"/></svg>
+          <div class="dl-btn-text"><div class="dl-btn-sub">Download for</div><div class="dl-btn-label">Windows</div></div>
+          <span class="dl-btn-arrow">→</span>
+        </div>
+      </a>
+      <a href="https://github.com/Muaves/muavescli/releases/download/v1.0.6/muaves-portfolio-v1.0.6.zip" download>
+        <div class="dl-btn">
+          <svg width="20" height="20" viewBox="0 0 97 97" fill="currentColor" style="opacity:.7"><path d="M93.8 90.2c-2.3-3.9-9-5.8-12.3-7.4-3.3-1.6-3.3-7.3-3.3-7.3.3-2.2 3.6-3.5 5-5.9 1.5-2.4 2.1-5.6 2.6-8.1.5-2.6 1.3-2.1 1.9-5.6.6-3.5-1.5-4.2-1.5-4.2 1.3-9.7-2-20.5-4.2-24.9-3.1-6.1-8.5-11.3-14.7-13.8-3.2-1.3-7.3-1.9-9.9-2-2.6-.1-6.6.7-9.8 2C41.4 15.6 36 20.8 32.9 27c-2.2 4.4-5.5 15.2-4.2 24.9 0 0-2 .7-1.5 4.2.6 3.5 1.4 3 1.9 5.6.5 2.5 1.2 5.7 2.6 8.1 1.5 2.4 4.7 3.7 5 5.9 0 0 0 5.7-3.3 7.3-3.3 1.6-10.1 3.5-12.3 7.4-1.2 2-.8 4.2 0 5.8h72.7c.8-1.6 1.2-3.8 0-5.8z"/></svg>
+          <div class="dl-btn-text"><div class="dl-btn-sub">Download for</div><div class="dl-btn-label">Linux / macOS</div></div>
+          <span class="dl-btn-arrow">→</span>
+        </div>
+      </a>
+      <a href="https://github.com/Muaves/muavescli/releases" target="_blank">
+        <div class="dl-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="opacity:.7"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <div class="dl-btn-text"><div class="dl-btn-sub">All releases on</div><div class="dl-btn-label">GitHub</div></div>
+          <span class="dl-btn-arrow">→</span>
+        </div>
+      </a>
+    </div>
+    <p class="dl-note">By downloading you agree to the <a href="https://github.com/Muaves/muavescli/blob/main/LICENSE" target="_blank">license</a>.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">muavescli</div>
+  <div class="footer-links">
+    <a href="https://muaves.com" target="_blank">muaves.com</a>
+    <a href="https://github.com/Muaves" target="_blank">GitHub</a>
+    <a href="maker.html">Maker</a>
+    <a href="https://github.com/Muaves/muavescli/blob/main/LICENSE" target="_blank">License</a>
+    <a href="https://github.com/Muaves/muavescli/releases" target="_blank">Releases</a>
+  </div>
+  <div>Made by Muaves</div>
+</footer>
+
+<script>
+const API = 'https://core.muaves.com/api';
+
+async function typeHero() {
+  const el = document.getElementById('hero-term');
+  const lines = [
+    {t:'prompt', text:'muaves -oA'},
+    {t:'blank'},
+    {t:'out', text:'  ╔════════════════════════════╗', cls:'to'},
+    {t:'out', text:'  ║     About Muaves           ║', cls:'tm'},
+    {t:'out', text:'  ╚════════════════════════════╝', cls:'to'},
+    {t:'blank'},
+    {t:'out', text:'  Name    › Muaves', cls:'tb'},
+    {t:'out', text:'  Site    › muaves.com', cls:'tb'},
+    {t:'out', text:'  GitHub  › github.com/muaves', cls:'tb'},
+    {t:'blank'},
+    {t:'prompt', text:'muaves --version'},
+    {t:'blank'},
+    {t:'out', text:'  muavescli v1.0.6', cls:'tg'},
+    {t:'blank'},
+    {t:'cursor'},
+  ];
+  for (const l of lines) {
+    await new Promise(r => setTimeout(r, l.t === 'prompt' ? 100 : l.t === 'blank' ? 50 : 35));
+    if (l.t === 'blank') { const d = document.createElement('div'); d.className = 't_'; el.appendChild(d); }
+    else if (l.t === 'cursor') { const d = document.createElement('div'); d.innerHTML = '<span class="tl"><span class="tp" style="color:var(--accent2)">❯</span> <span class="cursor"></span></span>'; el.appendChild(d); }
+    else if (l.t === 'prompt') {
+      const d = document.createElement('div'); d.className = 'tl';
+      d.innerHTML = '<span class="tp" style="color:var(--accent2)">❯</span> ';
+      el.appendChild(d);
+      const s = document.createElement('span'); s.className = 'tc'; d.appendChild(s);
+      for (const ch of l.text) { await new Promise(r => setTimeout(r, 36)); s.textContent += ch; }
+    } else {
+      const d = document.createElement('div'); d.className = l.cls || 'to'; d.textContent = l.text; el.appendChild(d);
+    }
+  }
+}
+typeHero();
+
+function addOut(container, html, cls) {
+  const d = document.createElement('div'); d.className = cls || 'to'; d.innerHTML = html;
+  container.appendChild(d); container.scrollTop = container.scrollHeight;
+}
+function addBlank(container) {
+  const d = document.createElement('div'); d.className = 't_';
+  container.appendChild(d); container.scrollTop = container.scrollHeight;
+}
+
+const cmdMap = { 'muaves':'help','muaves -oh':'help','muaves -oa':'about','muaves -op':'projects','muaves -h:l':'links','muaves --version':'stats','muaves --v':'stats','muaves -ow':'' };
+const fallback = {
+  help: [ ['  muavescli — portfolio in bash','tg'],['','to'],['  muaves           Help','to'],['  muaves -oA        About me','to'],['  muaves -oP        Projects','to'],['  muaves -OW        Open website','to'],['  muaves -H:l       Links','to'],['  muaves --version  Version','to'] ],
+  about: [ ['  Name    › Muaves','tb'],['  Site    › muaves.com','tb'],['  GitHub  › github.com/muaves','tb'] ],
+  projects: [ ['  1. muavescli','tg'],['     My portfolio but its in bash!','to'],['     github.com/Muaves/muavescli','tb'] ],
+  links: [ ['  1. Website  → muaves.com','to'],['  2. GitHub   → github.com/muaves','to'] ],
+  stats: [ ['  muavescli v1.0.6','tg'],['  Made by Muaves — muaves.com','to'] ],
+};
+
+async function runCmd() {
+  const input = document.getElementById('t-input');
+  const out = document.getElementById('live-out');
+  const raw = input.value.trim(); if (!raw) return;
+  const key = raw.toLowerCase(); input.value = '';
+  const pd = document.createElement('div'); pd.className = 'tl';
+  pd.innerHTML = '<span class="tp" style="color:var(--accent2)">❯</span> <span class="tc">' + raw + '</span>';
+  out.appendChild(pd); addBlank(out);
+  if (key === 'muaves -ow') { addOut(out, '  Opening muaves.com...', 'to'); window.open('https://muaves.com','_blank'); addBlank(out); return; }
+  const ep = cmdMap[key];
+  if (ep === undefined) { addOut(out, '  Unknown: <span style="color:#febc2e">' + raw + '</span>. Try muaves or muaves -oA', 'to'); addBlank(out); return; }
+  const loading = document.createElement('div'); loading.className = 'to'; loading.textContent = '  Fetching...'; out.appendChild(loading);
+  try {
+    const res = await fetch(ep ? API + '/' + ep : API);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    loading.remove(); addBlank(out);
+    renderData(out, ep, data);
+  } catch {
+    loading.remove(); addBlank(out);
+    (fallback[ep] || fallback.help).forEach(([text, cls]) => { if (text) addOut(out, text, cls); else addBlank(out); });
+    addBlank(out);
+  }
+}
+
+function renderData(out, ep, data) {
+  if (ep === 'about') {
+    const d = data; const fields = [['Name',d.name||''],['Title',d.title||''],['Bio',d.bio||d.description||''],['Location',d.location||''],['Site',d.website||d.site||''],['GitHub',d.github||''],['Email',d.email||'']];
+    fields.forEach(([k,v]) => { if(v) addOut(out, '  <span style="color:var(--accent)">'+k+'</span>  › '+v, 'to'); });
+  } else if (ep === 'projects') {
+    const arr = Array.isArray(data) ? data : (data.projects || []);
+    arr.forEach((p,i) => { addOut(out,'  '+(i+1)+'. <span class="tg">'+( p.name||p.title||'Project')+'</span>','to'); if(p.description||p.desc) addOut(out,'     '+(p.description||p.desc),'to'); if(p.url) addOut(out,'     <span class="tb">'+p.url+'</span>','to'); addBlank(out); });
+  } else if (ep === 'links') {
+    const arr = Array.isArray(data) ? data : (data.links || []);
+    arr.forEach((l,i) => { const n=l.name||l.label||'Link'; const u=l.url||l.href||''; addOut(out,'  '+(i+1)+'. <span style="color:var(--accent)">'+n+'</span>  → <span class="tb">'+u+'</span>','to'); });
+  } else {
+    Object.keys(data).forEach(k => { const v=data[k]; if(typeof v !== 'object') addOut(out,'  <span style="color:var(--accent)">'+k+'</span>  › '+v,'to'); });
+  }
+  addBlank(out);
+}
+
+document.getElementById('t-input').addEventListener('keydown', e => { if (e.key === 'Enter') runCmd(); });
+
+const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }); }, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>Blog</title>
+  <link rel="stylesheet" href="src/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Concert+One&family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>Welcome to my blog page, yayy!</header>
+  <main>
+    <h1>Blogs <select name="blog-selector" id="oldalvalaszto">
+        <option value="/blogs/page1">Page 1</option>
+        <option value="/blogs/page2">Page 2</option>
+        <option value="/blogs/page3">Page 3</option>
+        <option value="/blogs/page4">Page 4</option>
+        <option value="/blogs/page5">Page 5</option>
+      </select></h1>
+    <ul>
+      <h3>Recent blogs</h3>
+      <div class="blog-card">
+          <h2>About 88x31 buttons</h2>
+          <hr>
+          <p>Learn more about these interesting buttons! And what do I think about them?</p>
+
+          <a href="blogs/main/articles/about-88x31-buttons/">Read more!</a>
+      </div>
+      <div class="blog-card">
+          <h2>Zenox-Case</h2>
+          <hr>
+          <p>Learn more about these interesting buttons! And what do I think about them?</p>
+
+          <a href="blogs/main/articles/about-88x31-buttons/">Read more!</a>
+      </div>
+      <div class="blog-card">
+          <h2>About 88x31 buttons</h2>
+          <hr>
+          <p>Learn more about these interesting buttons! And what do I think about them?</p>
+
+          <a href="blogs/main/articles/about-88x31-buttons/">Read more!</a>
+      </div>
+    </ul>
+
+<p></p>
+  </main>
+  <footer></footer>
+  <script>
+    const selectElem = document.getElementById('oldalvalaszto');
+    selectElem.addEventListener('change', function () {
+      const celUrl = this.value;
+      console.log('Selected URL:', celUrl);
+      if (celUrl !== "") {
+        window.location.href = celUrl;
+      }
+    });
+  </script>
+</body>
+
+</html>

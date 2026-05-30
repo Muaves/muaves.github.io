@@ -1,0 +1,30 @@
+.blog-card {
+  border: 2px solid #ddd;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-self: auto;
+  text-align: center;
+  width: fit-content;
+  justify-content: center;
+}
+
+.blog-card a {
+  margin-top: 12px;
+  color: #007BFF;
+  text-decoration: none;
+  font-weight: bold;
+  transition-duration: 0.3s;
+}
+.blog-card a:hover {
+  text-decoration: underline;
+  transition-duration: 0.3s;
+
+}
+.blog-card hr {
+  margin: 16px 0;
+  width: 100%;
+}
