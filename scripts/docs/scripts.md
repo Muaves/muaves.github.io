@@ -8,5 +8,3 @@
 - `scripts/build.sh` : build artifacts
 - `scripts/release.sh <version>` : tag + build
 - `scripts/support-bundle.sh` : diagnostics bundle
-- `scripts/new-service.sh <name>` : scaffold a service
-- `scripts/changed.sh [baseRef] [headRef]` : run checks for changed files

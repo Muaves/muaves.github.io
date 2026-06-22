@@ -32,7 +32,7 @@ if [[ -d "${ROOT_DIR}/logs" ]]; then
   cp -R "${ROOT_DIR}/logs" "$TMP/logs" 2>/dev/null || true
 fi
 
-# Docker logs (optional redact as needed)
+# Docker logs (optional, redact as needed)
 if command -v docker >/dev/null 2>&1; then
   if docker compose version >/dev/null 2>&1; then
     # Change service names if needed; generic dump:
