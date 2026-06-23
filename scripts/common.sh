@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title> Muaves 404 – Not Found</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Muaves's page" />
+  <meta property="og:image" content="https://github.com/Muaves/muaves.github.io/blob/main/img/fav_cat.png?raw=true" />
+  <meta property="og:description" content="ERROR 404 - FILE NOT FOUND" />
+  <meta name="theme-color" content="#c644af">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="shortcut icon" href="../img/GBRR - PAGE.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3K03LYDK01"></script>
+  <link rel="stylesheet" href="src/404/style.css">
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+  </script>
+  <link rel="stylesheet" href="/cookies/cookie.css">
+  
+</head>
+
+<body>
+  <div id="cookie-placeholder"></div>
+  <script src="/cookies/cookie.js"></script>
+  <div class="box">
+    <h1>404</h1>
+    <p>FILE NOT FOUND</p>
+    <p>The requested URL does not exist.</p>
+
+    <a href="/">RETURN TO HOME</a>
+    <audio id="music" loop>
+      <source src="./audio/a_minecraft_movie_07. Steves Lava Chicken.mp3" type="audio/mpeg">
+    </audio>
+
+    <button onclick="document.getElementById('music').play()">
+      ▶ PLAY LAVA CHICKEN
+    </button>
+    <p>Or watch a yt video:</p>
+    <div style="border:2px solid #00ff00; padding:8px; background:black; ">
+      <iframe width="320" height="180" src="https://www.youtube.com/embed/1ndxZM8QXZI" frameborder="0" allowfullscreen>
+      </iframe>
+    </div>
+
+
+    <div class="footer">
+      Not found<br>but not forgotten.
+    </div>
+  </div>
+</body>
+
+</html>
