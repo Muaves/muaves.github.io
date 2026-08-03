@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /$
+Allow: /lszszv/
+Allow: /piano/
+Allow: /asd/
+Allow: /projects/
+Allow: /portfolio-api/
+Allow: /muavescli/
+Allow: /templix/
+Allow: /redstone-cli
+Disallow: /
