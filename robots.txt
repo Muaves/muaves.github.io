@@ -9,3 +9,4 @@ Allow: /muavescli/
 Allow: /templix/
 Allow: /redstone-cli
 Disallow: /
+Sitemap: https://muaves.com/sitemap.xml
