@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUAVES — Your favourite carry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="shortcut icon" href="https://uploadzoo.muaves.com/GBRR - PAGE.png" type="image/x-icon">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #101012;
+            --surface: #17171a;
+            --surface-2: #1e1e22;
+            --line: #2a2a2e;
+            --text: #f3f2ed;
+            --text-muted: #8b8b85;
+            --blue: #0a84ff;
+            --green: #34c759;
+            --amber: #f2c14e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .mono {
+            font-family: 'DM Mono', monospace;
+        }
+
+        .wrap {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .announce {
+            background: var(--amber);
+            color: #101012;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .02em;
+            padding: 9px 16px;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(16, 16, 18, .92);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 32px;
+            max-width: 1280px;
+            margin: 0 auto;
+            gap: 24px;
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-left {
+            flex: 1;
+        }
+
+        .nav-right {
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: .14em;
+            white-space: nowrap;
+        }
+
+        .navlink {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 6px 0;
+            border-bottom: 1px solid transparent;
+            transition: border-color .15s ease, color .15s ease;
+        }
+
+        .navlink:hover {
+            color: var(--blue);
+        }
+
+        .navlink svg {
+            width: 10px;
+            height: 10px;
+            transition: transform .15s ease;
+        }
+
+        .navlink.open svg {
+            transform: rotate(180deg);
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .icons svg {
+            width: 19px;
+            height: 19px;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .icons svg:hover {
+            color: var(--blue);
+        }
+
+        .megamenu {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            background: var(--surface);
+            border-bottom: 1px solid var(--line);
+            display: none;
+            padding: 36px 0 44px;
+        }
+
+        .megamenu.show {
+            display: block;
+        }
+
+        .mega-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        .mega-col h4 {
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            font-weight: 500;
+        }
+
+        .mega-col a {
+            display: block;
+            font-size: 14px;
+            padding: 7px 0;
+            color: var(--text);
+            border-left: 1px solid transparent;
+            padding-left: 0;
+            transition: color .15s ease, padding-left .15s ease, border-color .15s ease;
+        }
+
+        .mega-col a:hover {
+            color: var(--blue);
+            padding-left: 8px;
+            border-left-color: var(--blue);
+        }
+
+        .mega-feature {
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--blue), #063a70);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .mega-feature.alt {
+            background: linear-gradient(135deg, var(--green), #0f4a25);
+        }
+
+        .mega-feature span {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: rgba(255, 255, 255, .85);
+            font-weight: 500;
+        }
+
+        .mega-feature strong {
+            font-size: 17px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .hero {
+            border-bottom: 1px solid var(--line);
+            padding: 96px 32px 90px;
+        }
+
+        .hero-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .eyebrow {
+            font-size: 12px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--blue);
+            font-weight: 500;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: var(--blue);
+            display: block;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 5.4vw, 66px);
+            font-weight: 700;
+            line-height: 1.03;
+            letter-spacing: -.02em;
+            margin-bottom: 22px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: var(--text-muted);
+            max-width: 440px;
+            margin-bottom: 32px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 26px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid var(--text);
+            cursor: pointer;
+            transition: background .15s ease, color .15s ease;
+        }
+
+        .btn-primary {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            background: var(--blue);
+            border-color: var(--blue);
+            color: #fff;
+        }
+
+        .btn-outline {
+            border-color: var(--line);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--text);
+        }
+
+        .hero-visual {
+            aspect-ratio: 1/1.05;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-visual .block {
+            position: absolute;
+        }
+
+        .hero-visual .b1 {
+            width: 62%;
+            height: 46%;
+            top: 8%;
+            left: 8%;
+            background: linear-gradient(160deg, var(--blue), #063a70);
+        }
+
+        .hero-visual .b2 {
+            width: 44%;
+            height: 34%;
+            bottom: 10%;
+            left: 8%;
+            background: var(--surface-2);
+            border: 1px solid var(--line);
+        }
+
+        .hero-visual .b3 {
+            width: 38%;
+            height: 56%;
+            top: 10%;
+            right: 8%;
+            background: linear-gradient(160deg, var(--green), #0f4a25);
+        }
+
+        .categories {
+            padding: 80px 32px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            max-width: 1280px;
+            margin: 0 auto 36px;
+        }
+
+        .section-head h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -.01em;
+        }
+
+        .section-head a {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--blue);
+            border-bottom: 1px solid var(--blue);
+            padding-bottom: 2px;
+        }
+
+        .cat-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            background: var(--line);
+            border: 1px solid var(--line);
+        }
+
+        .cat-card {
+            background: var(--bg);
+            padding: 34px 24px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: background .15s ease;
+            cursor: pointer;
+        }
+
+        .cat-card:hover {
+            background: var(--surface);
+        }
+
+        .cat-swatch {
+            width: 34px;
+            height: 34px;
+            background: var(--blue);
+        }
+
+        .cat-card:nth-child(2) .cat-swatch {
+            background: var(--green);
+        }
+
+        .cat-card:nth-child(3) .cat-swatch {
+            background: var(--amber);
+        }
+
+        .cat-card:nth-child(4) .cat-swatch {
+            background: #e2574c;
+        }
+
+        .cat-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+
+        .cat-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .products {
+            padding: 80px 32px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .prod-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+        }
+
+        .prod-card {
+            cursor: pointer;
+        }
+
+        .prod-thumb {
+            aspect-ratio: 1/1;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .prod-thumb iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: var(--surface);
+            display: block;
+        }
+
+
+        .tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border: 1px solid var(--line);
+        }
+
+        .prod-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 16px;
+        }
+
+        .prod-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .stars {
+            color: var(--amber);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .prod-count {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .prod-price {
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .prod-price .was {
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-right: 8px;
+        }
+
+        .guarantee {
+            padding: 76px 32px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .g-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            text-align: center;
+        }
+
+        .g-icon {
+            width: 44px;
+            height: 44px;
+            margin: 0 auto 20px;
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .g-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--blue);
+        }
+
+        .g-grid h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .g-grid p {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        footer {
+            padding: 70px 32px 28px;
+        }
+
+        .foot-top {
+            max-width: 1280px;
+            margin: 0 auto 56px;
+            display: grid;
+            grid-template-columns: 1.3fr .8fr .8fr;
+            gap: 64px;
+        }
+
+        .foot-news p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            max-width: 320px;
+        }
+
+        .news-row {
+            display: flex;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 10px;
+            max-width: 340px;
+        }
+
+        .news-row input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            outline: none;
+        }
+
+        .news-row input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .news-row button {
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .news-row svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .foot-social {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .foot-social svg {
+            width: 19px;
+            height: 19px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .foot-social svg:hover {
+            color: var(--text);
+        }
+
+        .foot-col h4 {
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 18px;
+        }
+
+        .foot-col a {
+            display: block;
+            font-size: 14px;
+            padding: 6px 0;
+            color: var(--text);
+        }
+
+        .foot-col a:hover {
+            color: var(--blue);
+        }
+
+        .foot-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            border-top: 1px solid var(--line);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .foot-logo {
+            font-weight: 700;
+            letter-spacing: .14em;
+            font-size: 15px;
+            color: var(--text);
+        }
+
+        @media(max-width:900px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .cat-grid,
+            .prod-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .g-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .foot-top {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+
+            .mega-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-left .navlink:not(.logo-link) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="announce">CARRY BUILT TO OUTLAST THE TRIP — FREE SHIPPING OVER $60</div>
+
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="navlink" id="shop-trigger" onclick="toggleMega('shop')">
+                    Shop
+                    <svg viewBox="0 0 12 8" fill="none">
+                        <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" />
+                    </svg>
+                </div>
+                <a class="navlink" href="#">Sale</a>
+                <a class="navlink" href="#">Bundles</a>
+            </div>
+
+            <a class="logo" href="#">MUAVES</a>
+
+            <div class="nav-right">
+                <div class="navlink" id="guides-trigger" onclick="toggleMega('guides')">
+                    Guides
+                    <svg viewBox="0 0 12 8" fill="none">
+                        <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" />
+                    </svg>
+                </div>
+                <a class="navlink" href="#">Reviews</a>
+                <div class="icons">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="M21 21l-4.3-4.3" />
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <path d="M20 21a8 8 0 0 0-16 0" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                        <path
+                            d="M3 6h18M6 6v13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                    </svg>
+                </div>
+            </div>
+        </nav>
+
+        <div class="megamenu" id="mega-shop">
+            <div class="wrap mega-grid">
+                <div class="mega-col">
+                    <h4>Carry Pouches</h4>
+                    <a href="#">All Pouches</a>
+                    <a href="#">Slim Pouches</a>
+                    <a href="#">XL Pouches</a>
+                    <a href="#">Field Roll</a>
+                </div>
+                <div class="mega-col">
+                    <h4>Straps + Clips</h4>
+                    <a href="#">Wrist Straps</a>
+                    <a href="#">Crossbody Straps</a>
+                    <a href="#">Carabiner Clips</a>
+                    <a href="#">Key Tethers</a>
+                </div>
+                <div class="mega-col">
+                    <h4>Organizers</h4>
+                    <a href="#">Cable Rolls</a>
+                    <a href="#">Desk Trays</a>
+                    <a href="#">Travel Cubes</a>
+                </div>
+                <div class="mega-feature">
+                    <span>Just landed</span>
+                    <strong>The Transit Line</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="megamenu" id="mega-guides">
+            <div class="wrap mega-grid">
+                <div class="mega-col">
+                    <h4>Learn</h4>
+                    <a href="#">Fit Guide</a>
+                    <a href="#">Care Guide</a>
+                    <a href="#">Materials</a>
+                </div>
+                <div class="mega-col">
+                    <h4>Inspiration</h4>
+                    <a href="#">Pack Setups</a>
+                    <a href="#">Desk Setups</a>
+                </div>
+                <div class="mega-feature alt">
+                    <span>Guide</span>
+                    <strong>Choosing your pouch size</strong>
+                </div>
+                <div class="mega-feature">
+                    <span>Guide</span>
+                    <strong>Cable roll setup</strong>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-inner">
+            <div>
+                <h1>Today's sponsor <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        aria-hidden="true" role="img"
+                        style="color: rgb(255, 255, 255); opacity: 1; transform: rotate(0deg);" width="52" height="52"
+                        viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M16.175 13H5q-.425 0-.712-.288T4 12t.288-.712T5 11h11.175l-4.9-4.9q-.3-.3-.288-.7t.313-.7q.3-.275.7-.288t.7.288l6.6 6.6q.15.15.213.325t.062.375t-.062.375t-.213.325l-6.6 6.6q-.275.275-.687.275T11.3 19.3q-.3-.3-.3-.712t.3-.713z">
+                        </path>
+                    </svg></h1>
+                <p>Today's and tomorrow's sponsor is <a href="http://fisevents.com">FisEvents</a> - Because <span
+                        style="color: #079005;" title="🤑🤑🤑">money</span> is always first!
+                    <br>
+                    <i><small>It might be because I'm jewish, but I'm not sure.</small></i>
+                </p>
+                <div style="display:flex;gap:14px;">
+                    <a class="btn btn-primary" href="https://www.fisevents.com/en/auth">Get a FREE deal!</a>
+                    <a class="btn btn-outline" href="https://www.fisevents.com/en/how-it-works">Fit guide</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <iframe src="http://fisevents.com" frameborder="0" width="100%" height="100%"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="section-head">
+            <h2>Shop by category</h2>
+            <a href="https://muaves.com/muaves.html#services">View all</a>
+        </div>
+        <div class="cat-grid">
+            <div class="cat-card">
+                <h6 style="text-align: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                        style="color: rgb(239, 68, 68); opacity: 1; transform: rotate(0deg);" width="52" height="52"
+                        viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2"
+                            d="M21 11V3H3v18h8m2-7l-4-4l-5.5 5.5m14.25-7.25a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm4.079 7.922L19 19m0 0l-2.828 2.829M19 19l-2.828-2.828M19 19l2.829 2.829">
+                        </path>
+                    </svg>
+                    <br> Image failed to load!
+                </h6>
+                <div>
+                    <h3>Pouches</h3>
+                    <p>Slim to XL, water-shedding shell</p>
+                </div>
+            </div>
+            <div class="cat-card">
+                <h6 style="text-align: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                        style="color: rgb(239, 68, 68); opacity: 1; transform: rotate(0deg);" width="52" height="52"
+                        viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2"
+                            d="M21 11V3H3v18h8m2-7l-4-4l-5.5 5.5m14.25-7.25a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm4.079 7.922L19 19m0 0l-2.828 2.829M19 19l-2.828-2.828M19 19l2.829 2.829">
+                        </path>
+                    </svg>
+                    <br> Image failed to load!
+                </h6>
+                <div>
+                    <h3>Straps</h3>
+                    <p>Adjustable webbing, quick-release</p>
+                </div>
+            </div>
+            <div class="cat-card">
+                <h6 style="text-align: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                        style="color: rgb(239, 68, 68); opacity: 1; transform: rotate(0deg);" width="52" height="52"
+                        viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2"
+                            d="M21 11V3H3v18h8m2-7l-4-4l-5.5 5.5m14.25-7.25a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm4.079 7.922L19 19m0 0l-2.828 2.829M19 19l-2.828-2.828M19 19l2.829 2.829">
+                        </path>
+                    </svg>
+                    <br> Image failed to load!
+                </h6>
+                <div>
+                    <h3>Organizers</h3>
+                    <p>Cable rolls, trays, travel cubes</p>
+                </div>
+            </div>
+            <div class="cat-card">
+                <h6 style="text-align: center; justify-content: center;"><svg xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                        style="color: rgb(239, 68, 68); opacity: 1; transform: rotate(0deg);" width="52" height="52"
+                        viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="square" stroke-width="2"
+                            d="M21 11V3H3v18h8m2-7l-4-4l-5.5 5.5m14.25-7.25a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm4.079 7.922L19 19m0 0l-2.828 2.829M19 19l-2.828-2.828M19 19l2.829 2.829">
+                        </path>
+                    </svg>
+                    <br> Image failed to load!
+                </h6>
+                <div>
+                    <h3>Bundles</h3>
+                    <p>Save 15% across the carry set</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products">
+        <div class="section-head">
+            <h2>Best sellers</h2>
+            <a href="https://muaves.com/muaves.html#adsnbtns">View all</a>
+        </div>
+        <div class="prod-grid">
+
+            <a href="https://www.fisevents.com/en/pricing">
+                <div class="prod-thumb"><iframe src="https://www.fisevents.com/en/pricing"
+                        title="Fisevents pricing"></iframe><span class="tag">Sponsor first</span></div>
+                <div class="prod-name">1+ Fisevents event</div>
+                <div class="prod-meta"><span class="stars">★★★★★★</span><span class="prod-count">1.42 reviews</span>
+                </div>
+                <div class="prod-price">$4.70</div>
+            </a>
+
+            <div class="prod-card">
+                <div class="prod-thumb"><iframe src="https://muaves.com/muavescli/maker.html"
+                        title="Muaves Maker"></iframe><span class="tag">Sale</span></div>
+                <div class="prod-name">Wrist Strap — Charcoal</div>
+                <div class="prod-meta"><span class="stars">★★★★★</span><span class="prod-count">-96 reviews</span></div>
+                <div class="prod-price"><span class="was">$24.00</span>$0.00</div>
+            </div>
+
+            <div class="prod-card">
+                <div class="prod-thumb"><iframe src="https://www.fisevents.com/en/pricing"
+                        title="Fisevents pricing"></iframe></div>
+                <p style="color: #fffdfd; font-size: 24px;">No image, but the <b>SPONSOR GET's it</b></p>
+                <div class="prod-name">1+ Fisevents event</div>
+                <div class="prod-meta"><span class="stars">★★★★★★</span><span class="prod-count">211 reviews</span>
+                </div>
+                <div class="prod-price">$0.00 - $4.70</div>
+            </div>
+
+            <div class="prod-card">
+                <div class="prod-thumb"><iframe src="https://uploadzoo.muaves.com/video_2.mp4"
+                        title="Fisevents pricing"></iframe><span class="tag">Sale</span></div>
+                <div class="prod-name">Want YOUR Website here? <a href="mailto:muaves@protonmail.com">contact us!</a>
+                </div>
+                <div class="prod-meta"><span class="stars">★★★★★</span><span class="prod-count"></span></div>
+                <div class="prod-price"><span class="was">0 months free.</span>2+ months for free.</div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="guarantee">
+        <div class="g-grid">
+            <div>
+               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        aria-hidden="true" role="img"
+                        style="color: rgb(74, 85, 101); opacity: 1; transform: rotate(0deg);" width="64" height="64"
+                        viewBox="0 0 14 14">
+                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 8.1a3 3 0 1 0-3.65-4.69A4 4 0 1 0 1.38 7M3.5 9.5l2-2v6"></path>
+                            <path d="m10.5 11.5l-2 2v-6"></path>
+                        </g>
+                    </svg>
+                <h3>Recyclable packaging</h3>
+                <p>Every order is via online. So no one gets stuck with a physical package.</p>
+            </div>
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" style="color: rgb(74, 85, 101); opacity: 1; transform: rotate(0deg);" width="64" height="64" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.486 2 2 6.486 2 12v4.143C2 17.167 2.897 18 4 18h1a1 1 0 0 0 1-1v-5.143a1 1 0 0 0-1-1h-.908C4.648 6.987 7.978 4 12 4s7.352 2.987 7.908 6.857H19a1 1 0 0 0-1 1V18c0 1.103-.897 2-2 2h-2v-1h-4v3h6c2.206 0 4-1.794 4-4c1.103 0 2-.833 2-1.857V12c0-5.514-4.486-10-10-10"></path></svg>
+                <h3>Support that answers</h3>
+                <p>Real replies within one business day at <a href="mailto:muaves@muaves.com">muaves@muaves.com</a>.</p>
+            </div>
+            <div>
+               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" style="color: rgb(74, 85, 101); opacity: 1; transform: rotate(0deg);" width="64" height="64" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M8.25 23.25h7.5M2.75.75h18.5s2 0 2 2V17.5s0 2-2 2H2.75s-2 0-2-2V2.75s0-2 2-2M12 23.25V19.5"></path><path d="m11.329 4.086l-4.5 2.25A1.5 1.5 0 0 0 6 7.677v4.9a1.5 1.5 0 0 0 .829 1.342l4.5 2.25a1.5 1.5 0 0 0 1.342 0l4.5-2.25A1.5 1.5 0 0 0 18 12.573v-4.9a1.5 1.5 0 0 0-.829-1.341l-4.5-2.25a1.5 1.5 0 0 0-1.342.004"></path><path d="M17.762 6.869L12 9.749L6.224 6.89M12 9.75v6.573"></path></g></svg>
+                <h3>Free shipping $0+</h3>
+                <p>On every order across the carry line, no code needed.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="foot-top">
+            <div class="foot-news">
+                <h4
+                    style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:14px;">
+                    Stay in the loop</h4>
+                <p>New drops, restocks and the occasional discount. No noise.</p>
+                <div class="news-row">
+                    <input type="email" placeholder="Enter your email">
+                    <button aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.6">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg></button>
+                </div>
+                <div class="foot-social">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6v1.9h2.8l-.4 2.9h-2.4v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z" />
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 2C6.5 2 2 6.5 2 12c0 4.4 2.9 8.2 6.8 9.5.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.1-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.4-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7 1 .7 2v3c0 .3.2.6.7.5A10 10 0 0 0 22 12c0-5.5-4.5-10-10-10z" />
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="2" y="2" width="20" height="20" rx="5" />
+                        <circle cx="12" cy="12" r="4.5" fill="var(--bg)" />
+                        <circle cx="17.3" cy="6.7" r="1.2" fill="var(--bg)" />
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 2C6.5 2 2 6.5 2 12c0 5.5 4.5 10 10 10s10-4.5 10-10c0-5.5-4.5-10-10-10zM9.5 8l7 4-7 4V8z"
+                            fill="none" stroke="currentColor" stroke-width="1.6" />
+                    </svg>
+                </div>
+            </div>
+            <div class="foot-col">
+                <h4>Company</h4>
+                <a href="https://muaves.com/muaves.html">Our Story</a>
+                <a href="https://muaves.com/privacy-policy.html">Privacy Policy</a>
+                <a href="https://muaves.com/terms-of-service.html">Terms of Service</a>
+            </div>
+            <div class="foot-col">
+                <h4>Customer care</h4>
+                <a href="https://muaves.com/">FAQs</a>
+                <a href="https://muaves.com/">Contact Us</a>
+                <a href="https://muaves.com/">Shipping + Delivery</a>
+                <a href="https://muaves.com/">Fit Guide</a>
+                <a href="https://muaves.com/">Gift Cards</a>
+            </div>
+        </div>
+        <div class="foot-bottom">
+            <span class="foot-logo">MUAVES</span>
+            <span>© 2026 Muaves. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMega(which) {
+            var shop = document.getElementById('mega-shop');
+            var guides = document.getElementById('mega-guides');
+            var shopT = document.getElementById('shop-trigger');
+            var guidesT = document.getElementById('guides-trigger');
+            if (which === 'shop') {
+                var willShow = !shop.classList.contains('show');
+                shop.classList.remove('show'); guides.classList.remove('show');
+                shopT.classList.remove('open'); guidesT.classList.remove('open');
+                if (willShow) { shop.classList.add('show'); shopT.classList.add('open'); }
+            } else {
+                var willShow2 = !guides.classList.contains('show');
+                shop.classList.remove('show'); guides.classList.remove('show');
+                shopT.classList.remove('open'); guidesT.classList.remove('open');
+                if (willShow2) { guides.classList.add('show'); guidesT.classList.add('open'); }
+            }
+        }
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('#shop-trigger') && !e.target.closest('#mega-shop') &&
+                !e.target.closest('#guides-trigger') && !e.target.closest('#mega-guides')) {
+                document.getElementById('mega-shop').classList.remove('show');
+                document.getElementById('mega-guides').classList.remove('show');
+                document.getElementById('shop-trigger').classList.remove('open');
+                document.getElementById('guides-trigger').classList.remove('open');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
