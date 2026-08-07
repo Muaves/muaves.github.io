@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /$
+Allow: /sitemap.xml
 Allow: /lszszv/
 Allow: /piano/
 Allow: /asd/
