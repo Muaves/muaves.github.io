@@ -47,13 +47,15 @@ function initCookieLogic() {
     };
 }
 
-function activateGA() {
-    console.log("GA4 Active: G-3K03LYDK01");
-    if (typeof gtag === 'function') {
-        gtag('config', 'G-3K03LYDK01');
-    } else {
-        console.warn("gtag is not defined. Check your <head> script!");
-    }
-}
+   function activateGA() {
+       if (window.gaActivated) return;
+       window.gaActivated = true;
+       const s = document.createElement('script');
+       s.async = true;
+       s.src = 'https://www.googletagmanager.com/gtag/js?id=G-3K03LYDK01';
+       document.head.appendChild(s);
+       gtag('js', new Date());
+       gtag('config', 'G-3K03LYDK01');
+   }
 
 console.log("Hello from cookie.js! Script executed.");
