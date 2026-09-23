@@ -10,7 +10,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -88,6 +87,14 @@ main {
     color: #c41e3a;
 }
 
+.card.trusted h2 {
+    color: #1e8449;
+}
+
+.card.trusted .dest {
+    border-color: #2ecc71;
+}
+
 .btns {
     display: flex;
     flex-wrap: wrap;
@@ -153,8 +160,8 @@ footer {
 
 <main>
     <section class="card" id="confirm" hidden>
-        <h2>Are you sure you want to leave our site?</h2>
-        <p>This link takes you to another website that isn't run by us. Check the address below before you continue.</p>
+        <h2 id="title">Are you sure you want to leave our site?</h2>
+        <p id="lead">This link takes you to another website that isn't run by us. Check the address below before you continue.</p>
         <div class="dest">
             <h3 id="host"></h3>
             <p id="full"></p>
@@ -185,6 +192,7 @@ footer {
 (function () {
     var INTERNAL = /(^|\.)muaves\.com$/i;
     var EXTRA = ['muaves.github.io'];
+    var TRUSTED = /(^|\.)redstone-launcher\.com$/i;
 
     function decode(s) {
         s = s.replace(/-/g, '+').replace(/_/g, '/');
@@ -215,6 +223,16 @@ footer {
     document.getElementById('host').textContent = target.hostname;
     document.getElementById('full').textContent = target.href;
     document.getElementById('insecure').hidden = target.protocol === 'https:';
+    var trusted = TRUSTED.test(target.hostname);
+
+    if (trusted) {
+        document.getElementById('confirm').classList.add('trusted');
+        document.getElementById('title').textContent = 'Yayy, this site is secure!';
+        document.getElementById('lead').textContent = 'This site is owned and operated by us, so you can continue safely.';
+        document.getElementById('go').textContent = 'Take me there';
+        document.getElementById('back').textContent = 'Go back';
+    }
+
     document.getElementById('confirm').hidden = false;
 
     document.getElementById('go').addEventListener('click', function () {
@@ -226,7 +244,7 @@ footer {
         else location.href = '/';
     });
 
-    document.getElementById('back').focus();
+    document.getElementById(trusted ? 'go' : 'back').focus();
 })();
 </script>
 </body>
