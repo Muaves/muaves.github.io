@@ -95,6 +95,14 @@ main {
     border-color: #2ecc71;
 }
 
+.card.contrib h2 {
+    color: #1a4480;
+}
+
+.card.contrib .dest {
+    border-color: #1a4480;
+}
+
 .btns {
     display: flex;
     flex-wrap: wrap;
@@ -192,7 +200,42 @@ footer {
 (function () {
     var INTERNAL = /(^|\.)muaves\.com$/i;
     var EXTRA = ['muaves.github.io'];
-    var TRUSTED = /(^|\.)redstone-launcher\.com$/i;
+
+    var TRUSTED = {
+        'redstone-launcher.com': 'team',
+        'fisevents.com': 'trusted',
+        'github.com': 'trusted',
+    };
+
+    var MESSAGES = {
+        owner: {
+            title: 'Yayy, this site is secure!',
+            lead: 'This site is owned and operated by me, so you can continue safely.',
+            style: 'trusted'
+        },
+        team: {
+            title: 'Yayy, this site is one of mine!',
+            lead: 'This site is owned and operated by me and other people, so you can continue safely.',
+            style: 'trusted'
+        },
+        trusted: {
+            title: 'This site is trusted',
+            lead: 'I know and trust this site, though it is not run by me. You can continue safely.',
+            style: 'trusted'
+        },
+        contributor: {
+            title: 'I helped build this one!',
+            lead: 'I contributed to this site, but it is run by someone else. Check the address before you continue.',
+            style: 'contrib'
+        }
+    };
+
+    function trustType(host) {
+        for (var d in TRUSTED) {
+            if (host === d || host.endsWith('.' + d)) return TRUSTED[d];
+        }
+        return null;
+    }
 
     function decode(s) {
         s = s.replace(/-/g, '+').replace(/_/g, '/');
@@ -220,20 +263,23 @@ footer {
         return;
     }
 
+    var confirmBox = document.getElementById('confirm');
+    var type = trustType(target.hostname);
+
     document.getElementById('host').textContent = target.hostname;
     document.getElementById('full').textContent = target.href;
     document.getElementById('insecure').hidden = target.protocol === 'https:';
-    var trusted = TRUSTED.test(target.hostname);
 
-    if (trusted) {
-        document.getElementById('confirm').classList.add('trusted');
-        document.getElementById('title').textContent = 'Yayy, this site is secure!';
-        document.getElementById('lead').textContent = 'This site is owned and operated by us, so you can continue safely.';
+    if (type && MESSAGES[type]) {
+        var m = MESSAGES[type];
+        confirmBox.classList.add(m.style);
+        document.getElementById('title').textContent = m.title;
+        document.getElementById('lead').textContent = m.lead;
         document.getElementById('go').textContent = 'Take me there';
         document.getElementById('back').textContent = 'Go back';
     }
 
-    document.getElementById('confirm').hidden = false;
+    confirmBox.hidden = false;
 
     document.getElementById('go').addEventListener('click', function () {
         location.href = target.href;
@@ -244,7 +290,7 @@ footer {
         else location.href = '/';
     });
 
-    document.getElementById(trusted ? 'go' : 'back').focus();
+    document.getElementById(type ? 'go' : 'back').focus();
 })();
 </script>
 </body>
