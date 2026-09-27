@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UK Slang, News &amp; Tube Times</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #ffffff;
+      color: #111111;
+    }
+
+    .deck {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 60px 120px 60px 60px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .25s ease;
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0 0 30px;
+      border-bottom: 2px solid #111;
+      padding-bottom: 14px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 40px;
+    }
+
+    .item {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+
+    .item .tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .item .meaning {
+      font-size: 0.92rem;
+      margin: 4px 0;
+    }
+
+    .item .example {
+      font-size: 0.85rem;
+      color: #555;
+      font-style: italic;
+    }
+
+    .live-row {
+      display: flex;
+      gap: 50px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .live-block {
+      flex: 1 1 320px;
+    }
+
+    .clock-time {
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .clock-date {
+      color: #555;
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
+
+    .arrival {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #ccc;
+      font-size: 0.92rem;
+    }
+
+    .arrival .dir {
+      color: #777;
+      font-size: 0.75rem;
+      display: block;
+    }
+
+    .mins {
+      font-weight: 800;
+      font-size: 1rem;
+    }
+
+    .status-line {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 10px;
+    }
+
+    .line-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .roundel {
+      width: 26px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .line-switch {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .line-switch button {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #111;
+      border-radius: 20px;
+      background: #fff;
+      padding: 5px 12px 5px 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #111;
+    }
+
+    .line-switch button.active {
+      background: #111;
+      color: #fff;
+    }
+
+    .line-switch .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .news-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .news-item a {
+      color: #111;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .news-item a:hover {
+      text-decoration: underline;
+    }
+
+    .news-item .src {
+      color: #777;
+      font-size: 0.75rem;
+      margin-top: 3px;
+    }
+
+    .loading {
+      color: #777;
+      font-size: 0.85rem;
+    }
+
+    ul.notes {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      padding-left: 20px;
+    }
+
+    .map-frame {
+      width: 100%;
+      height: 70vh;
+      border: 1px solid #111;
+    }
+
+    .map-fallback {
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 10px;
+    }
+
+    .translator {
+      max-width: 600px;
+    }
+
+    .translator textarea {
+      width: 100%;
+      min-height: 90px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      border: 1px solid #111;
+      border-radius: 8px;
+      padding: 12px;
+      resize: vertical;
+    }
+
+    .translator button {
+      margin-top: 10px;
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      padding: 9px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+    }
+
+    .translator .result {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px dashed #111;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      min-height: 24px;
+    }
+
+    .nav {
+      position: fixed;
+      top: 50%;
+      right: 30px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      z-index: 10;
+    }
+
+    .nav button {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid #111;
+      background: #fff;
+      color: #111;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .nav button.active {
+      background: #111;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="deck">
+
+    <div class="slide active" id="slide-1">
+      <h1>1 · UK Slang</h1>
+      <div class="grid" id="slangGrid"></div>
+    </div>
+
+    <div class="slide" id="slide-2">
+      <h1>2 · Live London Clock &amp; Tube</h1>
+      <div class="live-row">
+        <div class="live-block">
+          <h2>Exact time — Europe/London</h2>
+          <div class="clock-time" id="clockTime">--:--:--</div>
+          <div class="clock-date" id="clockDate">Loading…</div>
+        </div>
+        <div class="live-block">
+          <div class="line-head">
+            <svg class="roundel" id="roundelIcon" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#0098D8" stroke-width="10" />
+              <rect x="8" y="42" width="84" height="16" fill="#0098D8" />
+            </svg>
+            <h2 id="lineTitle">Victoria line · Green Park</h2>
+          </div>
+          <div class="line-switch" id="lineSwitch">
+            <button data-line="victoria" data-color="#0098D8" class="active"><span class="dot"
+                style="background:#0098D8"></span>Victoria</button>
+            <button data-line="piccadilly" data-color="#003688"><span class="dot"
+                style="background:#003688"></span>Piccadilly</button>
+            <button data-line="jubilee" data-color="#A0A5A9"><span class="dot"
+                style="background:#A0A5A9"></span>Jubilee</button>
+          </div>
+          <div id="tubeList" class="loading">Fetching live arrivals from the TfL API…</div>
+          <div class="status-line" id="tubeStatus"></div>
+        </div>
+      </div>
+      <h3>
+        Map of London: <a href="https://www.google.com/maps/@51.5074,-0.1278,12z" target="_blank">View on Google
+          Maps</a>
+        </h1>
+    </div>
+    <div class="slide" id="slide-3">
+      <h1>3 · Live Tube Map</h1>
+      <iframe class="map-frame" src="https://www.londonunderground.live/" title="Live London Underground map"></iframe>
+      <div class="map-fallback">If the map above stays blank, the site is blocking embedding — <a
+          href="https://www.londonunderground.live/" target="_blank" rel="noopener">open it directly here</a>.</div>
+    </div>
+    <div class="slide" id="slide-4">
+      <h1>4 · Latest UK News</h1>
+      <div id="newsList" class="loading">Fetching latest headlines…</div>
+    </div>
+
+    <div class="slide" id="slide-5">
+      <h1>5 · Accents, Regions &amp; Housing</h1>
+      <div class="grid" style="grid-template-columns:1fr 1fr;">
+        <div>
+          <h2>Pronunciation &amp; accents</h2>
+          <ul class="notes" style="font-size:0.88rem;line-height:1.6;">
+            <li><b>RP (Received Pronunciation)</b> — the "standard", non-regional accent used in broadcasting and often
+              taught to learners.</li>
+            <li><b>Cockney</b> — East London; dropped "h"s, glottal stops, rhyming slang.</li>
+            <li><b>Estuary English</b> — South-East England; a softer blend between RP and Cockney.</li>
+            <li><b>Scouse</b> — Liverpool; distinctive rising intonation.</li>
+            <li><b>Geordie</b> — Newcastle/North-East; unique vowel sounds and vocabulary.</li>
+            <li><b>Brummie</b> — Birmingham; flat, nasal tone.</li>
+            <li><b>Scottish</b> &amp; <b>Welsh</b> — strong national accents, each with many local variants.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>UK regions</h2>
+          <ul class="notes" style="font-size:0.88rem;line-height:1.6;">
+            <li>Four nations: <b>England, Scotland, Wales, Northern Ireland.</b></li>
+            <li>England is split into regions: North East, North West, Yorkshire &amp; the Humber, East Midlands, West
+              Midlands, East of England, London, South East, South West.</li>
+            <li>There's a well-known <b>North–South divide</b> in wealth, house prices and investment.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:20px;">
+        <div>
+          <h2>Council house</h2>
+          <p style="font-size:0.88rem;line-height:1.6;">A home owned and rented out by a local council (or a housing
+            association) at a below-market rent, for people on low incomes or with particular needs — one form of
+            <b>social housing</b>. Most were built between 1919 and the 1980s; since the 1980 "Right to Buy" scheme,
+            tenants could purchase their council home at a discount, and the overall stock has shrunk.</p>
+        </div>
+        <div>
+          <h2>Bigger problems</h2>
+          <ul class="notes" style="font-size:0.88rem;line-height:1.6;">
+            <li>A long-running <b>housing shortage</b> and a shrinking supply of social/council housing.</li>
+            <li><b>Rising rents</b> and a cost-of-living squeeze on lower incomes.</li>
+            <li>Growing <b>homelessness</b> and use of temporary accommodation.</li>
+            <li>Pressure on the <b>NHS</b> (waiting lists) and public services.</li>
+            <li>Regional inequality — the North–South divide in jobs and investment.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <div class="slide" id="slide-6">
+      <h1>6 · Surprise: Cockney Rhyming Slang Translator</h1>
+      <div class="translator">
+        <p style="font-size:0.9rem;color:#555;">Type an English sentence and see it swapped into real Cockney rhyming
+          slang.</p>
+        <textarea id="ckInput"
+          placeholder="e.g. Use your feet and look with your eyes, mate">Use your feet and look with your eyes, mate</textarea>
+        <br>
+        <button id="ckBtn">Translate</button>
+        <div class="result" id="ckResult"></div>
+      </div>
+    </div>
+
+    <div class="slide" id="slide-7">
+      <h1>7 · Sources</h1>
+      <ul class="notes">
+        <li>Slang meanings — public dictionaries &amp; Multicultural London English references.</li>
+        <li>News — BBC News RSS feed, via rss2json.</li>
+        <li>Tube times — free public TfL Unified API (api.tfl.gov.uk), no key required.</li>
+        <li>Clock — device time, converted to Europe/London.</li>
+        <li>Accents, regions &amp; housing — general reference sources (Wikipedia, Oxford Learner's Dictionaries,
+          housing charities).</li>
+        <li>Live map — londonunderground.live, embedded directly.</li>
+        <li>Cockney rhyming slang — traditional East London slang dictionary.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="nav" id="nav">
+    <button data-slide="1" class="active">1</button>
+    <button data-slide="2">2</button>
+    <button data-slide="3">3</button>
+    <button data-slide="4">4</button>
+    <button data-slide="5">5</button>
+    <button data-slide="6">6</button>
+    <button data-slide="7">7</button>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.nav button');
+    const slides = document.querySelectorAll('.slide');
+    function goToSlide(n) {
+      slides.forEach(s => s.classList.remove('active'));
+      buttons.forEach(b => b.classList.remove('active'));
+      document.getElementById('slide-' + n).classList.add('active');
+      document.querySelector('.nav button[data-slide="' + n + '"]').classList.add('active');
+    }
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => goToSlide(btn.dataset.slide));
+    });
+    document.addEventListener('keydown', (e) => {
+      const current = document.querySelector('.nav button.active');
+      let n = parseInt(current.dataset.slide, 10);
+      if (e.key === 'ArrowRight' && n < slides.length) goToSlide(n + 1);
+      if (e.key === 'ArrowLeft' && n > 1) goToSlide(n - 1);
+    });
+
+    const slang = [
+      { w: "Fam", tag: "London / MLE", m: "Close friend, treated like family. Not used for actual relatives.", e: "“Safe fam, see you later.”" },
+      { w: "G", tag: "London / grime scene", m: "Friend or “guy”, borrowed from Jamaican patois via Multicultural London English.", e: "“Yo G, you good?”" },
+      { w: "Bruv", tag: "London / MLE", m: "Shortened form of “brother”, used for a close mate.", e: "“Come on bruv, we're late.”" },
+      { w: "Mate", tag: "Nationwide", m: "The classic, everywhere-in-the-UK word for friend, also used to address strangers.", e: "“Alright mate, you good?”" },
+      { w: "Innit", tag: "Nationwide (esp. London/Estuary)", m: "Contraction of “isn't it”, used as a tag to agree or emphasise a point.", e: "“Cold today, innit.”" },
+      { w: "Bare", tag: "London / MLE", m: "Means “a lot of” or “very”.", e: "“There was bare traffic on the M25.”" },
+      { w: "Peng", tag: "London / MLE", m: "Very attractive, or (of food) really tasty.", e: "“This jerk chicken is peng.”" },
+      { w: "Duck", tag: "East Midlands", m: "A friendly term of address, similar to “love” or “mate”.", e: "“Alright duck, you alright?”" },
+      { w: "Boss", tag: "Liverpool (Scouse)", m: "Excellent, brilliant.", e: "“That match was boss.”" },
+      { w: "Chuffed", tag: "Nationwide", m: "Really pleased or proud about something.", e: "“I was chuffed to bits with my results.”" },
+      { w: "Gutted", tag: "Nationwide", m: "Extremely disappointed.", e: "“We lost on penalties, absolutely gutted.”" },
+      { w: "Gobsmacked", tag: "Nationwide", m: "Utterly astonished or amazed.", e: "“I was gobsmacked when I saw the bill.”" },
+    ];
+    const grid = document.getElementById('slangGrid');
+    slang.forEach(s => {
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = `<h2>${s.w}</h2><div class="tag">${s.tag}</div>
+    <div class="meaning">${s.m}</div>
+    <div class="example">${s.e}</div>`;
+      grid.appendChild(div);
+    });
+
+    function updateClock() {
+      const now = new Date();
+      const timeFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      const dateFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      document.getElementById('clockTime').textContent = timeFmt.format(now);
+      document.getElementById('clockDate').textContent = dateFmt.format(now) + ' (Europe/London)';
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    let currentLine = 'victoria';
+    const lineNames = { victoria: 'Victoria', piccadilly: 'Piccadilly', jubilee: 'Jubilee' };
+
+    async function loadTube() {
+      const tubeList = document.getElementById('tubeList');
+      const tubeStatus = document.getElementById('tubeStatus');
+      tubeList.className = 'loading';
+      tubeList.textContent = 'Fetching live arrivals from the TfL API…';
+      try {
+        const res = await fetch('https://api.tfl.gov.uk/Line/' + currentLine + '/Arrivals');
+        if (!res.ok) throw new Error('bad response');
+        const data = await res.json();
+        const stop = data.filter(a => a.stationName && a.stationName.includes('Green Park'));
+        stop.sort((a, b) => a.timeToStation - b.timeToStation);
+        if (stop.length === 0) {
+          tubeList.innerHTML = '<div class="loading">No live trains reported for Green Park right now.</div>';
+        } else {
+          tubeList.innerHTML = stop.slice(0, 6).map(a => {
+            const mins = Math.round(a.timeToStation / 60);
+            return `<div class="arrival">
+          <div>${a.destinationName || a.towards}<span class="dir">${a.platformName || ''}</span></div>
+          <div class="mins">${mins <= 0 ? 'Due' : mins + ' min'}</div>
+        </div>`;
+          }).join('');
+        }
+        const avgGap = stop.length > 1 ? Math.round((stop[stop.length - 1].timeToStation - stop[0].timeToStation) / 60 / (stop.length - 1)) : null;
+        tubeStatus.textContent = `${stop.length} trains tracked` + (avgGap ? ` · roughly every ${avgGap} min` : '') + ` · updated ${new Date().toLocaleTimeString('en-GB')}`;
+      } catch (err) {
+        tubeList.innerHTML = '<div class="loading">Couldn\'t reach the TfL API right now. Try refreshing the page.</div>';
+        tubeStatus.textContent = '';
+      }
+    }
+    loadTube();
+    setInterval(loadTube, 30000);
+
+    document.querySelectorAll('#lineSwitch button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentLine = btn.dataset.line;
+        const color = btn.dataset.color;
+        document.querySelectorAll('#lineSwitch button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('lineTitle').textContent = lineNames[currentLine] + ' line · Green Park';
+        const roundel = document.getElementById('roundelIcon');
+        roundel.querySelector('circle').setAttribute('stroke', color);
+        roundel.querySelector('rect').setAttribute('fill', color);
+        loadTube();
+      });
+    });
+
+    async function loadNews() {
+      const newsList = document.getElementById('newsList');
+      try {
+        const url = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://feeds.bbci.co.uk/news/uk/rss.xml');
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.status !== 'ok' || !data.items) throw new Error('bad feed');
+        newsList.innerHTML = data.items.slice(0, 8).map(item => {
+          const date = new Date(item.pubDate).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+          return `<div class="news-item">
+        <a href="${item.link}" target="_blank" rel="noopener">${item.title}</a>
+        <div class="src">BBC News · ${date}</div>
+      </div>`;
+        }).join('');
+      } catch (err) {
+        newsList.innerHTML = '<div class="loading">Couldn\'t load live headlines right now. Try refreshing the page.</div>';
+      }
+    }
+    loadNews();
+    setInterval(loadNews, 300000);
+
+    const rhymingSlang = {
+      "feet": "plates of meat", "eyes": "mince pies", "look": "butcher's hook", "believe": "adam and eve",
+      "stairs": "apples and pears", "phone": "dog and bone", "money": "bread and honey", "wife": "trouble and strife",
+      "word": "dog and bone", "head": "loaf of bread", "hair": "barnet fair", "teeth": "hampstead heath",
+      "trouble": "barney rubble", "suit": "whistle and flute", "road": "frog and toad", "hands": "berkshire hunt",
+      "drunk": "elephant's trunk", "tea": "rosie lee", "wig": "syrup of figs", "boots": "daisy roots",
+      "mate": "china plate", "lies": "porky pies", "shoes": "ayrton sennas"
+    };
+    document.getElementById('ckBtn').addEventListener('click', () => {
+      const input = document.getElementById('ckInput').value;
+      let output = input;
+      Object.keys(rhymingSlang).sort((a, b) => b.length - a.length).forEach(word => {
+        const re = new RegExp('\\b' + word + '\\b', 'gi');
+        output = output.replace(re, match => {
+          const slangPhrase = rhymingSlang[word];
+          return match[0] === match[0].toUpperCase() ? slangPhrase.charAt(0).toUpperCase() + slangPhrase.slice(1) : slangPhrase;
+        });
+      });
+      document.getElementById('ckResult').textContent = output;
+    });
+  </script>
+</body>
+
+</html>
