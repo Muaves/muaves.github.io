@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UK Slang, News &amp; Tube Times</title>
+  <link rel="preconnect" href="https://www.google.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
@@ -182,6 +184,77 @@
       flex-shrink: 0;
     }
 
+    .status-board {
+      margin-top: 26px;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 8px 20px;
+      margin-top: 12px;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      padding: 6px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .status-item .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .status-item .lname {
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .status-item .lstatus {
+      color: #777;
+      font-size: 0.78rem;
+    }
+
+    .status-item {
+      cursor: default;
+    }
+
+    .line-tooltip {
+      position: fixed;
+      background: #fff;
+      border: 1px solid #111;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      max-width: 260px;
+      z-index: 50;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      display: none;
+    }
+
+    .line-tooltip .tt-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .line-tooltip .tt-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 3px 0;
+      border-bottom: 1px dashed #ddd;
+    }
+
+    .line-tooltip .tt-row:last-child {
+      border-bottom: none;
+    }
+
     .news-item {
       padding: 12px 0;
       border-bottom: 1px solid #ddd;
@@ -225,6 +298,58 @@
       font-size: 0.85rem;
       color: #777;
       margin-top: 10px;
+    }
+
+    .shortcut-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .shortcut-row button {
+      border: 1px solid #111;
+      border-radius: 20px;
+      background: #fff;
+      color: #111;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      cursor: pointer;
+    }
+
+    .shortcut-row button.active {
+      background: #111;
+      color: #fff;
+    }
+
+    .map-search {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .map-search input {
+      flex: 1;
+      max-width: 360px;
+      border: 1px solid #111;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+    }
+
+    .map-search button {
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      border-radius: 20px;
+      padding: 8px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
     }
 
     .translator {
@@ -332,24 +457,41 @@
           <div class="status-line" id="tubeStatus"></div>
         </div>
       </div>
-      <h3>
-        Map of London: <a href="https://www.google.com/maps/@51.5074,-0.1278,12z" target="_blank">View on Google
-          Maps</a>
-        </h1>
+
+      <div class="status-board">
+        <h2>All lines, DLR, Overground, Elizabeth line &amp; Trams — live status</h2>
+        <div class="status-grid" id="statusGrid">
+          <div class="loading">Fetching live line status…</div>
+        </div>
+      </div>
     </div>
+
     <div class="slide" id="slide-3">
       <h1>3 · Live Tube Map</h1>
-      <iframe class="map-frame" src="https://www.londonunderground.live/" title="Live London Underground map"></iframe>
+      <iframe class="map-frame" id="tubeMapFrame" data-src="https://www.londonunderground.live/"
+        title="Live London Underground map"></iframe>
       <div class="map-fallback">If the map above stays blank, the site is blocking embedding — <a
           href="https://www.londonunderground.live/" target="_blank" rel="noopener">open it directly here</a>.</div>
     </div>
+
     <div class="slide" id="slide-4">
-      <h1>4 · Latest UK News</h1>
-      <div id="newsList" class="loading">Fetching latest headlines…</div>
+      <h1>4 · Google Maps — Station Shortcuts</h1>
+      <div class="map-search">
+        <input type="text" id="mapSearchInput" placeholder="Search any place in London (or anywhere)…">
+        <button id="mapSearchBtn">Search</button>
+      </div>
+      <div class="shortcut-row" id="shortcutRow"></div>
+      <iframe class="map-frame" id="googleMapFrame" data-src="" title="Google Maps"></iframe>
+      <div class="map-fallback">Pick a station above — the map jumps straight there, no reload of the whole page.</div>
     </div>
 
     <div class="slide" id="slide-5">
-      <h1>5 · Accents, Regions &amp; Housing</h1>
+      <h1>5 · Latest UK News</h1>
+      <div id="newsList" class="loading">Fetching latest headlines…</div>
+    </div>
+
+    <div class="slide" id="slide-6">
+      <h1>6 · Accents, Regions &amp; Housing</h1>
       <div class="grid" style="grid-template-columns:1fr 1fr;">
         <div>
           <h2>Pronunciation &amp; accents</h2>
@@ -395,10 +537,8 @@
       </div>
     </div>
 
-    
-
-    <div class="slide" id="slide-6">
-      <h1>6 · Surprise: Cockney Rhyming Slang Translator</h1>
+    <div class="slide" id="slide-7">
+      <h1>7 · Surprise: Cockney Rhyming Slang Translator</h1>
       <div class="translator">
         <p style="font-size:0.9rem;color:#555;">Type an English sentence and see it swapped into real Cockney rhyming
           slang.</p>
@@ -410,21 +550,24 @@
       </div>
     </div>
 
-    <div class="slide" id="slide-7">
-      <h1>7 · Sources</h1>
+    <div class="slide" id="slide-8">
+      <h1>8 · Sources</h1>
       <ul class="notes">
         <li>Slang meanings — public dictionaries &amp; Multicultural London English references.</li>
         <li>News — BBC News RSS feed, via rss2json.</li>
-        <li>Tube times — free public TfL Unified API (api.tfl.gov.uk), no key required.</li>
+        <li>Tube times &amp; line status — free public TfL Unified API (api.tfl.gov.uk), no key required.</li>
         <li>Clock — device time, converted to Europe/London.</li>
         <li>Accents, regions &amp; housing — general reference sources (Wikipedia, Oxford Learner's Dictionaries,
           housing charities).</li>
-        <li>Live map — londonunderground.live, embedded directly.</li>
+        <li>Live tube map — londonunderground.live, embedded directly.</li>
+        <li>Station shortcuts map — Google Maps, embedded without an API key.</li>
         <li>Cockney rhyming slang — traditional East London slang dictionary.</li>
       </ul>
     </div>
 
   </div>
+
+  <div class="line-tooltip" id="lineTooltip"></div>
 
   <div class="nav" id="nav">
     <button data-slide="1" class="active">1</button>
@@ -434,16 +577,27 @@
     <button data-slide="5">5</button>
     <button data-slide="6">6</button>
     <button data-slide="7">7</button>
+    <button data-slide="8">8</button>
   </div>
 
   <script>
     const buttons = document.querySelectorAll('.nav button');
     const slides = document.querySelectorAll('.slide');
+
+    function lazyLoadFrame(id) {
+      const frame = document.getElementById(id);
+      if (frame && !frame.getAttribute('src') && frame.dataset.src) {
+        frame.setAttribute('src', frame.dataset.src);
+      }
+    }
+
     function goToSlide(n) {
       slides.forEach(s => s.classList.remove('active'));
       buttons.forEach(b => b.classList.remove('active'));
       document.getElementById('slide-' + n).classList.add('active');
       document.querySelector('.nav button[data-slide="' + n + '"]').classList.add('active');
+      if (n == 3) lazyLoadFrame('tubeMapFrame');
+      if (n == 4) lazyLoadFrame('googleMapFrame');
     }
     buttons.forEach(btn => {
       btn.addEventListener('click', () => goToSlide(btn.dataset.slide));
@@ -536,6 +690,139 @@
         roundel.querySelector('rect').setAttribute('fill', color);
         loadTube();
       });
+    });
+
+    const lineColors = {
+      bakerloo: '#B36305', central: '#E32017', circle: '#FFD300', district: '#00782A',
+      'hammersmith-city': '#F3A9BB', jubilee: '#A0A5A9', metropolitan: '#9B0056', northern: '#000000',
+      piccadilly: '#003688', victoria: '#0098D8', 'waterloo-city': '#95CDBA', elizabeth: '#773DA4'
+    };
+    function colorForLine(line) {
+      if (lineColors[line.id]) return lineColors[line.id];
+      if (line.modeName === 'dlr') return '#00A4A7';
+      if (line.modeName === 'elizabeth-line') return '#773DA4';
+      if (line.modeName === 'overground') return '#EE7C0E';
+      if (line.modeName === 'tram') return '#84B817';
+      return '#888888';
+    }
+
+    async function loadLineStatus() {
+      const statusGrid = document.getElementById('statusGrid');
+      try {
+        const res = await fetch('https://api.tfl.gov.uk/Line/Mode/tube,dlr,overground,elizabeth-line,tram/Status');
+        if (!res.ok) throw new Error('bad response');
+        const data = await res.json();
+        statusGrid.innerHTML = data.map(line => {
+          const desc = line.lineStatuses && line.lineStatuses[0] ? line.lineStatuses[0].statusSeverityDescription : 'Unknown';
+          const color = colorForLine(line);
+          return `<div class="status-item" data-line-id="${line.id}" data-line-name="${line.name}">
+          <span class="dot" style="background:${color}"></span>
+          <span class="lname">${line.name}</span>
+          <span class="lstatus">${desc}</span>
+        </div>`;
+        }).join('');
+      } catch (err) {
+        statusGrid.innerHTML = '<div class="loading">Couldn\'t reach the TfL API right now.</div>';
+      }
+    }
+    loadLineStatus();
+    setInterval(loadLineStatus, 60000);
+
+    const lineArrivalsCache = {};
+    const lineTooltip = document.getElementById('lineTooltip');
+
+    function renderTooltip(lineName, data) {
+      const sorted = [...data].sort((a, b) => a.timeToStation - b.timeToStation).slice(0, 6);
+      if (sorted.length === 0) {
+        lineTooltip.innerHTML = `<div class="tt-title">${lineName}</div><div>No live arrivals right now.</div>`;
+        return;
+      }
+      lineTooltip.innerHTML = `<div class="tt-title">${lineName}</div>` + sorted.map(a => {
+        const mins = Math.round(a.timeToStation / 60);
+        const station = (a.stationName || '').replace(' Underground Station', '').replace(' Rail Station', '');
+        return `<div class="tt-row"><span>${station} → ${a.destinationName || a.towards || ''}</span><span>${mins <= 0 ? 'Due' : mins + ' min'}</span></div>`;
+      }).join('');
+    }
+
+    async function showLineTooltip(item) {
+      const lineId = item.dataset.lineId;
+      const lineName = item.dataset.lineName;
+      const rect = item.getBoundingClientRect();
+      lineTooltip.style.left = rect.left + 'px';
+      lineTooltip.style.top = (rect.bottom + 6) + 'px';
+      lineTooltip.style.display = 'block';
+      lineTooltip.innerHTML = `<div class="tt-title">${lineName}</div><div>Loading arrivals…</div>`;
+      const cached = lineArrivalsCache[lineId];
+      const now = Date.now();
+      if (cached && now - cached.time < 15000) {
+        renderTooltip(lineName, cached.data);
+        return;
+      }
+      try {
+        const res = await fetch('https://api.tfl.gov.uk/Line/' + lineId + '/Arrivals');
+        if (!res.ok) throw new Error('bad response');
+        const data = await res.json();
+        lineArrivalsCache[lineId] = { time: now, data };
+        renderTooltip(lineName, data);
+      } catch (err) {
+        lineTooltip.innerHTML = `<div class="tt-title">${lineName}</div><div>Couldn't load arrivals.</div>`;
+      }
+    }
+
+    document.getElementById('statusGrid').addEventListener('mouseover', e => {
+      const item = e.target.closest('.status-item');
+      if (!item) return;
+      showLineTooltip(item);
+    });
+    document.getElementById('statusGrid').addEventListener('mouseout', e => {
+      const item = e.target.closest('.status-item');
+      if (!item) return;
+      if (item.contains(e.relatedTarget)) return;
+      lineTooltip.style.display = 'none';
+    });
+
+    const stations = [
+      { name: 'Green Park', lat: 51.5067, lng: -0.1428 },
+      { name: 'Oxford Circus', lat: 51.5152, lng: -0.1418 },
+      { name: 'Victoria', lat: 51.4965, lng: -0.1447 },
+      { name: "King's Cross", lat: 51.5308, lng: -0.1238 },
+      { name: 'Bank', lat: 51.5133, lng: -0.0886 },
+      { name: 'Waterloo', lat: 51.5036, lng: -0.1143 },
+      { name: 'Piccadilly Circus', lat: 51.5100, lng: -0.1337 },
+      { name: 'Camden Town', lat: 51.5392, lng: -0.1426 },
+      { name: 'Liverpool Street', lat: 51.5178, lng: -0.0823 },
+      { name: 'Paddington', lat: 51.5154, lng: -0.1755 }
+    ];
+    const shortcutRow = document.getElementById('shortcutRow');
+    const googleMapFrame = document.getElementById('googleMapFrame');
+    function setGoogleMap(station, btn) {
+      const url = `https://www.google.com/maps?q=${station.lat},${station.lng}&z=16&output=embed`;
+      googleMapFrame.dataset.src = url;
+      if (googleMapFrame.getAttribute('src')) googleMapFrame.setAttribute('src', url);
+      document.querySelectorAll('#shortcutRow button').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+    stations.forEach((station, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = station.name;
+      if (i === 0) btn.classList.add('active');
+      btn.addEventListener('click', () => setGoogleMap(station, btn));
+      shortcutRow.appendChild(btn);
+    });
+    setGoogleMap(stations[0], null);
+    shortcutRow.querySelector('button').classList.add('active');
+
+    function searchGoogleMap() {
+      const query = document.getElementById('mapSearchInput').value.trim();
+      if (!query) return;
+      const url = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+      googleMapFrame.dataset.src = url;
+      if (googleMapFrame.getAttribute('src')) googleMapFrame.setAttribute('src', url);
+      document.querySelectorAll('#shortcutRow button').forEach(b => b.classList.remove('active'));
+    }
+    document.getElementById('mapSearchBtn').addEventListener('click', searchGoogleMap);
+    document.getElementById('mapSearchInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') searchGoogleMap();
     });
 
     async function loadNews() {
