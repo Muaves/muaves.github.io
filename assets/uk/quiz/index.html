@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UK Slang, Accents & Regions Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #fff;
+      color: #111;
+    }
+
+    .deck {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    .slide {
+      display: none;
+      min-height: 100vh;
+      padding: 60px 120px 60px 60px;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0 0 30px;
+      border-bottom: 2px solid #111;
+      padding-bottom: 14px;
+    }
+
+    .question-number {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .question {
+      font-size: 1.35rem;
+      line-height: 1.45;
+      font-weight: 700;
+      margin-bottom: 26px;
+      max-width: 850px;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 900px;
+    }
+
+    .option {
+      text-align: left;
+      border: 1px solid #111;
+      background: #fff;
+      color: #111;
+      padding: 18px 20px;
+      font: inherit;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .15s ease;
+    }
+
+    .option:hover:not(:disabled) {
+      background: #111;
+      color: #fff;
+    }
+
+    .option:disabled {
+      cursor: default;
+    }
+
+    .option.correct {
+      border: 2px solid #16803a;
+      background: #eaf8ee;
+      color: #0d5425;
+    }
+
+    .option.wrong {
+      border: 2px solid #b42318;
+      background: #fff0ee;
+      color: #821b12;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 22px;
+      max-width: 900px;
+      padding: 16px 18px;
+      border-left: 4px solid #111;
+      background: #f5f5f5;
+      font-size: .95rem;
+      line-height: 1.55;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.good {
+      border-left-color: #16803a;
+    }
+
+    .feedback.bad {
+      border-left-color: #b42318;
+    }
+
+    .next-btn,
+    .restart-btn {
+      display: none;
+      margin-top: 22px;
+      border: 1px solid #111;
+      background: #111;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: .88rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .next-btn.show,
+    .restart-btn.show {
+      display: inline-block;
+    }
+
+    .score-box {
+      max-width: 700px;
+      border: 1px solid #111;
+      padding: 28px;
+    }
+
+    .score {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 6px 0 16px;
+    }
+
+    .result-text {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .progress {
+      position: fixed;
+      left: 60px;
+      right: 120px;
+      bottom: 24px;
+      height: 3px;
+      background: #ddd;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 20%;
+      background: #111;
+      transition: width .25s ease;
+    }
+
+    .corner-label {
+      position: fixed;
+      left: 20px;
+      bottom: 12px;
+      font-size: .75rem;
+      color: #666;
+    }
+
+    .nav {
+      position: fixed;
+      top: 50%;
+      right: 30px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .nav-dot {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid #111;
+      background: #fff;
+      color: #111;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+    }
+
+    .nav-dot.active {
+      background: #111;
+      color: #fff;
+    }
+
+    .nav-dot.done {
+      border-width: 2px;
+    }
+
+    @media (max-width: 760px) {
+      .slide {
+        padding: 36px 28px 90px;
+      }
+
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .progress {
+        left: 28px;
+        right: 28px;
+      }
+
+      .corner-label {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="deck" id="deck"></div>
+
+  <div class="nav" id="nav"></div>
+
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="corner-label">UK Quiz</div>
+
+  <script>
+    const questions = [
+      {
+        q: 'What does the UK slang word “chuffed” mean?',
+        options: [
+          'Really pleased or proud',
+          'Extremely disappointed',
+          'Very confused',
+          'Angry with someone'
+        ],
+        answer: 0,
+        explanation: '“Chuffed” means really pleased or proud about something.'
+      },
+      {
+        q: 'Which accent is mainly associated with Liverpool and Merseyside?',
+        options: [
+          'Geordie',
+          'Scouse',
+          'Brummie',
+          'Cockney'
+        ],
+        answer: 1,
+        explanation: 'Scouse is the accent associated with Liverpool and Merseyside.'
+      },
+      {
+        q: 'In Geordie speech, what does “canny” mean?',
+        options: [
+          'Expensive',
+          'Strange',
+          'Nice',
+          'Very loud'
+        ],
+        answer: 2,
+        explanation: 'The slides describe “canny” as meaning nice in Geordie speech.'
+      },
+      {
+        q: 'What is a council house?',
+        options: [
+          'A house used by Parliament',
+          'A privately owned holiday home',
+          'A house reserved for council workers',
+          'A home rented out by a local council or housing association at below-market rent'
+        ],
+        answer: 3,
+        explanation: 'A council house is social housing owned and rented by a local council or housing association, usually at below-market rent.'
+      },
+      {
+        q: 'Which problem is mentioned in the presentation?',
+        options: [
+          'A long-running housing shortage and rising rents',
+          'Too many hospitals being built',
+          'A major shortage of UK regions',
+          'Too many council houses'
+        ],
+        answer: 0,
+        explanation: 'The presentation mentions a housing shortage, shrinking social housing supply, rising rents, homelessness and pressure on public services.'
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+    const answered = new Array(questions.length).fill(false);
+
+    const deck = document.getElementById('deck');
+    const nav = document.getElementById('nav');
+    const progressBar = document.getElementById('progressBar');
+
+    function renderQuiz() {
+      deck.innerHTML = '';
+      nav.innerHTML = '';
+
+      questions.forEach((item, index) => {
+        const slide = document.createElement('section');
+        slide.className = 'slide' + (index === 0 ? ' active' : '');
+        slide.id = 'slide-' + index;
+
+        slide.innerHTML = `
+          <h1>${index + 1} · UK Quiz</h1>
+          <div class="question-number">Question ${index + 1} of ${questions.length}</div>
+          <div class="question">${item.q}</div>
+
+          <div class="options">
+            ${item.options.map((option, i) =>
+              `<button class="option" data-question="${index}" data-option="${i}">
+                ${String.fromCharCode(65 + i)} · ${option}
+              </button>`
+            ).join('')}
+          </div>
+
+          <div class="feedback" id="feedback-${index}"></div>
+          <button class="next-btn" id="next-${index}">
+            ${index === questions.length - 1 ? 'See results' : 'Next question'}
+          </button>
+        `;
+
+        deck.appendChild(slide);
+
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot' + (index === 0 ? ' active' : '');
+        dot.textContent = index + 1;
+        dot.id = 'dot-' + index;
+        nav.appendChild(dot);
+      });
+
+      const resultSlide = document.createElement('section');
+      resultSlide.className = 'slide';
+      resultSlide.id = 'result-slide';
+      resultSlide.innerHTML = `
+        <h1>Quiz Complete</h1>
+        <div class="score-box">
+          <div class="question-number">Your score</div>
+          <div class="score" id="finalScore">0 / ${questions.length}</div>
+          <div class="result-text" id="resultText"></div>
+          <button class="restart-btn show" onclick="restartQuiz()">Try again</button>
+        </div>
+      `;
+      deck.appendChild(resultSlide);
+
+      document.querySelectorAll('.option').forEach(btn => {
+        btn.addEventListener('click', handleAnswer);
+      });
+
+      questions.forEach((_, index) => {
+        document.getElementById('next-' + index).addEventListener('click', () => {
+          if (index === questions.length - 1) {
+            showResults();
+          } else {
+            goTo(index + 1);
+          }
+        });
+      });
+
+      updateProgress();
+    }
+
+    function handleAnswer(e) {
+      const button = e.currentTarget;
+      const qIndex = Number(button.dataset.question);
+      const optionIndex = Number(button.dataset.option);
+
+      if (answered[qIndex]) return;
+      answered[qIndex] = true;
+
+      const question = questions[qIndex];
+      const slide = document.getElementById('slide-' + qIndex);
+      const buttons = slide.querySelectorAll('.option');
+      const feedback = document.getElementById('feedback-' + qIndex);
+
+      buttons.forEach(btn => btn.disabled = true);
+
+      if (optionIndex === question.answer) {
+        button.classList.add('correct');
+        feedback.className = 'feedback show good';
+        feedback.innerHTML = '<strong>Correct.</strong> ' + question.explanation;
+        score++;
+      } else {
+        button.classList.add('wrong');
+        buttons[question.answer].classList.add('correct');
+        feedback.className = 'feedback show bad';
+        feedback.innerHTML = '<strong>Nah bums, not the correct answer</strong> ' + question.explanation;
+      }
+
+      document.getElementById('dot-' + qIndex).classList.add('done');
+      document.getElementById('next-' + qIndex).classList.add('show');
+    }
+
+    function goTo(index) {
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+
+      current = index;
+      document.getElementById('slide-' + index).classList.add('active');
+      document.getElementById('dot-' + index).classList.add('active');
+
+      updateProgress();
+      window.scrollTo(0, 0);
+    }
+
+    function showResults() {
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+
+      document.getElementById('result-slide').classList.add('active');
+      document.getElementById('finalScore').textContent = `${score} / ${questions.length}`;
+
+      let message = '';
+      if (score === 5) message = 'Perfect score. JUST PUT THE FRIES IN THE BAG.';
+      else if (score >= 4) message = 'Yeah bro, www.redstone-launcher.com';
+      else if (score >= 3) message = 'Nah fam, Go put the fries in the bag.';
+      else message = 'You guys suck! Go put the fries in the bag.';
+
+      document.getElementById('resultText').textContent = message;
+      progressBar.style.width = '100%';
+    }
+
+    function updateProgress() {
+      progressBar.style.width = ((current + 1) / questions.length * 100) + '%';
+    }
+
+    function restartQuiz() {
+      current = 0;
+      score = 0;
+      answered.fill(false);
+      renderQuiz();
+    }
+
+    renderQuiz();
+  </script>
+</body>
+</html>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UK Slang, News &amp; Tube Times</title>
+  <title>UK Slang, Accents &amp; Regions</title>
   <link rel="preconnect" href="https://www.google.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -65,12 +65,17 @@
       gap: 18px 40px;
     }
 
-    .item {
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 10px;
+    .grid.wide {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     }
 
-    .item .tag {
+    .item {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 12px;
+    }
+
+    .item .tag,
+    .vcard .tag {
       font-size: 0.7rem;
       font-weight: 600;
       color: #555;
@@ -81,6 +86,7 @@
     .item .meaning {
       font-size: 0.92rem;
       margin: 4px 0;
+      line-height: 1.45;
     }
 
     .item .example {
@@ -89,170 +95,106 @@
       font-style: italic;
     }
 
-    .live-row {
-      display: flex;
-      gap: 50px;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
-
-    .live-block {
-      flex: 1 1 320px;
-    }
-
-    .clock-time {
-      font-size: 2.6rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    .clock-date {
-      color: #555;
-      font-size: 0.9rem;
-      margin-top: 2px;
-    }
-
-    .arrival {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px dashed #ccc;
-      font-size: 0.92rem;
-    }
-
-    .arrival .dir {
-      color: #777;
-      font-size: 0.75rem;
-      display: block;
-    }
-
-    .mins {
-      font-weight: 800;
-      font-size: 1rem;
-    }
-
-    .status-line {
-      font-size: 0.8rem;
-      color: #777;
-      margin-top: 10px;
-    }
-
-    .line-head {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .roundel {
-      width: 26px;
-      height: 26px;
-      flex-shrink: 0;
-    }
-
-    .line-switch {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
-    .line-switch button {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .maplink {
+      margin-top: 8px;
       border: 1px solid #111;
-      border-radius: 20px;
       background: #fff;
-      padding: 5px 12px 5px 6px;
+      color: #111;
+      border-radius: 20px;
+      padding: 4px 12px;
       font-family: 'Inter', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
-      color: #111;
     }
 
-    .line-switch button.active {
+    .maplink:hover {
       background: #111;
       color: #fff;
     }
 
-    .line-switch .dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .status-board {
-      margin-top: 26px;
-    }
-
-    .status-grid {
+    .vgrid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 8px 20px;
-      margin-top: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 26px 28px;
     }
 
-    .status-item {
+    .vid {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #eee;
+      border: 1px solid #111;
+      overflow: hidden;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+    .vid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .vid iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .play {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      padding: 6px 0;
-      border-bottom: 1px solid #eee;
+      justify-content: center;
     }
 
-    .status-item .dot {
-      width: 12px;
-      height: 12px;
+    .play span {
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .status-item .lname {
-      font-weight: 600;
-      flex: 1;
-    }
-
-    .status-item .lstatus {
-      color: #777;
-      font-size: 0.78rem;
-    }
-
-    .status-item {
-      cursor: default;
-    }
-
-    .line-tooltip {
-      position: fixed;
       background: #fff;
+      color: #111;
       border: 1px solid #111;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 0.78rem;
-      max-width: 260px;
-      z-index: 50;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-      display: none;
-    }
-
-    .line-tooltip .tt-title {
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .line-tooltip .tt-row {
       display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 3px 0;
-      border-bottom: 1px dashed #ddd;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      padding-left: 3px;
     }
 
-    .line-tooltip .tt-row:last-child {
-      border-bottom: none;
+    .vlink {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 0.78rem;
+      color: #111;
+    }
+
+    table.regions {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-bottom: 30px;
+    }
+
+    table.regions th,
+    table.regions td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table.regions th {
+      border-bottom: 2px solid #111;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    table.regions td:first-child {
+      font-weight: 600;
+      white-space: nowrap;
     }
 
     .news-item {
@@ -290,7 +232,7 @@
 
     .map-frame {
       width: 100%;
-      height: 70vh;
+      height: 62vh;
       border: 1px solid #111;
     }
 
@@ -298,30 +240,6 @@
       font-size: 0.85rem;
       color: #777;
       margin-top: 10px;
-    }
-
-    .shortcut-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-
-    .shortcut-row button {
-      border: 1px solid #111;
-      border-radius: 20px;
-      background: #fff;
-      color: #111;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 6px 14px;
-      cursor: pointer;
-    }
-
-    .shortcut-row button.active {
-      background: #111;
-      color: #fff;
     }
 
     .map-search {
@@ -350,6 +268,44 @@
       font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
+    }
+
+    .shortcut-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .shortcut-row button {
+      border: 1px solid #111;
+      border-radius: 20px;
+      background: #fff;
+      color: #111;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      cursor: pointer;
+    }
+
+    .shortcut-row button.active {
+      background: #111;
+      color: #fff;
+    }
+
+    .blank-area {
+      min-height: 62vh;
+      border: 1px dashed #bbb;
+      padding: 22px;
+      font-size: 1rem;
+      line-height: 1.6;
+      outline: none;
+    }
+
+    .blank-area:empty::before {
+      content: 'Click here and type…';
+      color: #aaa;
     }
 
     .translator {
@@ -389,6 +345,15 @@
       min-height: 24px;
     }
 
+    .corner-clock {
+      position: fixed;
+      left: 20px;
+      bottom: 14px;
+      font-size: 0.78rem;
+      color: #555;
+      z-index: 10;
+    }
+
     .nav {
       position: fixed;
       top: 50%;
@@ -396,7 +361,7 @@
       transform: translateY(-50%);
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
       z-index: 10;
     }
 
@@ -430,95 +395,43 @@
     </div>
 
     <div class="slide" id="slide-2">
-      <h1>2 · Live London Clock &amp; Tube</h1>
-      <div class="live-row">
-        <div class="live-block">
-          <h2>Exact time — Europe/London</h2>
-          <div class="clock-time" id="clockTime">--:--:--</div>
-          <div class="clock-date" id="clockDate">Loading…</div>
-        </div>
-        <div class="live-block">
-          <div class="line-head">
-            <svg class="roundel" id="roundelIcon" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="45" fill="none" stroke="#0098D8" stroke-width="10" />
-              <rect x="8" y="42" width="84" height="16" fill="#0098D8" />
-            </svg>
-            <h2 id="lineTitle">Victoria line · Green Park</h2>
-          </div>
-          <div class="line-switch" id="lineSwitch">
-            <button data-line="victoria" data-color="#0098D8" class="active"><span class="dot"
-                style="background:#0098D8"></span>Victoria</button>
-            <button data-line="piccadilly" data-color="#003688"><span class="dot"
-                style="background:#003688"></span>Piccadilly</button>
-            <button data-line="jubilee" data-color="#A0A5A9"><span class="dot"
-                style="background:#A0A5A9"></span>Jubilee</button>
-          </div>
-          <div id="tubeList" class="loading">Fetching live arrivals from the TfL API…</div>
-          <div class="status-line" id="tubeStatus"></div>
-        </div>
-      </div>
-
-      <div class="status-board">
-        <h2>All lines, DLR, Overground, Elizabeth line &amp; Trams — live status</h2>
-        <div class="status-grid" id="statusGrid">
-          <div class="loading">Fetching live line status…</div>
-        </div>
-      </div>
+      <h1>2 · Accents by Region</h1>
+      <div class="grid wide" id="accentGrid"></div>
     </div>
 
     <div class="slide" id="slide-3">
-      <h1>3 · Live Tube Map</h1>
-      <iframe class="map-frame" id="tubeMapFrame" data-src="https://www.londonunderground.live/"
-        title="Live London Underground map"></iframe>
-      <div class="map-fallback">If the map above stays blank, the site is blocking embedding — <a
-          href="https://www.londonunderground.live/" target="_blank" rel="noopener">open it directly here</a>.</div>
+      <h1>3 · Accent Videos</h1>
+      <div class="vgrid" id="videoGrid"></div>
     </div>
 
     <div class="slide" id="slide-4">
-      <h1>4 · Google Maps — Station Shortcuts</h1>
+      <h1>4 · Map — Accent Regions</h1>
       <div class="map-search">
-        <input type="text" id="mapSearchInput" placeholder="Search any place in London (or anywhere)…">
+        <input type="text" id="mapSearchInput" placeholder="Search any place in the UK (or anywhere)…">
         <button id="mapSearchBtn">Search</button>
       </div>
       <div class="shortcut-row" id="shortcutRow"></div>
       <iframe class="map-frame" id="googleMapFrame" data-src="" title="Google Maps"></iframe>
-      <div class="map-fallback">Pick a station above — the map jumps straight there, no reload of the whole page.</div>
+      <div class="map-fallback">Pick a city above, or use “Show on map” on any accent card.</div>
     </div>
 
     <div class="slide" id="slide-5">
-      <h1>5 · Latest UK News</h1>
-      <div id="newsList" class="loading">Fetching latest headlines…</div>
-    </div>
-
-    <div class="slide" id="slide-6">
-      <h1>6 · Accents, Regions &amp; Housing</h1>
-      <div class="grid" style="grid-template-columns:1fr 1fr;">
+      <h1>5 · Regions, Housing &amp; Problems</h1>
+      <table class="regions">
+        <thead>
+          <tr><th>Region</th><th>Main accents &amp; dialects</th></tr>
+        </thead>
+        <tbody id="regionsBody"></tbody>
+      </table>
+      <div class="grid">
         <div>
-          <h2>Pronunciation &amp; accents</h2>
+          <h2>Four nations</h2>
           <ul class="notes" style="font-size:0.88rem;line-height:1.6;">
-            <li><b>RP (Received Pronunciation)</b> — the "standard", non-regional accent used in broadcasting and often
-              taught to learners.</li>
-            <li><b>Cockney</b> — East London; dropped "h"s, glottal stops, rhyming slang.</li>
-            <li><b>Estuary English</b> — South-East England; a softer blend between RP and Cockney.</li>
-            <li><b>Scouse</b> — Liverpool; distinctive rising intonation.</li>
-            <li><b>Geordie</b> — Newcastle/North-East; unique vowel sounds and vocabulary.</li>
-            <li><b>Brummie</b> — Birmingham; flat, nasal tone.</li>
-            <li><b>Scottish</b> &amp; <b>Welsh</b> — strong national accents, each with many local variants.</li>
-          </ul>
-        </div>
-        <div>
-          <h2>UK regions</h2>
-          <ul class="notes" style="font-size:0.88rem;line-height:1.6;">
-            <li>Four nations: <b>England, Scotland, Wales, Northern Ireland.</b></li>
-            <li>England is split into regions: North East, North West, Yorkshire &amp; the Humber, East Midlands, West
-              Midlands, East of England, London, South East, South West.</li>
+            <li><b>England, Scotland, Wales, Northern Ireland.</b></li>
+            <li>England is split into nine regions (the first nine rows above).</li>
             <li>There's a well-known <b>North–South divide</b> in wealth, house prices and investment.</li>
           </ul>
-        </div>
-      </div>
-      <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:20px;">
-        <div>
-          <h2>Council house</h2>
+          <h2 style="margin-top:20px;">Council house</h2>
           <p style="font-size:0.88rem;line-height:1.6;">A home owned and rented out by a local council (or a housing
             association) at a below-market rent, for people on low incomes or with particular needs — one form of
             <b>social housing</b>. Most were built between 1919 and the 1980s; since the 1980 "Right to Buy" scheme,
@@ -537,8 +450,18 @@
       </div>
     </div>
 
+    <div class="slide" id="slide-6">
+      <h1>6 · Latest UK News</h1>
+      <div id="newsList" class="loading">Fetching latest headlines…</div>
+    </div>
+
     <div class="slide" id="slide-7">
-      <h1>7 · Surprise: Cockney Rhyming Slang Translator</h1>
+      <h1>7 · Quiz</h1>
+      <p><a href="https://muaves.com/assets/uk/quiz">Here</a></p>
+    </div>
+
+    <div class="slide" id="slide-8">
+      <h1>8 · Surprise: Cockney Rhyming Slang Translator</h1>
       <div class="translator">
         <p style="font-size:0.9rem;color:#555;">Type an English sentence and see it swapped into real Cockney rhyming
           slang.</p>
@@ -550,24 +473,23 @@
       </div>
     </div>
 
-    <div class="slide" id="slide-8">
-      <h1>8 · Sources</h1>
+    <div class="slide" id="slide-9">
+      <h1>9 · Sources</h1>
       <ul class="notes">
         <li>Slang meanings — public dictionaries &amp; Multicultural London English references.</li>
+        <li>Accents &amp; regions — general reference sources (Wikipedia, accent-teaching resources).</li>
+        <li>Accent videos — YouTube; every card links to the original video.</li>
+        <li>Map — Google Maps, embedded without an API key.</li>
         <li>News — BBC News RSS feed, via rss2json.</li>
-        <li>Tube times &amp; line status — free public TfL Unified API (api.tfl.gov.uk), no key required.</li>
+        <li>Housing &amp; social issues — general reference sources and housing charities.</li>
         <li>Clock — device time, converted to Europe/London.</li>
-        <li>Accents, regions &amp; housing — general reference sources (Wikipedia, Oxford Learner's Dictionaries,
-          housing charities).</li>
-        <li>Live tube map — londonunderground.live, embedded directly.</li>
-        <li>Station shortcuts map — Google Maps, embedded without an API key.</li>
         <li>Cockney rhyming slang — traditional East London slang dictionary.</li>
       </ul>
     </div>
 
   </div>
 
-  <div class="line-tooltip" id="lineTooltip"></div>
+  <div class="corner-clock">London <b id="clockTime">--:--:--</b></div>
 
   <div class="nav" id="nav">
     <button data-slide="1" class="active">1</button>
@@ -578,11 +500,13 @@
     <button data-slide="6">6</button>
     <button data-slide="7">7</button>
     <button data-slide="8">8</button>
+    <button data-slide="9">9</button>
   </div>
 
   <script>
     const buttons = document.querySelectorAll('.nav button');
     const slides = document.querySelectorAll('.slide');
+    let videosRendered = false;
 
     function lazyLoadFrame(id) {
       const frame = document.getElementById(id);
@@ -596,15 +520,16 @@
       buttons.forEach(b => b.classList.remove('active'));
       document.getElementById('slide-' + n).classList.add('active');
       document.querySelector('.nav button[data-slide="' + n + '"]').classList.add('active');
-      if (n == 3) lazyLoadFrame('tubeMapFrame');
+      if (n == 3 && !videosRendered) renderVideos();
       if (n == 4) lazyLoadFrame('googleMapFrame');
     }
     buttons.forEach(btn => {
       btn.addEventListener('click', () => goToSlide(btn.dataset.slide));
     });
     document.addEventListener('keydown', (e) => {
+      if (e.target.closest && e.target.closest('input, textarea, [contenteditable="true"]')) return;
       const current = document.querySelector('.nav button.active');
-      let n = parseInt(current.dataset.slide, 10);
+      const n = parseInt(current.dataset.slide, 10);
       if (e.key === 'ArrowRight' && n < slides.length) goToSlide(n + 1);
       if (e.key === 'ArrowLeft' && n > 1) goToSlide(n - 1);
     });
@@ -633,197 +558,137 @@
       grid.appendChild(div);
     });
 
-    function updateClock() {
-      const now = new Date();
-      const timeFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-      const dateFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-      document.getElementById('clockTime').textContent = timeFmt.format(now);
-      document.getElementById('clockDate').textContent = dateFmt.format(now) + ' (Europe/London)';
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-
-    let currentLine = 'victoria';
-    const lineNames = { victoria: 'Victoria', piccadilly: 'Piccadilly', jubilee: 'Jubilee' };
-
-    async function loadTube() {
-      const tubeList = document.getElementById('tubeList');
-      const tubeStatus = document.getElementById('tubeStatus');
-      tubeList.className = 'loading';
-      tubeList.textContent = 'Fetching live arrivals from the TfL API…';
-      try {
-        const res = await fetch('https://api.tfl.gov.uk/Line/' + currentLine + '/Arrivals');
-        if (!res.ok) throw new Error('bad response');
-        const data = await res.json();
-        const stop = data.filter(a => a.stationName && a.stationName.includes('Green Park'));
-        stop.sort((a, b) => a.timeToStation - b.timeToStation);
-        if (stop.length === 0) {
-          tubeList.innerHTML = '<div class="loading">No live trains reported for Green Park right now.</div>';
-        } else {
-          tubeList.innerHTML = stop.slice(0, 6).map(a => {
-            const mins = Math.round(a.timeToStation / 60);
-            return `<div class="arrival">
-          <div>${a.destinationName || a.towards}<span class="dir">${a.platformName || ''}</span></div>
-          <div class="mins">${mins <= 0 ? 'Due' : mins + ' min'}</div>
-        </div>`;
-          }).join('');
-        }
-        const avgGap = stop.length > 1 ? Math.round((stop[stop.length - 1].timeToStation - stop[0].timeToStation) / 60 / (stop.length - 1)) : null;
-        tubeStatus.textContent = `${stop.length} trains tracked` + (avgGap ? ` · roughly every ${avgGap} min` : '') + ` · updated ${new Date().toLocaleTimeString('en-GB')}`;
-      } catch (err) {
-        tubeList.innerHTML = '<div class="loading">Couldn\'t reach the TfL API right now. Try refreshing the page.</div>';
-        tubeStatus.textContent = '';
-      }
-    }
-    loadTube();
-    setInterval(loadTube, 30000);
-
-    document.querySelectorAll('#lineSwitch button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        currentLine = btn.dataset.line;
-        const color = btn.dataset.color;
-        document.querySelectorAll('#lineSwitch button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('lineTitle').textContent = lineNames[currentLine] + ' line · Green Park';
-        const roundel = document.getElementById('roundelIcon');
-        roundel.querySelector('circle').setAttribute('stroke', color);
-        roundel.querySelector('rect').setAttribute('fill', color);
-        loadTube();
-      });
-    });
-
-    const lineColors = {
-      bakerloo: '#B36305', central: '#E32017', circle: '#FFD300', district: '#00782A',
-      'hammersmith-city': '#F3A9BB', jubilee: '#A0A5A9', metropolitan: '#9B0056', northern: '#000000',
-      piccadilly: '#003688', victoria: '#0098D8', 'waterloo-city': '#95CDBA', elizabeth: '#773DA4'
-    };
-    function colorForLine(line) {
-      if (lineColors[line.id]) return lineColors[line.id];
-      if (line.modeName === 'dlr') return '#00A4A7';
-      if (line.modeName === 'elizabeth-line') return '#773DA4';
-      if (line.modeName === 'overground') return '#EE7C0E';
-      if (line.modeName === 'tram') return '#84B817';
-      return '#888888';
-    }
-
-    async function loadLineStatus() {
-      const statusGrid = document.getElementById('statusGrid');
-      try {
-        const res = await fetch('https://api.tfl.gov.uk/Line/Mode/tube,dlr,overground,elizabeth-line,tram/Status');
-        if (!res.ok) throw new Error('bad response');
-        const data = await res.json();
-        statusGrid.innerHTML = data.map(line => {
-          const desc = line.lineStatuses && line.lineStatuses[0] ? line.lineStatuses[0].statusSeverityDescription : 'Unknown';
-          const color = colorForLine(line);
-          return `<div class="status-item" data-line-id="${line.id}" data-line-name="${line.name}">
-          <span class="dot" style="background:${color}"></span>
-          <span class="lname">${line.name}</span>
-          <span class="lstatus">${desc}</span>
-        </div>`;
-        }).join('');
-      } catch (err) {
-        statusGrid.innerHTML = '<div class="loading">Couldn\'t reach the TfL API right now.</div>';
-      }
-    }
-    loadLineStatus();
-    setInterval(loadLineStatus, 60000);
-
-    const lineArrivalsCache = {};
-    const lineTooltip = document.getElementById('lineTooltip');
-
-    function renderTooltip(lineName, data) {
-      const sorted = [...data].sort((a, b) => a.timeToStation - b.timeToStation).slice(0, 6);
-      if (sorted.length === 0) {
-        lineTooltip.innerHTML = `<div class="tt-title">${lineName}</div><div>No live arrivals right now.</div>`;
-        return;
-      }
-      lineTooltip.innerHTML = `<div class="tt-title">${lineName}</div>` + sorted.map(a => {
-        const mins = Math.round(a.timeToStation / 60);
-        const station = (a.stationName || '').replace(' Underground Station', '').replace(' Rail Station', '');
-        return `<div class="tt-row"><span>${station} → ${a.destinationName || a.towards || ''}</span><span>${mins <= 0 ? 'Due' : mins + ' min'}</span></div>`;
-      }).join('');
-    }
-
-    async function showLineTooltip(item) {
-      const lineId = item.dataset.lineId;
-      const lineName = item.dataset.lineName;
-      const rect = item.getBoundingClientRect();
-      lineTooltip.style.left = rect.left + 'px';
-      lineTooltip.style.top = (rect.bottom + 6) + 'px';
-      lineTooltip.style.display = 'block';
-      lineTooltip.innerHTML = `<div class="tt-title">${lineName}</div><div>Loading arrivals…</div>`;
-      const cached = lineArrivalsCache[lineId];
-      const now = Date.now();
-      if (cached && now - cached.time < 15000) {
-        renderTooltip(lineName, cached.data);
-        return;
-      }
-      try {
-        const res = await fetch('https://api.tfl.gov.uk/Line/' + lineId + '/Arrivals');
-        if (!res.ok) throw new Error('bad response');
-        const data = await res.json();
-        lineArrivalsCache[lineId] = { time: now, data };
-        renderTooltip(lineName, data);
-      } catch (err) {
-        lineTooltip.innerHTML = `<div class="tt-title">${lineName}</div><div>Couldn't load arrivals.</div>`;
-      }
-    }
-
-    document.getElementById('statusGrid').addEventListener('mouseover', e => {
-      const item = e.target.closest('.status-item');
-      if (!item) return;
-      showLineTooltip(item);
-    });
-    document.getElementById('statusGrid').addEventListener('mouseout', e => {
-      const item = e.target.closest('.status-item');
-      if (!item) return;
-      if (item.contains(e.relatedTarget)) return;
-      lineTooltip.style.display = 'none';
-    });
-
-    const stations = [
-      { name: 'Green Park', lat: 51.5067, lng: -0.1428 },
-      { name: 'Oxford Circus', lat: 51.5152, lng: -0.1418 },
-      { name: 'Victoria', lat: 51.4965, lng: -0.1447 },
-      { name: "King's Cross", lat: 51.5308, lng: -0.1238 },
-      { name: 'Bank', lat: 51.5133, lng: -0.0886 },
-      { name: 'Waterloo', lat: 51.5036, lng: -0.1143 },
-      { name: 'Piccadilly Circus', lat: 51.5100, lng: -0.1337 },
-      { name: 'Camden Town', lat: 51.5392, lng: -0.1426 },
-      { name: 'Liverpool Street', lat: 51.5178, lng: -0.0823 },
-      { name: 'Paddington', lat: 51.5154, lng: -0.1755 }
+    const cities = [
+      { key: "london", label: "London", q: "London, UK" },
+      { key: "oxford", label: "Oxford · Posh", q: "Oxford, UK" },
+      { key: "liverpool", label: "Liverpool · Scouse", q: "Liverpool, UK" },
+      { key: "manchester", label: "Manchester", q: "Manchester, UK" },
+      { key: "newcastle", label: "Newcastle · Geordie", q: "Newcastle upon Tyne, UK" },
+      { key: "birmingham", label: "Birmingham · Brummie", q: "Birmingham, UK" },
+      { key: "leeds", label: "Leeds · Yorkshire", q: "Leeds, UK" },
+      { key: "bristol", label: "Bristol · West Country", q: "Bristol, UK" },
+      { key: "glasgow", label: "Glasgow", q: "Glasgow, UK" },
+      { key: "cardiff", label: "Cardiff · Welsh", q: "Cardiff, UK" },
+      { key: "belfast", label: "Belfast", q: "Belfast, UK" }
     ];
-    const shortcutRow = document.getElementById('shortcutRow');
+
+    const accents = [
+      { name: "Posh / RP", place: "Oxford, Cambridge & the Home Counties", city: "oxford", feat: "Received Pronunciation. No “r” after vowels (car sounds like “cah”), long “ah” in bath and dance, crisp “t” and “h” sounds.", ex: "“Rather good, isn't it?”" },
+      { name: "Cockney", place: "East London", city: "london", feat: "“th” becomes “f” or “v” (think → fink), glottal stop for “t” (bottle → bo'le), dropped “h”, and rhyming slang.", ex: "“Alright, me old china?”" },
+      { name: "Multicultural London English", place: "Inner London", city: "london", feat: "Cockney blended with Caribbean, African and Asian language influences; “th” often shifts to “f” or “d”; slang like fam, bruv, bare, peng.", ex: "“Wagwan fam, you good?”" },
+      { name: "Scouse", place: "Liverpool & Merseyside", city: "liverpool", feat: "“k” sounds like clearing your throat, a strong rise-and-fall sing-song tune, tapped “r”, “th” often sounds like “d”.", ex: "“Sound, la — that's boss.”" },
+      { name: "Mancunian", place: "Manchester", city: "manchester", feat: "Short “a” in bath and grass, “cup” and “put” share a vowel, and “our kid” means brother or mate.", ex: "“Alright, our kid?”" },
+      { name: "Geordie", place: "Newcastle & Tyneside", city: "newcastle", feat: "“ow” becomes “oo” (town → toon), plus words like canny (nice), bairn (child) and howay (come on).", ex: "“Howay man, that's canny good.”" },
+      { name: "Brummie", place: "Birmingham", city: "birmingham", feat: "A flat, drawn-out tune; “ay” drifts toward “i” (day → die) and “i” toward “oi” (five → foive).", ex: "“How's it going, bab?”" },
+      { name: "Yorkshire", place: "Leeds, Sheffield, Hull & the county", city: "leeds", feat: "“the” shortened to “t'” (going to t' shop), “were” used for “was”, short flat vowels.", ex: "“Ey up, how do?”" },
+      { name: "West Country", place: "Bristol, Devon, Somerset & Cornwall", city: "bristol", feat: "A strongly pronounced “r” after vowels, a slow rolling tune; Bristolians add an “l” to word endings (idea → ideal).", ex: "“Gert lush, cheers drive!”" },
+      { name: "Glaswegian", place: "Glasgow, Scotland", city: "glasgow", feat: "Rolled or tapped “r”, glottal stops, short vowels, and words like wee (small), aye (yes) and dinnae (don't).", ex: "“Aye, it's a wee bit cold the day.”" },
+      { name: "Welsh (South Wales)", place: "Cardiff & the Valleys", city: "cardiff", feat: "A lilting sing-song rise and fall, tapped “r”; tidy and lush mean good, and “butt” is a friendly way to address someone.", ex: "“Alright, butt? That's lush, that is.”" },
+      { name: "Belfast / Ulster", place: "Northern Ireland", city: "belfast", feat: "A rising tune at the end of statements, broad vowels, words like wee, aye and craic (fun), plus some Ulster-Scots words.", ex: "“What's the craic?”" }
+    ];
+    const accentGrid = document.getElementById('accentGrid');
+    accentGrid.innerHTML = accents.map(a => `<div class="item">
+      <h2>${a.name}</h2><div class="tag">${a.place}</div>
+      <div class="meaning">${a.feat}</div>
+      <div class="example">${a.ex}</div>
+      <button class="maplink" data-city="${a.city}">Show on map</button>
+    </div>`).join('');
+
+    const regionRows = [
+      ["London", "Cockney, Multicultural London English, Estuary"],
+      ["South East", "Estuary English, Home Counties RP"],
+      ["South West", "West Country — Bristolian, Devonian, Cornish"],
+      ["East of England", "East Anglian, Essex Estuary"],
+      ["East Midlands", "Nottingham, Leicester, Derbyshire (“duck”)"],
+      ["West Midlands", "Brummie, Black Country"],
+      ["North West", "Scouse, Mancunian, Lancashire"],
+      ["North East", "Geordie, Mackem (Sunderland), Teesside"],
+      ["Yorkshire & the Humber", "Yorkshire — Leeds, Sheffield, Hull"],
+      ["Scotland", "Glaswegian, Edinburgh, Doric (north-east)"],
+      ["Wales", "South Wales (Cardiff, the Valleys), North Wales"],
+      ["Northern Ireland", "Belfast, Ulster-Scots"]
+    ];
+    document.getElementById('regionsBody').innerHTML = regionRows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('');
+
+    const videos = [
+      { id: "1KaXTasMTwo", name: "Posh / RP", place: "How to speak POSH & RP English" },
+      { id: "NiUOu1Y6drQ", name: "Scouse", place: "Liverpool accent guide" },
+      { id: "n85OGN5M-Ng", name: "Brummie", place: "Birmingham accent guide" },
+      { id: "0C1jbnBB6nc", name: "Geordie", place: "Newcastle accent tutorial" },
+      { id: "xc94eXS-RrY", name: "Cockney", place: "East London accent" },
+      { id: "hPTVLX1rV1E", name: "Yorkshire", place: "Yorkshire accent guide" },
+      { id: "oNjcAs3PcJs", name: "Glaswegian", place: "Scottish accent (Glasgow)" },
+      { id: "UFzbhwUxqEs", name: "Welsh", place: "The Welsh accent" }
+    ];
+
+    function renderVideos() {
+      videosRendered = true;
+      document.getElementById('videoGrid').innerHTML = videos.map(v => `<div class="vcard">
+        <div class="vid" data-id="${v.id}">
+          <img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="${v.name} accent video">
+          <div class="play"><span>▶</span></div>
+        </div>
+        <h2>${v.name}</h2>
+        <div class="tag">${v.place}</div>
+        <a class="vlink" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">Watch on YouTube</a>
+      </div>`).join('');
+    }
+    document.getElementById('videoGrid').addEventListener('click', e => {
+      const vid = e.target.closest('.vid');
+      if (!vid || vid.querySelector('iframe')) return;
+      vid.innerHTML = `<iframe src="https://www.youtube.com/embed/${vid.dataset.id}?autoplay=1&rel=0" title="Accent video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+    });
+
     const googleMapFrame = document.getElementById('googleMapFrame');
-    function setGoogleMap(station, btn) {
-      const url = `https://www.google.com/maps?q=${station.lat},${station.lng}&z=16&output=embed`;
+    const shortcutRow = document.getElementById('shortcutRow');
+
+    function mapUrl(query) {
+      return 'https://www.google.com/maps?q=' + encodeURIComponent(query) + '&z=12&output=embed';
+    }
+    function showMap(query) {
+      const url = mapUrl(query);
       googleMapFrame.dataset.src = url;
       if (googleMapFrame.getAttribute('src')) googleMapFrame.setAttribute('src', url);
-      document.querySelectorAll('#shortcutRow button').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
     }
-    stations.forEach((station, i) => {
+    function selectCity(key) {
+      const city = cities.find(c => c.key === key);
+      if (!city) return;
+      showMap(city.q);
+      shortcutRow.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.key === key));
+    }
+    cities.forEach(city => {
       const btn = document.createElement('button');
-      btn.textContent = station.name;
-      if (i === 0) btn.classList.add('active');
-      btn.addEventListener('click', () => setGoogleMap(station, btn));
+      btn.textContent = city.label;
+      btn.dataset.key = city.key;
+      btn.addEventListener('click', () => selectCity(city.key));
       shortcutRow.appendChild(btn);
     });
-    setGoogleMap(stations[0], null);
-    shortcutRow.querySelector('button').classList.add('active');
+    selectCity('london');
 
     function searchGoogleMap() {
       const query = document.getElementById('mapSearchInput').value.trim();
       if (!query) return;
-      const url = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
-      googleMapFrame.dataset.src = url;
-      if (googleMapFrame.getAttribute('src')) googleMapFrame.setAttribute('src', url);
-      document.querySelectorAll('#shortcutRow button').forEach(b => b.classList.remove('active'));
+      showMap(query);
+      shortcutRow.querySelectorAll('button').forEach(b => b.classList.remove('active'));
     }
     document.getElementById('mapSearchBtn').addEventListener('click', searchGoogleMap);
     document.getElementById('mapSearchInput').addEventListener('keydown', e => {
       if (e.key === 'Enter') searchGoogleMap();
     });
+
+    accentGrid.addEventListener('click', e => {
+      const btn = e.target.closest('.maplink');
+      if (!btn) return;
+      selectCity(btn.dataset.city);
+      goToSlide(4);
+    });
+
+    function updateClock() {
+      const fmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      document.getElementById('clockTime').textContent = fmt.format(new Date());
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
 
     async function loadNews() {
       const newsList = document.getElementById('newsList');
@@ -849,7 +714,7 @@
     const rhymingSlang = {
       "feet": "plates of meat", "eyes": "mince pies", "look": "butcher's hook", "believe": "adam and eve",
       "stairs": "apples and pears", "phone": "dog and bone", "money": "bread and honey", "wife": "trouble and strife",
-      "word": "dog and bone", "head": "loaf of bread", "hair": "barnet fair", "teeth": "hampstead heath",
+      "head": "loaf of bread", "hair": "barnet fair", "teeth": "hampstead heath",
       "trouble": "barney rubble", "suit": "whistle and flute", "road": "frog and toad", "hands": "berkshire hunt",
       "drunk": "elephant's trunk", "tea": "rosie lee", "wig": "syrup of figs", "boots": "daisy roots",
       "mate": "china plate", "lies": "porky pies", "shoes": "ayrton sennas"
